@@ -31,46 +31,8 @@ axiom I3: ∃ A B C: Point, ∃ l m : Line, l ≠ m ∧ A ~ l
 
 
 def have_common_point (l m: Line) := ∃ A:Point, A ~ l ∧ A ~ m
-
+def no_common_points (l m: Line) := ¬ have_common_point l m
 def is_common_point (A: Point) (l m: Line) := A ~ l ∧ A ~ m
-
-def no_common_points (l m: Line) := ∀ A: Point, (A ~ l → ¬ A ~ m) ∧ (A ~ m → ¬ A ~ l)
-
-lemma equiv_common_points (l m: Line):
-  have_common_point l m ↔ ¬ no_common_points l m :=
-begin
-  split,
-  {
-    intros h1 h2,
-    cases h1 with A h1,
-    specialize h2 A,
-    cases h1 with hAl hAm,
-    cases h2,
-    have hF: A ~ m ∧ ¬ A ~ m,
-    { split, 
-      exact hAm,
-      exact h2_left hAl },
-    { 
-      rw ← and_not_self (A ~ m), 
-      exact hF
-    }
-  },
-  {
-    intro h1,
-    rw have_common_point,
-    rw no_common_points at h1,
-    rw push_neg.not_forall_eq at h1,
-    cases h1 with x h1,
-    rw push_neg.not_and_distrib_eq at h1,
-    rw push_neg.not_implies_eq at h1,
-    rw push_neg.not_implies_eq at h1,
-    push_neg at h1,
-    use x,
-    cases h1,
-    { exact h1 },
-    { rw and_comm, exact h1 }
-  }
-end
 
 /-- 
 Two distinct lines can have at most one point in common.
@@ -85,7 +47,7 @@ begin
   by_contra h,
   push_neg at h,
   cases h with h have_common,
-  rw ← equiv_common_points at have_common,
+  rw [no_common_points, push_neg.not_not_eq] at have_common,
   cases have_common with x hx,
   rw [exists_unique, not_exists] at h,
   specialize h x,
