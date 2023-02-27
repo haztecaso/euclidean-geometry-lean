@@ -23,7 +23,7 @@ def collinear (A B C: Point) := ∃ l:Line, A ~ l ∧ B ~ l ∧ C ~ l
 /-- 
 There exist three different noncollinear points.
 -/
-axiom I3: ∃ A B C: Point, (A ≠ B ∧ A ≠ C ∧ B≠ C) ∧ ¬ collinear A B C
+axiom I3: ∃ A B C: Point, (A ≠ B ∧ A ≠ C ∧ B ≠ C) ∧ ¬ collinear A B C
 
 /--
 Given two different points get the line that passes through them
