@@ -1,41 +1,30 @@
 import data.real.basic
 import geometry.euclidean.basic
-import analysis.inner_product_space.pi_L2
+import basic
 
-class incidence_geometry (Point : Type*) (Line : Type*) :=
-  (lies_on : Point → Line → Prop)
+open has_lies_on
+
+class incidence_geometry (Point Line : Type*) extends has_lies_on Point Line :=
   (i1 (A B : Point) : A ≠ B → ∃! l : Line, lies_on A l ∧ lies_on B l)  -- unicidad
   (i2 (l : Line) : ∃ A B : Point, A ≠ B ∧ lies_on A l ∧ lies_on B l)
-  (i3 : ∃ A B C : Point, (A ≠ B ∧ A ≠ C ∧ B ≠ C) ∧ ¬∃ l : Line, lies_on A l ∧ lies_on B l ∧ lies_on C l)
+  (i3 : ∃ A B C : Point, different3 A B C ∧ ¬ collinear Line A B C)
 
 namespace incidence_geometry
-
-local infix ` ~ ` : 50 := lies_on
 
 /--
 Given two different points get the line that passes through them
 -/
+
 noncomputable def line {Point : Type*} (Line : Type*) [incidence_geometry Point Line] 
 (A B : Point) (h : A ≠ B): 
-  { l : Line // A ~ l ∧ B ~ l ∧ ∀ l' : Line,  A ~ l' ∧ B ~ l' → l' = l } := 
+  { l : Line // points_in_line A B l } := 
 begin
   let hAB := i1 A B h,
   rw exists_unique at hAB,
-  let P := λ l : Line,  A ~ l ∧ B ~ l ∧ ∀ l' : Line,  A ~ l' ∧ B ~ l' → l' = l,
+  let P := λ l : Line, A ~ l ∧  B ~ l,
   have hlP : ∃ l : Line, P l, { tauto },
   exact classical.indefinite_description P hlP,
 end
-
-def collinear {Point : Type*} (Line : Type*) [incidence_geometry Point Line]
-  (A B C : Point) := ∃ l : Line, A ~ l ∧ B ~ l ∧ C ~ l
-
-def is_common_point {Point Line : Type*} [incidence_geometry Point Line]
-  (A : Point) (l m : Line) := 
-  lies_on A l ∧ lies_on A m 
-
-def have_common_point (Point : Type*) {Line : Type*} [incidence_geometry Point Line]
-  (l m : Line) := 
-  ∃ A : Point, is_common_point A l m
 
 /-- 
 Two distinct lines can have at most one point in common.
@@ -83,8 +72,9 @@ For every line there is at least one point not lying on it.
 lemma line_external_point {Point Line : Type*} [ig : incidence_geometry Point Line] :
   ∀ l : Line, ∃ A : Point, ¬ A ~ l :=
 begin
-  rcases i3 with ⟨A, B, C, ⟨-, h1⟩⟩,
+  rcases ig.i3 with ⟨A, B, C, ⟨_, h1⟩⟩,
   by_contra h2,
+  rw has_lies_on.collinear at h1,
   push_neg at h1,
   push_neg at h2,
   cases h2 with l hl,
@@ -108,7 +98,7 @@ begin
     let QR := line Line Q R hQR,
     use QR.val,
     rw hAP,
-    rw push_neg.not_exists_eq at h2,
+    rw [has_lies_on.collinear, push_neg.not_exists_eq] at h2,
     specialize h2 QR,
     rw push_neg.not_and_distrib_eq at h2,
     rw push_neg.not_and_distrib_eq at h2,
@@ -148,20 +138,3 @@ begin
 end
 
 end incidence_geometry
-
--- namespace ejemplo 
-
--- constants A B C : Type
-
--- def Points : set ℕ := { 1, 2, 3, 4 }
--- def Lines  : set (set ℕ) := { {1, 2}, {1, 3}, {2,3} }
-
--- instance : incidence_geometry ABC ABCLine := { 
---   lies_on := λ a b, a ∈ b,
---    i1 := sorry,
---    i2 := begin
---      intro l,
---    end,
---    i3 := sorry }
-
--- end ejemplo
