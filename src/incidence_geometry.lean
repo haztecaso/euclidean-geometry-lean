@@ -26,6 +26,20 @@ begin
   exact classical.indefinite_description P hlP,
 end
 
+/--
+Given two different points get the unique line that passes through them
+-/
+noncomputable def line_unique {Point : Type*} (Line : Type*) [incidence_geometry Point Line] 
+(A B : Point) (h : A ≠ B): 
+  { l : Line // A ~ l ∧ B ~ l ∧ ∀ l' : Line, A ~ l' ∧ B ~ l' → l' = l } := 
+begin
+  let hAB := i1 A B h,
+  rw exists_unique at hAB,
+  let P := λ l : Line, A ~ l ∧  B ~ l ∧ ∀ l' : Line, A ~ l' ∧ B ~ l' → l' = l,
+  have hlP : ∃ l : Line, P l, { tauto },
+  exact classical.indefinite_description P hlP,
+end
+
 /-- 
 Two distinct lines can have at most one point in common.
 -/
