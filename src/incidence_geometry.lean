@@ -5,7 +5,7 @@ import basic
 open has_lies_on
 
 class incidence_geometry (Point Line : Type*) extends has_lies_on Point Line :=
-  (i1 (A B : Point) : A ≠ B → ∃! l : Line, lies_on A l ∧ lies_on B l)  -- unicidad
+  (i1 {A B : Point} (h : A ≠ B): ∃! l : Line, lies_on A l ∧ lies_on B l)  -- unicidad
   (i2 (l : Line) : ∃ A B : Point, A ≠ B ∧ lies_on A l ∧ lies_on B l)
   (i3 : ∃ A B C : Point, different3 A B C ∧ ¬ collinear Line A B C)
 
@@ -19,7 +19,7 @@ noncomputable def line {Point : Type*} (Line : Type*) [incidence_geometry Point 
 (A B : Point) (h : A ≠ B): 
   { l : Line // A ~ l ∧  B ~ l } := 
 begin
-  let hAB := i1 A B h,
+  let hAB := i1 h,
   rw exists_unique at hAB,
   let P := λ l : Line, A ~ l ∧  B ~ l,
   have hlP : ∃ l : Line, P l, { tauto },
@@ -33,7 +33,7 @@ noncomputable def line_unique {Point : Type*} (Line : Type*) [incidence_geometry
 (A B : Point) (h : A ≠ B): 
   { l : Line // A ~ l ∧ B ~ l ∧ ∀ l' : Line, A ~ l' ∧ B ~ l' → l' = l } := 
 begin
-  let hAB := i1 A B h,
+  let hAB := i1 h,
   rw exists_unique at hAB,
   let P := λ l : Line, A ~ l ∧  B ~ l ∧ ∀ l' : Line, A ~ l' ∧ B ~ l' → l' = l,
   have hlP : ∃ l : Line, P l, { tauto },
@@ -54,11 +54,10 @@ begin
   choose A hA using hlm,
   rcases not_unique A hA with ⟨B, ⟨hB, hAB⟩⟩,
   rw ne_comm at hAB,
-  let hI1 := ig.i1 A B hAB,
   let hABlm := and.intro hA hB,
   have hABlm : (A ~ l ∧ B ~ l) ∧ A ~ m ∧ B ~ m,
   { exact ⟨⟨hA.left,hB.left⟩,⟨hA.right,hB.right⟩⟩ },
-  rw ← unique_of_exists_unique hI1 hABlm.1 hABlm.2,
+  rw ← unique_of_exists_unique (ig.i1 hAB) hABlm.1 hABlm.2,
 end
 
 /--
@@ -157,12 +156,14 @@ begin
   { 
     -- IDEA: AP y BP pasan por P y deben ser distintas 
     -- Ya que si AP = BP entonces A B y P son colineares 
-    -- y P ~ AB, lo que contradice la hipótesis.
-    sorry 
-  },
-  { 
-    -- IDEA: Si P ~ AB, AB y CP son lineas distintas que pasan por P
-    sorry },
+    -- y P ~ AB, lo que contradice la que ¬ P ~ AB.
+    have hAP : A ≠ P, { sorry },
+    have hBP : B ≠ P, { sorry },
+    let AP := line Line A P hAP,
+    let BP := line Line B P hBP,
+    have h2 : AP.val ≠ BP.val, { sorry },
+    use [AP, BP],
+    exact ⟨h2, AP.property.2, BP.property.2⟩ },
 end
 
 end incidence_geometry
