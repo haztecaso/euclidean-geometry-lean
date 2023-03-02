@@ -135,18 +135,25 @@ lemma point_has_two_lines {Point Line : Type*} [ig: incidence_geometry Point Lin
   ∀ A: Point, ∃ l m: Line, l ≠ m ∧ A ~ l ∧ A ~ m :=
 begin
   intro P,
-  rcases ig.i3 with ⟨A, B, C, h1⟩,
-
-  have hAB := ig.i1,
-  specialize hAB A B,
-  have hAnB : A ≠ B,
-  { sorry },
-  specialize hAB hAnB,
-  rw exists_unique at hAB,
-  rcases hAB with ⟨AB, ⟨hAB, -⟩⟩,
-
-  by_cases P ~ AB,
-
+  rcases ig.i3 with ⟨A, B, C, ⟨⟨hAB, hAC, hBC⟩, h_noncollinear⟩⟩,
+  rw has_lies_on.collinear at h_noncollinear,
+  push_neg at h_noncollinear,
+  let AB := line Line A B hAB,
+  by_cases h1 : P ~ AB.val,
+  { 
+    -- IDEA: Si P ~ AB, AB y CP son lineas distintas que pasan por P
+    let h2 := h_noncollinear,
+    specialize h2 AB AB.property.1 AB.property.2,
+    have hCP : C ≠ P, { by_contra h', rw ← h' at h1, tauto },
+    let CP := line Line C P hCP,
+    use [AB, CP],
+    refine ⟨_, h1, CP.property.right⟩,
+    by_contra h3,
+    have h3' : AB.val = CP.val, { tauto },
+    let hlCP := CP.property,
+    rw ← h3' at hlCP,
+    tauto,
+  },
   { 
     -- IDEA: AP y BP pasan por P y deben ser distintas 
     -- Ya que si AP = BP entonces A B y P son colineares 
