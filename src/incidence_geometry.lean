@@ -92,19 +92,28 @@ lemma point_external_line {Point Line : Type*} [ig : incidence_geometry Point Li
   ∀ A: Point, ∃ l: Line, ¬ A ~ l :=
 begin
   intro A,
-  rcases ig.i3 with ⟨P, Q, R, ⟨⟨hPQ, hPR, hQR⟩, h2⟩⟩,
-  by_cases hAP: A = P,
+  rcases @disctinct_lines_not_concurrent Point Line ig with ⟨l, m, n, ⟨_, h2⟩⟩,
+  push_neg at h2,
+  specialize h2 A,
+  by_cases hAlm : is_common_point A l m,
   { 
-    let QR := line Line Q R hQR,
-    use QR.val,
-    rw hAP,
-    rw [has_lies_on.collinear, push_neg.not_exists_eq] at h2,
-    specialize h2 QR,
-    rw push_neg.not_and_distrib_eq at h2,
-    rw push_neg.not_and_distrib_eq at h2,
-    sorry
-  },
-  { sorry },
+    by_cases hAln : is_common_point A l n,
+    { let h2 := h2 hAlm hAln,
+      rw is_common_point at h2,
+      push_neg at h2,
+      by_cases A ~ m,
+      { use n, exact h2 h, },
+      { use m, }},
+    { rw is_common_point at hAln,
+      push_neg at hAln,
+      by_cases A ~ l,
+      { use n, exact hAln h },
+      { use l }}},
+  { rw is_common_point at hAlm,
+    push_neg at hAlm,
+    by_cases A ~ l,
+    { use m, exact hAlm h, },
+    { use l, }},
 end
 
 /--
