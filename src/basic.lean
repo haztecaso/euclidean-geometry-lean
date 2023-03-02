@@ -1,5 +1,9 @@
 import tactic
 
+def different3 {T : Type*} (A B C : T) := (A ≠ B ∧ A ≠ C ∧ B ≠ C)
+
+def xor3 (p q r : Prop) : Prop := (p ∧ ¬ q ∧ ¬ r) ∨ (¬ p ∧ q ∧ ¬ r) ∨ (¬ p ∧ ¬ q ∧ r)
+
 class has_lies_on (Point Line : Type*) :=
   (lies_on : Point → Line → Prop)
   
@@ -30,7 +34,6 @@ lemma non_collinear {Point : Type*} (Line: Type*) [has_lies_on Point Line] (A B 
 end 
 end push_neg
 
-def different3 {Point : Type*} (A B C : Point) := (A ≠ B ∧ A ≠ C ∧ B ≠ C)
 
 def is_common_point {Point Line : Type*} [has_lies_on Point Line] (A : Point) (l m : Line) := 
   A ~ l ∧ A ~ m 
