@@ -116,28 +116,16 @@ lemma point_external_line {Point Line : Type*} [ig : incidence_geometry Point Li
   ∀ A: Point, ∃ l: Line, ¬ A ~ l :=
 begin
   intro A,
-  rcases @disctinct_lines_not_concurrent Point Line ig with ⟨l, m, n, ⟨_, h2⟩⟩,
-  push_neg at h2,
-  specialize h2 A,
-  by_cases hAlm : is_common_point A l m,
-  { 
-    by_cases hAln : is_common_point A l n,
-    { let h2 := h2 hAlm hAln,
-      rw is_common_point at h2,
-      push_neg at h2,
-      by_cases A ~ m,
-      { use n, exact h2 h, },
-      { use m, }},
-    { rw is_common_point at hAln,
-      push_neg at hAln,
-      by_cases A ~ l,
-      { use n, exact hAln h },
-      { use l }}},
-  { rw is_common_point at hAlm,
-    push_neg at hAlm,
-    by_cases A ~ l,
-    { use m, exact hAlm h, },
-    { use l, }},
+  rcases @disctinct_lines_not_concurrent Point Line ig with ⟨l, m, n, ⟨-, h⟩⟩,
+  rw push_neg.not_exists_eq at h,
+  specialize h A,
+  repeat { rw is_common_point at h },
+  repeat { rw push_neg.not_and_distrib_eq at h },
+  have h : ¬ A ~ l ∨ ¬ A ~ m ∨ ¬ A ~ n, { tauto },
+  rcases h with (h1 | h2 | h3),
+  { use l },
+  { use m },
+  { use n },
 end
 
 /--
