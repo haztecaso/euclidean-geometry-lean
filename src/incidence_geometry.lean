@@ -65,18 +65,28 @@ end
 There exist three disctinct lines not through any common point
 -/
 lemma disctinct_lines_not_concurrent {Point Line : Type*} [ig : incidence_geometry Point Line] :
-  ∃ l m n: Line, l ≠ m ∧ l ≠ n ∧ m ≠ n →
-  ¬ have_common_point Point l m ∧ ¬ have_common_point Point l n ∧ ¬ have_common_point Point m n
+  ∃ l m n: Line, (l ≠ m ∧ l ≠ n ∧ m ≠ n) ∧
+  ¬ ∃ P : Point, is_common_point P l m ∧ is_common_point P l n ∧ is_common_point P m n
   :=
 begin
-  rcases ig.i3 with ⟨A, B, C, h⟩,
-  rcases h.left with ⟨hAB, hAC, hBC⟩,
+  rcases ig.i3 with ⟨A, B, C, ⟨⟨hAB, hAC, hBC⟩, h_noncollinear⟩⟩,
+  rw [push_neg.non_collinear] at h_noncollinear,
   have AB := line Line A B hAB,
   have AC := line Line A C hAC,
   have BC := line Line B C hBC,
-  have hABAC: AB.val ≠ AC.val, { sorry },
-  have hABBC: AB.val ≠ BC.val, { sorry },
-  have hACBC: AC.val ≠ BC.val, { sorry },
+  use [AB, AC, BC],
+  have hABAC : AB.val ≠ AC.val, { sorry }, 
+  have hABBC : AB.val ≠ BC.val, { sorry },
+  have hACBC : AC.val ≠ BC.val, { sorry },
+  refine ⟨⟨hABAC, hABBC, hACBC⟩, _⟩, 
+  by_contra h,
+  cases h with P hP,
+  have h2 : P ≠ A,
+  { by_contra h, 
+    rw h at hP,
+    specialize h_noncollinear BC,
+    sorry },
+  let PA := line_unique Line P A h2,
   sorry,
 end
 
