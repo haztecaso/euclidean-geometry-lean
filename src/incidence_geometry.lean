@@ -5,9 +5,9 @@ import basic
 open has_lies_on
 
 class incidence_geometry (Point Line : Type*) extends has_lies_on Point Line :=
-  (i1 {A B : Point} (h : A ≠ B): ∃! l : Line, lies_on A l ∧ lies_on B l)  -- unicidad
-  (i2 (l : Line) : ∃ A B : Point, A ≠ B ∧ lies_on A l ∧ lies_on B l)
-  (i3 : ∃ A B C : Point, different3 A B C ∧ ¬ collinear Line A B C)
+  (I1 {A B : Point} (h : A ≠ B): ∃! l : Line, lies_on A l ∧ lies_on B l)  -- unicidad
+  (I2 (l : Line) : ∃ A B : Point, A ≠ B ∧ lies_on A l ∧ lies_on B l)
+  (I3 : ∃ A B C : Point, different3 A B C ∧ ¬ collinear Line A B C)
 
 namespace incidence_geometry
 
@@ -19,7 +19,7 @@ noncomputable def line {Point : Type*} (Line : Type*) [incidence_geometry Point 
 {A B : Point} (h : A ≠ B): 
   { l : Line // A ~ l ∧  B ~ l } := 
 begin
-  let hAB := i1 h,
+  let hAB := I1 h,
   rw exists_unique at hAB,
   let P := λ l : Line, A ~ l ∧  B ~ l,
   have hlP : ∃ l : Line, P l, { tauto },
@@ -33,7 +33,7 @@ noncomputable def line_unique {Point : Type*} (Line : Type*) [incidence_geometry
 {A B : Point} (h : A ≠ B): 
   { l : Line // A ~ l ∧ B ~ l ∧ ∀ l' : Line, A ~ l' ∧ B ~ l' → l' = l } := 
 begin
-  let hAB := i1 h,
+  let hAB := I1 h,
   rw exists_unique at hAB,
   let P := λ l : Line, A ~ l ∧  B ~ l ∧ ∀ l' : Line, A ~ l' ∧ B ~ l' → l' = l,
   have hlP : ∃ l : Line, P l, { tauto },
@@ -57,7 +57,7 @@ begin
   let hABlm := and.intro hA hB,
   have hABlm : (A ~ l ∧ B ~ l) ∧ A ~ m ∧ B ~ m,
   { exact ⟨⟨hA.left,hB.left⟩,⟨hA.right,hB.right⟩⟩ },
-  rw ← unique_of_exists_unique (ig.i1 hAB) hABlm.1 hABlm.2,
+  rw ← unique_of_exists_unique (ig.I1 hAB) hABlm.1 hABlm.2,
 end
 
 /--
@@ -68,7 +68,7 @@ lemma disctinct_lines_not_concurrent {Point Line : Type*} [ig : incidence_geomet
   ¬ ∃ P : Point, is_common_point P l m ∧ is_common_point P l n ∧ is_common_point P m n
   :=
 begin
-  rcases ig.i3 with ⟨A, B, C, ⟨⟨hAB, hAC, hBC⟩, h_noncollinear⟩⟩,
+  rcases ig.I3 with ⟨A, B, C, ⟨⟨hAB, hAC, hBC⟩, h_noncollinear⟩⟩,
   rw [push_neg.non_collinear] at h_noncollinear,
   have AB := line Line hAB,
   have AC := line Line hAC,
@@ -95,7 +95,7 @@ For every line there is at least one point not lying on it.
 lemma line_external_point {Point Line : Type*} [ig : incidence_geometry Point Line] :
   ∀ l : Line, ∃ A : Point, ¬ A ~ l :=
 begin
-  rcases ig.i3 with ⟨A, B, C, ⟨_, h1⟩⟩,
+  rcases ig.I3 with ⟨A, B, C, ⟨_, h1⟩⟩,
   by_contra h2,
   rw has_lies_on.collinear at h1,
   push_neg at h1,
@@ -134,7 +134,7 @@ lemma point_has_two_lines {Point Line : Type*} [ig: incidence_geometry Point Lin
   ∀ A: Point, ∃ l m: Line, l ≠ m ∧ A ~ l ∧ A ~ m :=
 begin
   intro P,
-  rcases ig.i3 with ⟨A, B, C, ⟨⟨hAB, hAC, hBC⟩, h_noncollinear⟩⟩,
+  rcases ig.I3 with ⟨A, B, C, ⟨⟨hAB, hAC, hBC⟩, h_noncollinear⟩⟩,
   rw has_lies_on.collinear at h_noncollinear,
   push_neg at h_noncollinear,
   let AB := line Line hAB,
