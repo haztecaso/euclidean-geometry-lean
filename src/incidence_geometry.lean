@@ -17,7 +17,7 @@ Given two different points get the line that passes through them
 
 noncomputable def line {Point : Type*} (Line : Type*) [incidence_geometry Point Line] 
 (A B : Point) (h : A ≠ B): 
-  { l : Line // points_in_line A B l } := 
+  { l : Line // A ~ l ∧  B ~ l } := 
 begin
   let hAB := i1 A B h,
   rw exists_unique at hAB,
