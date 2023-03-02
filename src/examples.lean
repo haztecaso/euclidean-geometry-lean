@@ -25,10 +25,10 @@ import incidence_geometry
 --    end,
 --    i3 := sorry }
 
-structure Point := (x : ℝ) (y : ℝ)
+@[ext] structure Point := (x : ℝ) (y : ℝ)
 
 -- y = mx + b
-structure Line := (m : ℝ) (b : ℝ)
+@[ext] structure Line := (m : ℝ) (b : ℝ)
 
 noncomputable def line_from_points (A B : Point) : Line :=
   let m := (B.y-A.y)/(B.x-A.x) in ⟨m,A.y-m*A.x⟩
