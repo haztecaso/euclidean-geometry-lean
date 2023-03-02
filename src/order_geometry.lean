@@ -14,8 +14,12 @@ class order_geometry (Point Line : Type*) extends incidence_geometry Point Line 
       (hlABC : ¬ (A ~ l ∨ B ~ l ∨ C ~ l)) (hlD : D ~ l) (hADB : A * D * B)
       : (∃ E ,  E ~ l ∧ (A * E * C)) xor (∃ E, E ~ l ∧ (B * E * C)))
 
+structure Segment (Point : Type*) := (A B : Point) (diff : A ≠ B)
+
 instance (Point Line : Type) [og: order_geometry Point Line]: has_mem Point (Segment Point) := 
   ⟨λ P S, P = S.A ∨ P = S.B ∨ og.between P S.A S.B⟩
+
+structure Triangle (Point : Type*) := (A B C : Point) (diff : different3 A B C)
 
 instance (Point Line : Type) [order_geometry Point Line]: has_mem Point (Triangle Point) := 
   ⟨λ P T, 
