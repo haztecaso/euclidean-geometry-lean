@@ -16,7 +16,7 @@ Given two different points get the line that passes through them
 -/
 
 noncomputable def line {Point : Type*} (Line : Type*) [incidence_geometry Point Line] 
-(A B : Point) (h : A ≠ B): 
+{A B : Point} (h : A ≠ B): 
   { l : Line // A ~ l ∧  B ~ l } := 
 begin
   let hAB := i1 h,
@@ -30,7 +30,7 @@ end
 Given two different points get the unique line that passes through them
 -/
 noncomputable def line_unique {Point : Type*} (Line : Type*) [incidence_geometry Point Line] 
-(A B : Point) (h : A ≠ B): 
+{A B : Point} (h : A ≠ B): 
   { l : Line // A ~ l ∧ B ~ l ∧ ∀ l' : Line, A ~ l' ∧ B ~ l' → l' = l } := 
 begin
   let hAB := i1 h,
@@ -70,9 +70,9 @@ lemma disctinct_lines_not_concurrent {Point Line : Type*} [ig : incidence_geomet
 begin
   rcases ig.i3 with ⟨A, B, C, ⟨⟨hAB, hAC, hBC⟩, h_noncollinear⟩⟩,
   rw [push_neg.non_collinear] at h_noncollinear,
-  have AB := line Line A B hAB,
-  have AC := line Line A C hAC,
-  have BC := line Line B C hBC,
+  have AB := line Line hAB,
+  have AC := line Line hAC,
+  have BC := line Line hBC,
   use [AB, AC, BC],
   have hABAC : AB.val ≠ AC.val, { sorry }, 
   have hABBC : AB.val ≠ BC.val, { sorry },
@@ -85,7 +85,7 @@ begin
     rw h at hP,
     specialize h_noncollinear BC,
     sorry },
-  let PA := line_unique Line P A h2,
+  let PA := line_unique Line h2,
   sorry,
 end
 
@@ -137,14 +137,14 @@ begin
   rcases ig.i3 with ⟨A, B, C, ⟨⟨hAB, hAC, hBC⟩, h_noncollinear⟩⟩,
   rw has_lies_on.collinear at h_noncollinear,
   push_neg at h_noncollinear,
-  let AB := line Line A B hAB,
+  let AB := line Line hAB,
   by_cases h1 : P ~ AB.val,
   { 
     -- IDEA: Si P ~ AB, AB y CP son lineas distintas que pasan por P
     let h2 := h_noncollinear,
     specialize h2 AB AB.property.1 AB.property.2,
     have hCP : C ≠ P, { by_contra h', rw ← h' at h1, tauto },
-    let CP := line Line C P hCP,
+    let CP := line Line hCP,
     use [AB, CP],
     refine ⟨_, h1, CP.property.right⟩,
     by_contra h3,
@@ -159,8 +159,8 @@ begin
     -- y P ~ AB, lo que contradice la que ¬ P ~ AB.
     have hAP : A ≠ P, { sorry },
     have hBP : B ≠ P, { sorry },
-    let AP := line Line A P hAP,
-    let BP := line Line B P hBP,
+    let AP := line Line hAP,
+    let BP := line Line hBP,
     have h2 : AP.val ≠ BP.val, { sorry },
     use [AP, BP],
     exact ⟨h2, AP.property.2, BP.property.2⟩ },
