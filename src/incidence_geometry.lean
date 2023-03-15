@@ -147,7 +147,7 @@ begin
   exact hABAC h
 end
 
-/-- 
+/--
 For every line there is at least one point not lying on it.
 -/
 lemma line_external_point {Point Line : Type*} [ig : incidence_geometry Point Line] :
@@ -196,7 +196,6 @@ begin
   let AB := line Line hAB,
   by_cases h1 : P ~ AB.val,
   { 
-    -- IDEA: Si P ~ AB, AB y CP son lineas distintas que pasan por P
     let h2 := h_noncollinear,
     specialize h2 AB AB.property.1 AB.property.2,
     have hCP : C ≠ P, { by_contra h', rw ← h' at h1, tauto },
