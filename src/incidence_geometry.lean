@@ -65,11 +65,11 @@ Given two different points get the unique line that passes through them
 -/
 noncomputable def line_unique {Point : Type*} (Line : Type*) [incidence_geometry Point Line] 
 {A B : Point} (h : A ≠ B): 
-  { l : Line // A ~ l ∧ B ~ l ∧ ∀ l' : Line, A ~ l' ∧ B ~ l' → l' = l } := 
+  { l : Line // (A ~ l ∧ B ~ l) ∧ ∀ l' : Line, A ~ l' ∧ B ~ l' → l' = l } := 
 begin
   let hAB := I1 h,
   rw exists_unique at hAB,
-  let P := λ l : Line, A ~ l ∧  B ~ l ∧ ∀ l' : Line, A ~ l' ∧ B ~ l' → l' = l,
+  let P := λ l : Line, (A ~ l ∧  B ~ l) ∧ ∀ l' : Line, A ~ l' ∧ B ~ l' → l' = l,
   have hlP : ∃ l : Line, P l, { tauto },
   exact classical.indefinite_description P hlP,
 end
