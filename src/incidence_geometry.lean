@@ -2,8 +2,6 @@ import data.real.basic
 import geometry.euclidean.basic
 import basic
 
-open has_lies_on
-
 class incidence_geometry (Point Line : Type*) :=
   (lies_on : Point → Line → Prop)
   (infix ` ~ ` : 50 := lies_on)
