@@ -9,6 +9,7 @@
       let pkgs = import nixpkgs { inherit system; }; in rec {
         devShell = pkgs.mkShell {
           nativeBuildInputs = with pkgs; [ 
+            lean3
             mathlibtools
           ];
         };
