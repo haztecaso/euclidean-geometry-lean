@@ -11,20 +11,28 @@
 
 % PORTADA
 \maketitle
+\emptypage
 
 % RESUMEN - ABSTRACT
-% \input{00-abstract.tex}
-% \newpage
+\begin{abstract}
+    \lipsum[3]
+\end{abstract}
+
+\begin{abstract}[Abstract]
+    Traducción del resumen al inglés.
+    \lipsum[2]
+\end{abstract}
+\newpage
 
 % ÍNDICE
-% \setcounter{tocdepth}{1}
-% \newpage
-% \tableofcontents
-% \newpage\null\thispagestyle{empty}\newpage
-
-\addcontentsline{toc}{chapter}{Introducción}
+\tableofcontents
+\newpage
 
 % CONTENIDO
-\input{00-introduccion.tex}
+
+\addcontentsline{toc}{section}{Introducción}
+\section*{Introducción}
+
+\lipsum{1}
 
 \end{document}

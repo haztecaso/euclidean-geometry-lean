@@ -17,7 +17,9 @@
 \RequirePackage{array}
 \RequirePackage{cite}
 \RequirePackage{graphicx}
+
 \RequirePackage[colorlinks=true, linktocpage=true, pagebackref=true, citecolor=red, linkcolor=blue]{hyperref}
+\setcounter{tocdepth}{1}
 
 \RequirePackage{enumitem}
 \setlist[enumerate]{topsep=0mm}
@@ -28,8 +30,9 @@
 
 
 \RequirePackage{sectsty}
-
 \RequirePackage{titlesec}
+
+\newcommand{\emptypage}{\newpage\null\thispagestyle{empty}\newpage}
 
 \renewcommand{\maketitle}{%
     \begin{titlepage}
@@ -50,7 +53,6 @@
       \end{center}
       \vfill \Large\noindent \@subtitle
     \end{titlepage}
-    \newpage\null\thispagestyle{empty}\newpage
 }
 
 \renewenvironment{abstract}[1][Resumen]{
@@ -59,6 +61,7 @@
       \textbf{#1}
   \end{center}
 }{\vspace*{1cm}}
+
 
 % \sectionfont{\centering\Large\underline}
 % \titlespacing*{\section}{0pt}{1.2em plus 0.1em minus 0.1em}{0.4em plus 0.1em minus 0.1em}
