@@ -1,22 +1,25 @@
 # Trabajo de Fin de Grado
 
-Código fuente y memoria del Trabajo de Fin de Grado del grado en Matemáticas de la Universidad Complutense de Madrid. Presentado por Adrián Lattes en septiembre del 2023.
+Código fuente y memoria del Trabajo de Fin de Grado del grado en Matemáticas de la Universidad Complutense de Madrid. 
+
+Actualmente el trabajo está en desarrollo y en una fase muy inestable; todo está sujeto a cambios radicales.
 
 ## Estructura del repositorio
 
-En la carpeta src puedes encontrar el código fuente en Lean 3, en el que se
-implementan definiciones y demostraciones de la axiomática de Hilbert para la
-geometría euclídea plana.
+### Código fuente
 
-Los ficheros están organizados de la siguiente forma:
+En la carpeta `/src` puedes encontrar el código fuente en Lean 3, en el que se implementan definiciones y demostraciones de la axiomática de Hilbert para la geometría euclídea plana. Los ficheros están organizados de la siguiente forma:
 
-- En `incidence_geometry.lean` se encuentran los axiomas de incidencia y algún
-  resultado elemental que se puede demostrar con ellos.
+- En `incidence_geometry.lean` se encuentran los axiomas de incidencia y algún resultado elemental que se puede demostrar con ellos.
 - En `order_geometry.lean` se encuentran los axiomas de orden.
-- En `examples.lean` hay construidos algunos modelos clásicos de las teorías
-  implementadas en los demás ficheros.
+- En `examples.lean` hay construidos algunos modelos clásicos de las teorías implementadas en los demás ficheros.
+
+### Memoria
+
+En la carpeta `/memoria` se encuentra la memoria del trabajo.
 
 ## Ejecutando el Código
+
 
 ### Instalación local
 
