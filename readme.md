@@ -1,4 +1,4 @@
-# Trabajo de Fin de Grado
+# Formalización de las matemáticas con Lean. Un caso de estudio: Geometría euclídea plana.
 
 Código fuente y memoria del Trabajo de Fin de Grado del grado en Matemáticas de la Universidad Complutense de Madrid. 
 
@@ -6,7 +6,7 @@ Actualmente el trabajo está en desarrollo y en una fase muy inestable; todo est
 
 ## Estructura del repositorio
 
-### Código fuente
+En la carpeta `/memoria` se encuentra la memoria del trabajo, en formato `LaTeX`.
 
 En la carpeta `/src` puedes encontrar el código fuente en Lean 3, en el que se implementan definiciones y demostraciones de la axiomática de Hilbert para la geometría euclídea plana. Los ficheros están organizados de la siguiente forma:
 
@@ -14,12 +14,8 @@ En la carpeta `/src` puedes encontrar el código fuente en Lean 3, en el que se 
 - En `order_geometry.lean` se encuentran los axiomas de orden.
 - En `examples.lean` hay construidos algunos modelos clásicos de las teorías implementadas en los demás ficheros.
 
-### Memoria
-
-En la carpeta `/memoria` se encuentra la memoria del trabajo.
 
 ## Ejecutando el Código
-
 
 ### Instalación local
 
