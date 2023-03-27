@@ -13,6 +13,12 @@ namespace incidence_geometry
 
 infix ` ~ ` : 50 := lies_on
 
+def line_points (Point : Type*) {Line : Type*} [incidence_geometry Point Line] (l: Line) := { A : Point | A ~ l }
+
+def outside_line_points (Point : Type*) {Line : Type*} [incidence_geometry Point Line] (l: Line) := { A : Point | ¬ A ~ l }
+
+instance (Point Line : Type*) [incidence_geometry Point Line] : has_coe Line (set Point) := { coe := line_points Point }
+
 def points_in_line {Point Line : Type*} [incidence_geometry Point Line] (A B : Point) (l : Line) :=
   A ~ l ∧ B ~ l
 
