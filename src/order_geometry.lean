@@ -74,25 +74,60 @@ end
 
 theorem line_same_side_trans (l : Line) : transitive (@line_same_side Point Line og l) := 
 begin
-  intros P Q R hPQ hQR,
-  cases hPQ,
-  { rw hPQ, exact hQR },
-  { cases hQR, 
-    { rw ← hQR, right, exact hPQ }, 
-    { cases hPQ with hPQ1 hPQ2,
-      cases hQR with hQR1 hQR2,
-      by_cases hPR : P = R,
-      { left, exact hPR },
+  intros A B C hAB hBC,
+  cases hAB,
+  { rw hAB, exact hBC },
+  { cases hBC, 
+    { rw ← hBC, right, exact hAB }, 
+    { cases hAB with hAneB hAB,
+      cases hBC with hBneC hBC,
+      by_cases hAC : A = C,
+      { left, exact hAC },
       { right, 
-        have hPR : ((↑P) : Point) ≠ ↑R, { sorry },
-        use hPR,
-        rw segment_intersect_line at hPQ2 hQR2 ⊢, 
-        push_neg at hPQ2 hQR2 ⊢, 
-        rintros A (h1|h2|h3),
-        { specialize hPQ2 A, apply hPQ2, left, exact h1 },
-        { specialize hQR2 A, apply hQR2, right, left, exact h2 },
-        { 
-          sorry }}}},
+        let hAC' := (outside_line_points_lift_ne Point l A C).mp hAC,
+        use hAC',
+        rw segment_intersect_line at hAB hBC ⊢, 
+        push_neg at hAB hBC ⊢, 
+        rintros P (h1|h2|h3),
+        { apply hAB P, left, exact h1 },
+        { apply hBC P, right, left, exact h2 },
+        { by_cases h_collinear : ¬ collinear Line (↑A: Point) ↑B ↑C,
+          { /- Case 1 in Hartshorne -/
+            by_contra hDl,
+            rw [collinear_comm2, collinear_comm, collinear_comm2] at h_collinear,
+            have hlABC : ¬ (↑A ~ l ∨ ↑C ~ l ∨ ↑B ~ l),
+            { push_neg, 
+              split,
+              { apply hAB (↑A : Point), left, exact rfl },
+              { split, 
+                { apply hBC (↑C : Point), right, left, exact rfl }, 
+                { apply hBC (↑B : Point), left, exact rfl }}}, 
+            cases (B4 h_collinear hlABC hDl h3).or,
+            { cases h with E h, 
+              apply (and_not_self (E ~ l)).mp,
+              refine ⟨h.left, _⟩, 
+              apply hAB E,
+              right, right,
+              exact h.right },
+            { cases h with E h, 
+              apply (and_not_self (E ~ l)).mp,
+              refine ⟨h.left, _⟩, 
+              apply hBC E,
+              right, right,
+              apply B12,
+              exact h.right },
+            },
+          { /- Case 2 in Hartshorne -/
+            push_neg at h_collinear, 
+            cases h_collinear with m h,
+            have hD : ∃ D : Point, D ~ l ∧ ¬ D ~ m, { sorry },
+            cases hD with D hD,
+            have hDA : D ≠ ↑A , { sorry },
+            have hE : ∃ E : Point, D * ↑A * E, { cases (og.B2 hDA) with E hE, use E, exact hE },
+            cases hE with E hE,
+            have hDAE_collinear : collinear Line D A E, { exact (og.B11 hE).right.left },
+            sorry }
+          }}}},
 end
 
 theorem line_same_side_equiv (l : Line) : equivalence (@line_same_side Point Line og l) :=
@@ -110,7 +145,13 @@ instance [og : order_geometry Point Line] (l : Line) : has_coe  (outside_line_po
 theorem plane_separation (Point Line : Type*) [og : order_geometry Point Line] (l : Line) (A B : outside_line_points Point l): 
   ¬ A ≈ B ↔ :=
 begin
-  sorry
+  split,
+  { rw segment_intersect_line, 
+    intro h, 
+    cases h with P hP,
+    rcases hP with ⟨hP, hPl⟩,
+    sorry },
+  { sorry }
 end
 
 end order_geometry
