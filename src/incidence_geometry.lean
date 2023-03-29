@@ -25,6 +25,22 @@ def points_in_line {Point Line : Type*} [incidence_geometry Point Line] (A B : P
 def collinear {Point : Type*} (Line: Type*) [incidence_geometry Point Line] (A B C : Point) : Prop := 
   ∃ l : Line, A ~ l ∧ B ~ l ∧ C ~ l
 
+@[simp] lemma collinear_comm {Point : Type*} (Line: Type*) [incidence_geometry Point Line] (A B C : Point) : 
+  collinear Line A B C ↔ collinear Line B A C := 
+begin
+  split,
+  { intro h, cases h with l h, use l, tauto },
+  { intro h, cases h with l h, use l, tauto },
+end
+
+@[simp] lemma collinear_comm2 {Point : Type*} (Line: Type*) [incidence_geometry Point Line] (A B C : Point) : 
+  collinear Line A B C ↔ collinear Line C B A := 
+begin
+  split,
+  { intro h, cases h with l h, use l, tauto },
+  { intro h, cases h with l h, use l, tauto },
+end
+
 namespace push_neg
 lemma non_collinear {Point : Type*} (Line: Type*) [incidence_geometry Point Line] (A B C : Point) : 
   ¬ collinear Line A B C ↔  ∀ x : Line, (¬ A ~ x ∨ ¬ B ~ x ∨ ¬ C ~ x)
