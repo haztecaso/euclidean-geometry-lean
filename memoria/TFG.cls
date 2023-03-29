@@ -33,6 +33,22 @@
 
 \newcommand{\emptypage}{\newpage\null\thispagestyle{empty}\newpage}
 
+% Lean3 formatting
+\RequirePackage{amssymb}
+\RequirePackage{upgreek}
+\RequirePackage{listings}
+\RequirePackage{color}
+\definecolor{keywordcolor}{rgb}{0.7, 0.1, 0.1}   % red
+\definecolor{commentcolor}{rgb}{0.4, 0.4, 0.4}   % grey
+\definecolor{symbolcolor}{rgb}{0.0, 0.1, 0.6}    % blue
+\definecolor{sortcolor}{rgb}{0.1, 0.5, 0.1}      % green
+\definecolor{errorcolor}{rgb}{1, 0, 0}           % bright red
+\definecolor{stringcolor}{rgb}{0.5, 0.3, 0.2}    % brown
+
+\def\lstlanguagefiles{lstlean.tex}
+\lstset{language=lean}
+
+
 \RequirePackage{xcolor}
 \newcommand{\todo}[1]{\noindent\textcolor{red}{\textbf{Pendiente: }#1}}
 \newcommand{\redactar}[1]{\noindent\textcolor{blue}{\bfseries #1}}
