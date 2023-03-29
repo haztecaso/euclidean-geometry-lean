@@ -19,6 +19,26 @@ def outside_line_points (Point : Type*) {Line : Type*} [incidence_geometry Point
 
 instance (Point Line : Type*) [incidence_geometry Point Line] : has_coe Line (set Point) := { coe := line_points Point }
 
+lemma line_points_lift_eq (Point : Type*) {Line : Type*} [incidence_geometry Point Line] (l : Line) (A B : line_points Point l) : A = B ↔ (↑A : Point) = ↑B :=
+begin
+  exact subtype.ext_iff
+end
+
+lemma line_points_lift_ne (Point : Type*) {Line : Type*} [incidence_geometry Point Line] (l : Line) (A B : line_points Point l) : A ≠ B ↔ (↑A : Point) ≠ ↑B :=
+begin
+  rw [ne.def, line_points_lift_eq],
+end
+
+lemma outside_line_points_lift_eq (Point : Type*) {Line : Type*} [incidence_geometry Point Line] (l : Line) (A B : outside_line_points Point l) : A = B ↔ (↑A : Point) = ↑B :=
+begin
+  exact subtype.ext_iff
+end
+
+lemma outside_line_points_lift_ne (Point : Type*) {Line : Type*} [incidence_geometry Point Line] (l : Line) (A B : outside_line_points Point l) : A ≠ B ↔ (↑A : Point) ≠ ↑B :=
+begin
+  rw [ne.def, outside_line_points_lift_eq],
+end
+
 def points_in_line {Point Line : Type*} [incidence_geometry Point Line] (A B : Point) (l : Line) :=
   A ~ l ∧ B ~ l
 
