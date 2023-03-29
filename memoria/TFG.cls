@@ -12,7 +12,6 @@
 \RequirePackage[utf8]{inputenc}
 \RequirePackage[T1]{fontenc}
 \RequirePackage[spanish]{babel}
-\RequirePackage[left=2cm,right=2cm,top=2.5cm,bottom=2.5cm]{geometry}
 \RequirePackage{enumitem}
 \RequirePackage{array}
 \RequirePackage{cite}
@@ -33,6 +32,10 @@
 \RequirePackage{titlesec}
 
 \newcommand{\emptypage}{\newpage\null\thispagestyle{empty}\newpage}
+
+\RequirePackage{xcolor}
+\newcommand{\todo}[1]{\noindent\textcolor{red}{\textbf{Pendiente: }#1}}
+\newcommand{\redactar}[1]{\noindent\textcolor{blue}{\bfseries #1}}
 
 \renewcommand{\maketitle}{%
     \begin{titlepage}
