@@ -90,6 +90,63 @@ asistente de demostración son:
 
 En esta sección se introducen los elementos básicos del lenguaje para
 
+\subsection{Cómo enunciar proposiciones con teoría de tipos}
+
+Estado táctico: hipótesis y metas.
+
+\begin{description}
+    \item[Tipos y conjuntos] Analogías y diferencias
+    \item[hipótesis] Los resultados pueden depender de unas hipótesis,
+        enunciadas antes de los \lstinline{:}.
+    \item[El tipo Prop] 
+    \item[Implicación y funciones] 
+    \item[Doble implicación] 
+    \item[and y or como tipos inductivos] 
+    \item[Términos true y false] 
+    \item[La negación] 
+\end{description}
+
+\subsection{Tácticas básicas}
+
+\begin{description}[font=\sffamily\bfseries, leftmargin=1.5cm, style=nextline]
+    \item[refl] Sirve para demostrar metas de la forma \lstinline{A = A}. Por
+        ejemplo, podemos demostrar que todo punto es igual a si mismo:
+
+         \begin{lstlisting}
+lemma point_refl (A : Point) : A = A :=
+begin
+  refl
+end
+        \end{lstlisting}
+    \item[rw] Para reescribir
+    \item[exact] Si la meta es  \lstinline{⊢ X} y \lstinline{x} es un término de
+        tipo \lstinline{X} se puede usar la táctica \lstinline{exact x} para
+        cerrar la meta.
+    \item[apply] Demostrar hacia atrás
+    \item[intro] Introducir hipótesis
+        \begin{lstlisting}
+lemma equal_comm (A B : Point) : A = B → B = A :=
+begin
+  intro h,
+  sorry
+end
+        \end{lstlisting}
+        
+
+    \item[split] Dividir la meta
+    \item[left, right] Modificar la meta
+    \item[exfalso] Cambia la meta a false
+    \item[by_cases] Para dividir la demostración en casos.
+    \item[have] Demostrar resultados intermedios
+    \item[cases] Varios usos. Descomponer and, or o exists.
+        
+\end{description}
+
+\subsection{Tácticas de nivel alto}
+
+\begin{description}
+    \item[simp] Para demostrar igualdades
+\end{description}
 
 \newpage
 \section{La geometría de Hilbert}
