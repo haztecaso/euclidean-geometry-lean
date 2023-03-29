@@ -1,4 +1,4 @@
-\documentclass[11pt, spanish]{TFG}
+\documentclass[12pt, spanish]{TFG}
 
 \usepackage{lipsum}
 
@@ -14,14 +14,25 @@
 \emptypage
 
 % RESUMEN - ABSTRACT
+
 \begin{abstract}
-    \lipsum[3]
+
+  Este trabajo explora el uso del asistente de demostración \textit{Lean}, un
+  lenguaje de programación que implementa una teoría de tipos útil para
+  verificar formalmente demostraciones matemáticas, para formalizar enunciados 
+  y resultados de la axiomática de Hilbert de la geometría euclídea plana. Esta
+  teoría servirá de guía para introducir el uso del asistente y exponer cómo
+  puede ser utilizado para construir relaciones de equivalencia, modelos de
+  una teoría y demostrar la independencia entre axiomas.
+
 \end{abstract}
 
 \begin{abstract}[Abstract]
-    Traducción del resumen al inglés.
-    \lipsum[2]
+
+ Resumen traducido al inglés.
+
 \end{abstract}
+
 \newpage
 
 % ÍNDICE
@@ -33,6 +44,70 @@
 \addcontentsline{toc}{section}{Introducción}
 \section*{Introducción}
 
-\lipsum{1}
+Los asistentes de demostración nos permiten formalizar definiciones, enunciados
+de proposiciones y teoremas, demostraciones, y verficar estas definiciones.
+Formalizar matemáticas consiste en digitalizar enunciados y resultados
+escribiéndolos en un lenguaje de programación que garantiza, mediante una
+correspondencia entre una teoríá de tipos y la lógica, la validez de cada paso.
+
+Algunos beneficios de formalizar enunciados y resultados matemáticos mediante un
+asistente de demostración son:
+
+\begin{itemize} 
+
+  \item El proceso de formalización requiere explicitar todos los detalles de
+      las demostraciones. \redactar{Garantiza la comprensión.}
+
+  \item 
+
+\end{itemize}
+
+\subsection{Contenidos del trabajo}
+
+\begin{itemize}
+
+    \item Introducción a la formalización de enunciados y demostraciones
+        mediante el uso de tácticas
+
+    \item Tratamiento de distintos patrones de demostración comunes en la
+        geometría euclídea
+        \begin{itemize}
+            \item ¿Qué es un modelo?
+            \item ¿Cómo podemos trabajar con relaciones de equivalencia?
+            \item ¿Cómo demostramos independencia de axiomas?
+        \end{itemize}
+
+    \item Desarrollo y demostración de resultados. Se formalizan enunciados y
+        demostraciones de las primeras secciones de axiomas. Posteriormente se
+        plantea cómo se podría demostrar la independencia del axioma de las
+        paralelas y se formalizan los enunciados necesarios dejando pendientes
+        ciertas construcciones.
+
+\end{itemize}
+
+\newpage
+\section{Lean}
+
+En esta sección se introducen los elementos básicos del lenguaje para
+
+
+\newpage
+\section{La geometría de Hilbert}
+
+En esta sección se introduce la teoría de la geometría de
+Hilbert~\cite{hilbert1902grundlagenfoundations}.
+limitaremos al caso de la geometría plana. Introducción de los problemas de la
+formalización de Euclides en los Elementos.
+
+Se utilizan nociones y construcciones intuitivas, basadas en justificaciones
+mediante dibujos, pero no incluidas dentro de la axiomática.
+
+
+\newpage
+\section{Formalizando la geometría de Hilbert en Lean}
+
+\newpage
+\addcontentsline{toc}{section}{Referencias}
+\bibliography{referencias}
 
 \end{document}
