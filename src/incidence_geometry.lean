@@ -1,6 +1,20 @@
 import geometry.euclidean.basic
 import basic
 
+/-!
+# Axiomas de incidencia
+
+En este fichero se enuncian los axiomas de incidencia de la geometría euclídea
+plana y se definen entidades y demuestran resultados que dependen de estos axiomas.
+
+## Notaciones
+
+- Se utiliza la notación A ~l para la relación de incidencia entre puntos y rectas
+
+-/
+
+/-- Geometría de incidencia, clase que engloba los axiomas para la relación de
+ incidencia. -/
 class incidence_geometry (Point Line : Type*) :=
   (lies_on : Point → Line → Prop)
   (infix ` ~ ` : 50 := lies_on)
@@ -12,8 +26,10 @@ namespace incidence_geometry
 
 infix ` ~ ` : 50 := lies_on
 
+/-- Conjunto de puntos de una línea. -/
 def line_points (Point : Type*) {Line : Type*} [incidence_geometry Point Line] (l: Line) := { A : Point | A ~ l }
 
+/-- Conjunto de puntos externos a una línea. -/
 def outside_line_points (Point : Type*) {Line : Type*} [incidence_geometry Point Line] (l: Line) := { A : Point | ¬ A ~ l }
 
 instance (Point Line : Type*) [incidence_geometry Point Line] : has_coe Line (set Point) := { coe := line_points Point }
@@ -38,9 +54,11 @@ begin
   rw [ne.def, outside_line_points_lift_eq],
 end
 
+/-- Proposición que determina si dos puntos están en una línea dada. -/
 def points_in_line {Point Line : Type*} [incidence_geometry Point Line] (A B : Point) (l : Line) :=
   A ~ l ∧ B ~ l
 
+/-- Relación de colinearidad. Determina si tres puntos están en una misma línea. -/
 def collinear {Point : Type*} (Line: Type*) [incidence_geometry Point Line] (A B C : Point) : Prop := 
   ∃ l : Line, A ~ l ∧ B ~ l ∧ C ~ l
 
@@ -77,17 +95,16 @@ lemma non_collinear {Point : Type*} (Line: Type*) [incidence_geometry Point Line
 end 
 end push_neg
 
+/-- Determina si A es un punto común de dos líneas dadas -/
 def is_common_point {Point Line : Type*} [incidence_geometry Point Line] (A : Point) (l m : Line) := 
   A ~ l ∧ A ~ m 
 
+/-- Determina si dos líneas tienen un punto en común -/
 def have_common_point (Point : Type*) {Line : Type*} [incidence_geometry Point Line]
   (l m : Line) := 
   ∃ A : Point, is_common_point A l m
 
-/--
-Given two different points get the line that passes through them
--/
-
+/-- Función que dados dos puntos distintos devuelve la línea que pasa por ellos. -/
 noncomputable def line {Point : Type*} (Line : Type*) [incidence_geometry Point Line] 
 {A B : Point} (h : A ≠ B): 
   { l : Line // A ~ l ∧  B ~ l } := 
@@ -99,8 +116,9 @@ begin
   exact classical.indefinite_description P hlP,
 end
 
-/--
-Given two different points get the unique line that passes through them
+/-- 
+Función que dados dos puntos distintos devuelve la línea que pasa por ellos,
+ con la propiedad de unicidad. 
 -/
 noncomputable def line_unique {Point : Type*} (Line : Type*) [incidence_geometry Point Line] 
 {A B : Point} (h : A ≠ B): 
@@ -113,9 +131,7 @@ begin
   exact classical.indefinite_description P hlP,
 end
 
-/-- 
-Two distinct lines can have at most one point in common.
--/
+/-- Dos líneas distintas tienen como mucho un punto en común. -/
 lemma disctinct_lines_one_common_point {Point Line : Type*} [ig : incidence_geometry Point Line] :
   ∀ l m : Line, l ≠ m → (∃! A : Point, is_common_point A l m) ∨ (¬ have_common_point Point l m) := 
 begin
@@ -133,9 +149,7 @@ begin
   rw ← unique_of_exists_unique (ig.I1 hAB) hABlm.1 hABlm.2,
 end
 
-/--
-There exist three disctinct lines not through any common point
--/
+/-- Existen tres líneas distintas que no pasan por ningún punto común. -/
 lemma disctinct_lines_not_concurrent {Point Line : Type*} [ig : incidence_geometry Point Line] :
   ∃ l m n: Line, (l ≠ m ∧ l ≠ n ∧ m ≠ n) ∧
   ¬ ∃ P : Point, is_common_point P l m ∧ is_common_point P l n ∧ is_common_point P m n
@@ -188,9 +202,7 @@ begin
   exact hABAC h
 end
 
-/--
-For every line there is at least one point not lying on it.
--/
+/-- Para cada línea existe un punto externo a ella. -/
 lemma line_external_point {Point Line : Type*} [ig : incidence_geometry Point Line] :
   ∀ l : Line, ∃ A : Point, ¬ A ~ l :=
 begin
@@ -206,9 +218,7 @@ begin
   exact h1 hCl
 end
 
-/-- 
-For every point there is at least one line not passing through it.
--/
+/-- Para caada punto existe una línea que no pasa por él. -/
 lemma point_external_line {Point Line : Type*} [ig : incidence_geometry Point Line]: 
   ∀ A: Point, ∃ l: Line, ¬ A ~ l :=
 begin
@@ -225,9 +235,7 @@ begin
   { use n },
 end
 
-/--
-For every point there exist at least two distinct lines that pass through it.
--/
+/-- Para cada punto existen al menos dos líneas que pasan por él. -/
 lemma point_has_two_lines {Point Line : Type*} [ig: incidence_geometry Point Line]: 
   ∀ A: Point, ∃ l m: Line, l ≠ m ∧ A ~ l ∧ A ~ m :=
 begin
