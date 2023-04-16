@@ -1,0 +1,263 @@
+\documentclass[12pt, spanish]{article}
+\usepackage[none]{hyphenat}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+
+\usepackage{geometry}
+\def \margin {20mm}
+\geometry{
+	a4paper,
+    left=\margin,
+	right=\margin,
+	top=\margin,
+	bottom=\margin
+}
+
+\usepackage{hyperref}
+
+\usepackage{enumitem}
+% \setenumerate{label=(\alph*),leftmargin=0.6cm}
+% \setitemize{label=---,leftmargin=0.6cm}
+
+\usepackage{titlesec}
+\titleformat{\section}{\huge}{\thesection}{.3em}{}
+\titleformat{\subsection}{\Large}{}{0pt}{}
+\titleformat{\subsubsection}{\large}{}{0pt}{}
+\renewcommand{\thesection}{\Roman{section}}
+
+\usepackage{amssymb}
+\usepackage{mathtools}
+
+% Theorems
+\usepackage{amsthm}
+\usepackage{thmtools}
+
+
+\newtheorem*{defin}{Definición}
+
+\def\theaxsection{}
+\newcommand{\setaxsection}[1]{\def\theaxsection{#1}\setcounter{ax}{0}}
+
+\newtheoremstyle{axstyle}{\topsep}{\topsep}{\itshape}{0pt}{\bfseries}{.}{ }
+    {\thmname{#1} \theaxsection\thmnumber{#2}\textnormal{\thmnote{ (#3)}}}
+\theoremstyle{axstyle}
+\newtheorem{ax}{Axioma}
+\newtheoremstyle{axbstyle}{\topsep}{\topsep}{\itshape}{0pt}{\bfseries}{.}{ }
+    {\thmname{#1}\thmnote{ #3}}
+\theoremstyle{axbstyle}
+\newtheorem{axb}{Axioma}
+
+% No indentation
+\setlength\parindent{0pt}
+
+\let\emptyset\varnothing
+
+\renewcommand{\geq}{\geqslant}
+\renewcommand{\leq}{\leqslant}
+
+\DeclareMathSymbol{*}{\mathbin}{symbols}{"01}
+
+\begin{document}
+\fontfamily{cmss}\selectfont
+
+{ \Large\textbf{Axiomas de Hilbert}\hfill Adrián Lattes} \noindent\rule{17cm}{1pt}
+\vspace*{1em}
+
+
+En este documento resumiremos los axiomas y principales definiciones de la
+axiomatización de Hilbert de la geometría euclídea, considerando el caso
+restringido de la geometría plana.
+
+\section{Nociones primitivas}
+
+El sistema axiomático de Hilbert parte de considerar cinco nociones primitivas:
+dos términos primitivos (puntos y líneas) y cuatro relaciones primitivas (orden,
+pertenencia, congruencia entre segmentos y congruencia entre ángulos).
+
+\begin{itemize}
+    \item Denotaremos los \textit{puntos} con letras mayúsculas $A,B,C,\dots$
+    \item Denotaremos las \textit{líneas} con letras minúsculas $a,b,c,\dots$
+    \item La relación de \textit{incidencia} es una relación binaria entre
+        puntos y rectas. Dado un punto $A$ y una recta $l$ escribiremos $A\sim
+        l$ para denotar que $A$ y $l$ están relacionados mediante la relación de
+        incidencia.
+    \item La relación de \textit{orden} es una relacion ternaria entre puntos.
+        Para tres puntos $A, B, C$ escribiremos $A * B * C$ para indicar que 
+        están relacionados mediante la relación de orden.
+    \item La relación de \textit{congruencia entre segmentos} es una relación
+        binaria entre \textit{segmentos} (noción definida más adelante).
+        Denotaremos esta relacion con el símbolo $\cong$.
+    \item La relación de \textit{congruencia entre ángulos} es una relación
+        binaria entre \textit{ángulos} (noción definida más adelante). Para
+        denotar esta relación usaremos el mismo símbolo que para la congruencia
+        entre segmentos, $\cong$. Por el contexto quedará claro a que relación
+        nos referimos.
+\end{itemize}
+
+\section{Axiomas}
+
+\subsection{Axiomas de incidencia}
+\setaxsection{I}
+
+\begin{ax}\label{I1}
+    Para cada par de puntos distintos $A, B$ existe una única recta que los
+    contiene. Denotraremos esta recta por $AB$.
+\end{ax}
+
+\begin{ax}\label{I2}
+    Cada línea contiene al menos dos puntos distintos.
+\end{ax}
+
+\begin{ax}\label{I3}
+   Existen tres puntos no colineares. Es decir, existen $A$, $B$ y $C$ tales que
+   $AB\neq BC$.
+\end{ax}
+
+\begin{defin}
+  Decimos que tres puntos distintos son \textbf{colineares} si existe una recta 
+  que los contiene.
+\end{defin}
+
+\subsection{Axiomas de orden}
+\setaxsection{B}
+
+\begin{ax}\label{B1}
+  Si un punto $B$ está entre $A$ y $C$ ($A * B * C$) entonces $A, B, C$ son
+  distintos, están en una misma línea y $C * B * A$.
+\end{ax}
+
+\begin{ax}\label{B2}
+  Para cada dos puntos distintos $A,B$ existe un punto $C$ tal que $A * B * C$.
+\end{ax}
+
+\begin{ax}\label{B3}
+  Dados tres puntos distintos en una línea, uno y sólo uno de ellos está entre
+  los otros dos.
+\end{ax}
+
+\begin{ax}[Pasch]\label{B4} 
+  Sean $A, B C$ tres puntos no colineares y $l$ una línea que no contenga a 
+  ninguno de estos puntos. Si $l$ contiene un punto $D$ que está entre $A$ y $B$ 
+  ($A * D * B$) entonces también debe contener un punto entre $A$ y $C$ o un
+  punto entre $B$ y $C$.
+\end{ax}
+
+\begin{defin}
+  Dados dos puntos distintos $A, B$ definimos el \textbf{segmento}
+  $\overline{AB}$ como el conjunto de puntos que contiene a $A, B$ y a todos los
+  puntos que están entre ellos. Diremos que $A$ y $B$ son los extremos del
+  segmento $AB$.
+\end{defin}
+
+\begin{defin}
+  Diremos que dos puntos \textbf{están del mismo lado del plano} respecto de una
+  recta si el segmento que los une no contiene ningún punto de la recta.
+
+  Diremos que dos puntos están del mismo \textbf{lado de una recta} respecto de
+  un punto si el segmento que los une no contiene a dicho punto.
+\end{defin}
+
+\begin{defin}
+  Dados dos puntos distintos $A, B$, definimos el \textbf{rayo}
+  $\overrightarrow{AB}$ como el conjunto que contiene a $A$ y a todos los puntos
+  de la línea $AB$ tales que están del mismo lado de $A$ que $B$. Dado un rayo
+  $\overrightarrow{AB}$ llamaremos \textbf{vértice} del rayo al punto $A$.
+\end{defin}
+
+\begin{defin}
+  Un \textbf{ángulo} es la unión de dos rayos $\overrightarrow{AB}$ y
+  $\overrightarrow{AC}$ con el mismo vértice y no contenidos en una misma recta.
+  Denotaremos dicho ángulo por $\angle ABC$.
+\end{defin}
+
+\subsection{Axiomas de congruencia}
+\subsubsection{Para segmentos}
+\setaxsection{C}
+
+\begin{ax}\label{C1}
+  Dados un segmento $\overline{AB}$ y un rayo $r$ con vértice $C$, existe un
+  único punto $D$ en el rayo $r$ tal que $\overline{AB}\cong\overline{CD}$.
+\end{ax}
+
+\begin{ax}\label{C2}
+  Si $\overline{AB}\cong\overline{CD}$ y $\overline{AB}\cong\overline{EF}$
+  entonces $\overline{CD}\cong\overline{EF}$. Además cada segmento es congruente
+  con sí mismo.
+\end{ax}
+
+\begin{ax}[Suma]\label{C3}
+  Dados tres puntos $A, B, C$ en una línea y tales que $A * B * C$ y otros tres
+  puntos $D, E, F$ en una línea tales que $D * E * F$, si
+  $\overline{AB}\cong\overline{DE}$ y $\overline{BC}\cong\overline{EF}$ entonces
+  $\overline{AC}\cong\overline{DF}$.
+\end{ax}
+
+% \begin{defin}
+%   Dados dos segmentos $\overline{AB}$, $\overline{CD}$ y un orden $A,B$ entre
+%   los extremos del segmento $\overline{AB}$
+% \end{defin}
+
+
+\subsubsection{Para ángulos}
+
+\begin{ax}\label{C4}
+  Dados un ángulo $\angle ABC$ y un rayo $\overrightarrow{DF}$, fijado un lado
+  del plano de la línea $DF$, existe un único rayo $\overrightarrow{DE}$ en
+  dicho lado tal que $\angle BAC\cong\angle EDF$.
+
+\end{ax}
+
+\begin{ax}\label{C5}
+  Para cada tres ángulos $\alpha, \beta, \gamma$, si $\alpha\cong\beta$ y
+  $\alpha\cong\gamma$ entonces $\beta\cong\gamma$. Además cada ángulo es
+  congruente con sí mismo.
+\end{ax}
+
+\begin{ax}[SAS]\label{C6}
+  Sean tres triángulos $ABC$ y $DEF$ tales que
+  $\overline{AB}\cong\overline{DE}$, $\overline{AC}\cong\overline{DF}$ y $\angle
+  BAC\cong\angle EDF$. Entonces los dos triángulos son congruentes, es decir
+  $\overline{BC}\cong\overline{EF}$, $\angle ABC\cong\angle DEF$ y $\angle
+  ACB\cong\angle DFE$.
+\end{ax}
+
+\subsection{Planos de Hilbert}
+
+\begin{defin}
+    Un \textbf{plano de Hilbert} es un modelo de la teoría formada por las
+    anteriores nociones primitivas y axiomas de incidencia, orden y congruencia.
+\end{defin}
+
+En un plano de Hilbert se pueden recuperar bastantes de los resultados de la
+geometría plana de los elementos de Euclides, pero no todos. 
+
+Por ejemplo no se puede demostrar la primera proposición del libro primero, en
+la que se enuncia la construcción de un triángulo equilátero dado uno de sus
+lados. Para esto será necesario introducir otro axioma.
+
+\section{Otros axiomas}
+
+\begin{defin}
+  Dados dos puntos distintos $O$ y $A$ se define el \textbf{círculo} $\Gamma$ de centro
+  $O$ y radio $\overline{OA}$ como el conjunto de los puntos $B$ tales que
+  $\overline{OA}\cong\overline{OB}$. El punto $O$ se llama \textbf{centro} del 
+  círculo y el segmento $\overline{OA}$ es un \textbf{radio} del círculo.
+
+  Se dice que un punto $C$ está en el \textbf{interior} de un círculo $\Gamma$
+  si $B=O$ o $\overline{OB}<\overline{OA}$. Si $\overline{OA}<\overline{OC}$ el
+  punto $C$ es \textbf{exterior} a $\Gamma$.
+\end{defin}
+
+\begin{axb}[E]\label{E}
+  Dados dos círculos $\Gamma, \Delta$, si $\Delta$ contiene al menos un punto en
+  el interior de $\Gamma$ y otro en el exterior, entonces $\Gamma$ y $\Delta$ se
+  intersecan.
+\end{axb}
+
+\begin{axb}[P]\label{P}
+  Para cada punto $P$ y línea $l$ existe como mucho una línea paralela a $P$ y
+  que pase por $P$.
+\end{axb}
+
+\end{document}
