@@ -70,6 +70,32 @@ TODO: Usar instancia de has_mem
 def segment_intersect_line (S : Segment Point) (l : Line) := 
 ∃ P : Point, (P = S.A ∨ P = S.B ∨ (S.A * P * S.B)) ∧ P ~ l
 
+variable (Line)
+
+/-- 
+Hilbert's theorem 3
+Para dos puntos distintos existe un tercero entre ellos
+-/
+lemma point_between_given {A C : Point} (hAC : A ≠ C): ∃ B : Point, A * B * C := 
+begin
+  let AC := line Line hAC,
+  have hE : ∃ E : Point, ¬ E ~ AC.val, { exact line_external_point AC.val },
+  cases hE with E hE,
+  have hAE : A ≠ E, { sorry }, 
+  have hF : ∃ F : Point, A * E * F, { exact og.B2 hAE }, 
+  cases hF with F hF,
+  have hFC : F ≠ C, { sorry }, 
+  have hG : ∃ G : Point, F * C * G, { exact og.B2 hFC }, 
+  cases hG with G hG,
+  have hGE : G ≠ E, { sorry }, 
+  let GE := line Line hGE,
+  have hB : segment_intersect_line
+
+  sorry
+end
+
+variable {Line}
+
 /--
 Relación de estar del mismo lado del plano respecto de una línea.
 Dos puntos externos a una línea están del mismo lado de la línea si el segmento que los 

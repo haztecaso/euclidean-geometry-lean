@@ -62,6 +62,7 @@ def points_in_line {Point Line : Type*} [incidence_geometry Point Line] (A B : P
 def collinear {Point : Type*} (Line: Type*) [incidence_geometry Point Line] (A B C : Point) : Prop := 
   ∃ l : Line, A ~ l ∧ B ~ l ∧ C ~ l
 
+/-- La relación de colinearidad es conmutativa en los dos primeros argumentos -/
 @[simp] lemma collinear_comm {Point : Type*} (Line: Type*) [incidence_geometry Point Line] (A B C : Point) : 
   collinear Line A B C ↔ collinear Line B A C := 
 begin
@@ -70,6 +71,7 @@ begin
   { intro h, cases h with l h, use l, tauto },
 end
 
+/-- La relación de colinearidad es conmutativa en el primer y tercer argumento -/
 @[simp] lemma collinear_comm2 {Point : Type*} (Line: Type*) [incidence_geometry Point Line] (A B C : Point) : 
   collinear Line A B C ↔ collinear Line C B A := 
 begin
@@ -116,6 +118,19 @@ begin
   exact classical.indefinite_description P hlP,
 end
 
+/-- Un punto externo a la línea determinada por dos puntos es distinto de estos dos puntos. -/
+lemma line_external_ne {Point : Type*} (Line : Type*) [incidence_geometry Point Line] 
+  {A B C: Point} (hAB : A ≠ B) (hC : ¬ C ~ (line Line hAB).val): A ≠ C ∧ B ≠ C :=
+begin
+let AB := line Line hAB,
+split,
+{ by_contra h,
+  have hC : C ~ AB.val,
+  { sorry },
+  sorry },
+{ sorry },
+end
+
 /-- 
 Función que dados dos puntos distintos devuelve la línea que pasa por ellos,
  con la propiedad de unicidad. 
@@ -136,18 +151,31 @@ lemma disctinct_lines_one_common_point {Point Line : Type*} [ig : incidence_geom
   ∀ l m : Line, l ≠ m → (∃! A : Point, is_common_point A l m) ∨ (¬ have_common_point Point l m) := 
 begin
   intros l m,
-  contrapose!,
+  contrapose,
+  push_neg,
   rintro ⟨not_unique, hlm⟩,
-  rw [exists_unique, push_neg.not_exists_eq] at not_unique,
+  rw exists_unique at not_unique,
   push_neg at not_unique,
-  choose A hA using hlm,
+  cases hlm with A hA,
   rcases not_unique A hA with ⟨B, ⟨hB, hAB⟩⟩,
   rw ne_comm at hAB,
-  let hABlm := and.intro hA hB,
-  have hABlm : (A ~ l ∧ B ~ l) ∧ A ~ m ∧ B ~ m,
-  { exact ⟨⟨hA.left,hB.left⟩,⟨hA.right,hB.right⟩⟩ },
-  rw ← unique_of_exists_unique (ig.I1 hAB) hABlm.1 hABlm.2,
+  exact unique_of_exists_unique (ig.I1 hAB) ⟨hA.left,hB.left⟩ ⟨hA.right,hB.right⟩,
 end
+
+lemma non_collinear_ne_lines {Point : Type*} (Line : Type*) [ig: incidence_geometry Point Line] (A B C: Point) (hAB : A ≠ B) (hAC : A ≠ C) (hBC : B ≠ C):
+ ¬ collinear Line A B C → (line Line hAB).val ≠ (line Line hAC).val
+ := 
+ begin
+  intro h_noncollinear,
+  rw push_neg.non_collinear at h_noncollinear,
+  by_contra h,
+  specialize h_noncollinear (line Line hAB).val,
+  rcases h_noncollinear with (h1 | h2 | h3),
+  { exact h1 (line Line hAB).property.left }, 
+  { exact h2 (line Line hAB).property.right }, 
+  { rw h at h3, exact h3 (line Line hAC).property.right },
+ end
+
 
 /-- Existen tres líneas distintas que no pasan por ningún punto común. -/
 lemma disctinct_lines_not_concurrent {Point Line : Type*} [ig : incidence_geometry Point Line] :
@@ -157,17 +185,14 @@ lemma disctinct_lines_not_concurrent {Point Line : Type*} [ig : incidence_geomet
 begin
   rcases ig.I3 with ⟨A, B, C, ⟨⟨hAB, hAC, hBC⟩, h_noncollinear⟩⟩,
   rw [← collinear, push_neg.non_collinear] at h_noncollinear,
-  have AB := line Line hAB,
-  have AC := line Line hAC,
-  have BC := line Line hBC,
+  let AB := line Line hAB,
+  let AC := line Line hAC,
+  let BC := line Line hBC,
   use [AB, AC, BC],
   have hABAC : AB.val ≠ AC.val, 
-  { by_contra h, 
-    specialize h_noncollinear AB.val,
-    rcases h_noncollinear with (h1 | h2 | h3),
-    { exact h1 AB.property.left },
-    { exact h2 AB.property.right },
-    { rw h at h3, exact h3 AC.property.right }
+  { 
+    
+    sorry
   }, 
   have hABBC : AB.val ≠ BC.val,
   { by_contra h,
