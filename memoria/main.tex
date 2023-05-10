@@ -1,4 +1,4 @@
-\documentclass[12pt, spanish]{TFG}
+\documentclass[10pt, spanish]{TFG}
 
 \usepackage{lipsum}
 
@@ -10,161 +10,22 @@
 \begin{document}
 
 % PORTADA
-\maketitle
-\emptypage
+% \maketitle
+% \emptypage
 
 % RESUMEN - ABSTRACT
-
-\begin{abstract}
-
-  Este trabajo explora el uso del asistente de demostración \textit{Lean}, un
-  lenguaje de programación que implementa una teoría de tipos útil para
-  verificar formalmente demostraciones matemáticas, para formalizar enunciados 
-  y resultados de la axiomática de Hilbert de la geometría euclídea plana. Esta
-  teoría servirá de guía para introducir el uso del asistente y exponer cómo
-  puede ser utilizado para construir relaciones de equivalencia, modelos de
-  una teoría y demostrar la independencia entre axiomas.
-
-\end{abstract}
-
-\begin{abstract}[Abstract]
-
- Resumen traducido al inglés.
-
-\end{abstract}
-
-\newpage
+% \input{abstract.tex}
 
 % ÍNDICE
 % \tableofcontents
 % \newpage
 
-% CONTENIDO
+% \input{content.tex}
 
-\addcontentsline{toc}{section}{Introducción}
-\section*{Introducción}
+\input{demo1.tex}
 
-Los asistentes de demostración nos permiten formalizar definiciones, enunciados
-de proposiciones y teoremas, demostraciones, y verficar estas definiciones.
-Formalizar matemáticas consiste en digitalizar enunciados y resultados
-escribiéndolos en un lenguaje de programación que garantiza, mediante una
-correspondencia entre una teoríá de tipos y la lógica, la validez de cada paso.
-
-Algunos beneficios de formalizar enunciados y resultados matemáticos mediante un
-asistente de demostración son:
-
-\begin{itemize} 
-
-  \item El proceso de formalización requiere explicitar todos los detalles de
-      las demostraciones. \redactar{Garantiza la comprensión.}
-
-  \item 
-
-\end{itemize}
-
-\subsection{Contenidos del trabajo}
-
-\begin{itemize}
-
-    \item Introducción a la formalización de enunciados y demostraciones
-        mediante el uso de tácticas
-
-    \item Tratamiento de distintos patrones de demostración comunes en la
-        geometría euclídea
-        \begin{itemize}
-            \item ¿Qué es un modelo?
-            \item ¿Cómo podemos trabajar con relaciones de equivalencia?
-            \item ¿Cómo demostramos independencia de axiomas?
-        \end{itemize}
-
-    \item Desarrollo y demostración de resultados. Se formalizan enunciados y
-        demostraciones de las primeras secciones de axiomas. Posteriormente se
-        plantea cómo se podría demostrar la independencia del axioma de las
-        paralelas y se formalizan los enunciados necesarios dejando pendientes
-        ciertas construcciones.
-
-\end{itemize}
-
-\newpage
-\section{Lean}
-
-En esta sección se introducen los elementos básicos del lenguaje para
-
-\subsection{Cómo enunciar proposiciones con teoría de tipos}
-
-Estado táctico: hipótesis y metas.
-
-\begin{description}
-    \item[Tipos y conjuntos] Analogías y diferencias
-    \item[hipótesis] Los resultados pueden depender de unas hipótesis,
-        enunciadas antes de los \lstinline{:}.
-    \item[El tipo Prop] 
-    \item[Implicación y funciones] 
-    \item[Doble implicación] 
-    \item[and y or como tipos inductivos] 
-    \item[Términos true y false] 
-    \item[La negación] 
-\end{description}
-
-\subsection{Tácticas básicas}
-
-\begin{description}[font=\sffamily\bfseries, leftmargin=1.5cm, style=nextline]
-    \item[refl] Sirve para demostrar metas de la forma \lstinline{A = A}. Por
-        ejemplo, podemos demostrar que todo punto es igual a si mismo:
-
-         \begin{lstlisting}
-lemma point_refl (A : Point) : A = A :=
-begin
-  refl
-end
-        \end{lstlisting}
-    \item[rw] Para reescribir
-    \item[exact] Si la meta es  \lstinline{⊢ X} y \lstinline{x} es un término de
-        tipo \lstinline{X} se puede usar la táctica \lstinline{exact x} para
-        cerrar la meta.
-    \item[apply] Demostrar hacia atrás
-    \item[intro] Introducir hipótesis
-        \begin{lstlisting}
-lemma equal_comm (A B : Point) : A = B → B = A :=
-begin
-  intro h,
-  sorry
-end
-        \end{lstlisting}
-        
-
-    \item[split] Dividir la meta
-    \item[left, right] Modificar la meta
-    \item[exfalso] Cambia la meta a false
-    \item[by_cases] Para dividir la demostración en casos.
-    \item[have] Demostrar resultados intermedios
-    \item[cases] Varios usos. Descomponer and, or o exists.
-        
-\end{description}
-
-\subsection{Tácticas de nivel alto}
-
-\begin{description}
-    \item[simp] Para demostrar igualdades
-\end{description}
-
-\newpage
-\section{La geometría de Hilbert}
-
-En esta sección se introduce la teoría de la geometría de
-Hilbert~\cite{hilbert1902grundlagenfoundations}.
-limitaremos al caso de la geometría plana. Introducción de los problemas de la
-formalización de Euclides en los Elementos.
-
-Se utilizan nociones y construcciones intuitivas, basadas en justificaciones
-mediante dibujos, pero no incluidas dentro de la axiomática.
-
-
-\newpage
-\section{Formalizando la geometría de Hilbert en Lean}
-
-\newpage
-\addcontentsline{toc}{section}{Referencias}
-\bibliography{referencias}
+% \newpage
+% \addcontentsline{toc}{section}{Referencias}
+% \bibliography{referencias}
 
 \end{document}

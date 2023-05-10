@@ -35,6 +35,7 @@
 
 % Lean3 formatting
 \RequirePackage{amssymb}
+\RequirePackage{amsthm}
 \RequirePackage{upgreek}
 \RequirePackage{listings}
 \RequirePackage{color}
@@ -45,8 +46,24 @@
 \definecolor{errorcolor}{rgb}{1, 0, 0}           % bright red
 \definecolor{stringcolor}{rgb}{0.5, 0.3, 0.2}    % brown
 
+\RequirePackage[margin=2.5cm]{geometry}
+
 \def\lstlanguagefiles{lstlean.tex}
 \lstset{language=lean}
+
+\newtheorem{prop}{Proposición}
+
+\def\theaxsection{}
+\newcommand{\setaxsection}[1]{\def\theaxsection{#1}\setcounter{ax}{0}}
+
+\newtheoremstyle{axstyle}{\topsep}{\topsep}{\itshape}{0pt}{\bfseries}{.}{ }
+    {\thmname{#1} \theaxsection\thmnumber{#2}\textnormal{\thmnote{ (#3)}}}
+\theoremstyle{axstyle}
+\newtheorem{ax}{Axioma}
+\newtheoremstyle{axbstyle}{\topsep}{\topsep}{\itshape}{0pt}{\bfseries}{.}{ }
+    {\thmname{#1}\thmnote{ #3}}
+\theoremstyle{axbstyle}
+\newtheorem{axb}{Axioma}
 
 
 \RequirePackage{xcolor}
