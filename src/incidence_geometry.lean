@@ -24,6 +24,7 @@ class incidence_geometry (Point Line : Type*) :=
 
 namespace incidence_geometry
 
+
 infix ` ~ ` : 50 := lies_on
 
 /-- Conjunto de puntos de una línea. -/
