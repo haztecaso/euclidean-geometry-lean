@@ -164,19 +164,32 @@ begin
 end
 
 lemma non_collinear_ne_lines {Point : Type*} (Line : Type*) [ig: incidence_geometry Point Line] (A B C: Point) (hAB : A ≠ B) (hAC : A ≠ C) (hBC : B ≠ C):
- ¬ collinear Line A B C → (line Line hAB).val ≠ (line Line hAC).val
+ ¬ collinear Line A B C → (line Line hAB).val ≠ (line Line hAC).val ∧ (line Line hAB).val ≠ (line Line hBC).val ∧ (line Line hAC).val ≠ (line Line hBC).val
  := 
  begin
   intro h_noncollinear,
   rw push_neg.non_collinear at h_noncollinear,
   by_contra h,
-  specialize h_noncollinear (line Line hAB).val,
-  rcases h_noncollinear with (h1 | h2 | h3),
-  { exact h1 (line Line hAB).property.left }, 
-  { exact h2 (line Line hAB).property.right }, 
-  { rw h at h3, exact h3 (line Line hAC).property.right },
+  rw [push_neg.not_and_distrib_eq, push_neg.not_and_distrib_eq] at h,
+  push_neg at h,
+  let AB := line Line hAB,
+  let AC := line Line hAC,
+  let BC := line Line hBC,
+  rcases h with (h | h | h), 
+  { rcases h_noncollinear (line Line hAB).val with (hA | hB | hC),
+    { exact hA AB.prop.left },
+    { exact hB AB.prop.right },
+    { rw h at hC, exact hC AC.prop.right }
+    },
+  { rcases h_noncollinear AB.val with (hA | hB | hC),
+    { exact hA AB.prop.left },
+    { exact hB AB.prop.right },
+    { rw h at hC, exact hC BC.prop.right }},
+  { rcases h_noncollinear AC.val with (hA | hB | hC),
+    { exact hA AC.prop.left },
+    { rw h at hB, exact hB BC.prop.left },
+    { exact hC AC.prop.right }},
  end
-
 
 /-- Existen tres líneas distintas que no pasan por ningún punto común. -/
 lemma disctinct_lines_not_concurrent {Point Line : Type*} [ig : incidence_geometry Point Line] :
@@ -185,47 +198,23 @@ lemma disctinct_lines_not_concurrent {Point Line : Type*} [ig : incidence_geomet
   :=
 begin
   rcases ig.I3 with ⟨A, B, C, ⟨⟨hAB, hAC, hBC⟩, h_noncollinear⟩⟩,
-  rw [← collinear, push_neg.non_collinear] at h_noncollinear,
   let AB := line Line hAB,
   let AC := line Line hAC,
   let BC := line Line hBC,
   use [AB, AC, BC],
-  have hABAC : AB.val ≠ AC.val, 
-  { 
-    
-    sorry
-  }, 
-  have hABBC : AB.val ≠ BC.val,
-  { by_contra h,
-    specialize h_noncollinear AB.val,
-    rcases h_noncollinear with (h1 | h2 | h3),
-    { exact h1 AB.property.left },
-    { exact h2 AB.property.right },
-    { rw h at h3, exact h3 BC.property.right }},
-  have hACBC : AC.val ≠ BC.val,
-  { by_contra h,
-    specialize h_noncollinear AC.val,
-    rcases h_noncollinear with (h1 | h2 | h3),
-    { exact h1 AC.property.left },
-    { rw h at h2, exact h2 BC.property.left },
-    { exact h3 AC.property.right }},
-  refine ⟨⟨hABAC, hABBC, hACBC⟩, _⟩, 
+  let hABC := non_collinear_ne_lines Line A B C hAB hAC hBC h_noncollinear,
+  refine ⟨hABC, _⟩, 
   by_contra h,
   cases h with P hP,
   repeat {rw is_common_point at hP},
   rcases hP with ⟨⟨hPAB, hPAC⟩, ⟨-, hPBC⟩, -⟩,
-  have h : AB.val = AC.val,
-  { by_cases hAP : A = P,
-    { sorry },
-    { let AP := line_unique Line hAP, 
-      let hAP1 := AP.property.right,
-      specialize hAP1 AB.val ⟨AB.property.1, hPAB⟩,
-      let hAP2 := AP.property.right,
-      specialize hAP2 AC.val ⟨AC.property.1, hPAC⟩,
-      rw [hAP1, hAP2],
-      },
-    },
-  exact hABAC h
+  have hAP : P ≠ A, 
+  { by_contra h,
+    rw h at hPBC,
+    push_neg at h_noncollinear,
+    exact h_noncollinear BC hPBC BC.prop.left BC.prop.right,
+  },
+  exact hABC.left (unique_of_exists_unique (ig.I1 hAP) ⟨hPAB, AB.prop.left⟩ ⟨hPAC, AC.prop.left⟩),
 end
 
 /-- Para cada línea existe un punto externo a ella. -/
