@@ -28,18 +28,32 @@ def P (i : incidence_geometry Point Line) : Prop :=
 inductive myPoint
   | A | B | C | D | E
 
-def myLine : set (set myPoint) := {{myPoint.A, myPoint.B}, {myPoint.B}}
+-- def myLine : set (set myPoint) := {{myPoint.A, myPoint.B}, {myPoint.B}}
 
-constant l : myLine
+-- structure myLine (line : set myPoint) :=
+--   (h : Prop := line.)
 
-#check l
-
-def lies_on (P : myPoint) (l : set myPoint) : Prop := P ∈ l
-
+-- otra idea es considerar una biyeccion con bool
+def myLine := { l : finset myPoint // l.card = 2 }
 
 
-def myIncidenceGeometry : incidence_geometry myPoint (set myPoint) := { 
-  lies_on := λ P l, if l.card = 2 then P ∈ l else false,
+
+-- def ej : myLine := {
+--   val := begin
+--     let e := finset.empty,
+--     let a := finset.cons e myPoint.A,
+
+--   end,
+--   property := _ 
+-- }
+
+def lies_on (P : myPoint) (l : myLine) : Prop := P ∈ l.val
+
+
+
+
+def myIncidenceGeometry : incidence_geometry myPoint (myLine) := { 
+  lies_on := λ P l, P ∈ l.val,
   I1 := begin
     intros A B hAB,
     let l : myLine := ⟨{A, B}, sorry⟩,
