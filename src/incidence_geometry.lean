@@ -9,7 +9,7 @@ plana y se definen entidades y demuestran resultados que dependen de estos axiom
 
 ## Notaciones
 
-- Se utiliza la notación A ~l para la relación de incidencia entre puntos y rectas
+- Se utiliza la notación A ~ l para la relación de incidencia entre puntos y rectas
 
 -/
 
@@ -26,6 +26,18 @@ namespace incidence_geometry
 
 
 infix ` ~ ` : 50 := lies_on
+
+/-- Función que dados dos puntos distintos devuelve la línea que pasa por ellos. -/
+noncomputable def line {Point : Type*} (Line : Type*) [incidence_geometry Point Line] 
+{A B : Point} (h : A ≠ B): 
+  { l : Line // A ~ l ∧  B ~ l } := 
+begin
+  let hAB := I1 h,
+  rw exists_unique at hAB,
+  let P := λ l : Line, A ~ l ∧  B ~ l,
+  have hlP : ∃ l : Line, P l, { tauto },
+  exact classical.indefinite_description P hlP,
+end
 
 /-- Conjunto de puntos de una línea. -/
 def line_points (Point : Type*) {Line : Type*} [incidence_geometry Point Line] (l: Line) := { A : Point | A ~ l }
@@ -156,16 +168,13 @@ def have_common_point (Point : Type*) {Line : Type*} [incidence_geometry Point L
   (l m : Line) := 
   ∃ A : Point, is_common_point A l m
 
-/-- Función que dados dos puntos distintos devuelve la línea que pasa por ellos. -/
-noncomputable def line {Point : Type*} (Line : Type*) [incidence_geometry Point Line] 
-{A B : Point} (h : A ≠ B): 
-  { l : Line // A ~ l ∧  B ~ l } := 
-begin
-  let hAB := I1 h,
-  rw exists_unique at hAB,
-  let P := λ l : Line, A ~ l ∧  B ~ l,
-  have hlP : ∃ l : Line, P l, { tauto },
-  exact classical.indefinite_description P hlP,
+
+lemma line_def_comm {Point : Type*} (Line : Type*) [incidence_geometry Point Line] 
+{A B : Point} (hAB : A ≠ B): ∀ P: Point,  P ~ (line Line hAB).val ↔ P ~ (line Line hAB.symm).val := begin
+  intro P,
+  split,
+  { intro hP, by_contra h, sorry },
+  { sorry },
 end
 
 /-- Un punto externo a la línea determinada por dos puntos es distinto de estos dos puntos. -/
@@ -299,6 +308,16 @@ begin
   { use n },
 end
 
+/-- Si dos líneas que determinan tres puntos son iguales, entonces la tercera también coincide. -/
+lemma eq_lines_determined_by_points {Point : Type*} (Line : Type*) [ig: incidence_geometry Point Line] {A B C : Point} 
+  (hAB : A ≠ B) (hAC : A ≠ C) (hBC : B ≠ C) :
+  ((line Line hAB).val = (line Line hAC).val) → (line Line hAB).val = (line Line hBC).val := 
+begin
+  intro hABAC,
+
+  sorry
+end
+
 /-- Para cada punto existen al menos dos líneas que pasan por él. -/
 lemma point_has_two_lines {Point Line : Type*} [ig: incidence_geometry Point Line]: 
   ∀ A: Point, ∃ l m: Line, l ≠ m ∧ A ~ l ∧ A ~ m :=
@@ -307,14 +326,14 @@ begin
   rcases ig.I3 with ⟨A, B, C, ⟨⟨hAB, hAC, hBC⟩, h_noncollinear⟩⟩,
   push_neg at h_noncollinear,
   let AB := line Line hAB,
-  by_cases h1 : P ~ AB.val,
+  by_cases hPAB : P ~ ↑AB,
   { 
     let h2 := h_noncollinear,
     specialize h2 AB AB.property.1 AB.property.2,
-    have hCP : C ≠ P, { by_contra h', rw ← h' at h1, tauto },
+    have hCP : C ≠ P, { by_contra h', rw ← h' at hPAB, tauto },
     let CP := line Line hCP,
     use [AB, CP],
-    refine ⟨_, h1, CP.property.right⟩,
+    refine ⟨_, hPAB, CP.property.right⟩,
     by_contra h3,
     have h3' : AB.val = CP.val, { tauto },
     let hlCP := CP.property,
@@ -325,13 +344,28 @@ begin
     -- IDEA: AP y BP pasan por P y deben ser distintas 
     -- Ya que si AP = BP entonces A B y P son colineares 
     -- y P ~ AB, lo que contradice la que ¬ P ~ AB.
-    have hAP : A ≠ P, { sorry },
-    have hBP : B ≠ P, { sorry },
+    have hAP : A ≠ P,
+    { by_contra h, 
+      rw ← h at hPAB,
+      exact hPAB AB.prop.left },
+    have hBP : B ≠ P,
+    { by_contra h, 
+      rw ← h at hPAB,
+      exact hPAB AB.prop.right },
     let AP := line Line hAP,
     let BP := line Line hBP,
-    have h2 : AP.val ≠ BP.val, { sorry },
+    have h2 : AP.val ≠ BP.val, 
+    { by_contra h,
+      let hhh := AP.prop,
+
+      let HHH := eq_lines_determined_by_points Line hAB hAP hBP,
+
+      have hPAB' : P ~ AB.val, 
+      { sorry },
+      exact hPAB hPAB',
+      },
     use [AP, BP],
-    exact ⟨h2, AP.property.2, BP.property.2⟩ },
+    exact ⟨h2, AP.property.right, BP.property.right⟩ },
 end
 
 end incidence_geometry
