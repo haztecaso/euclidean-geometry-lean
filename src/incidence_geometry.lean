@@ -98,6 +98,55 @@ lemma non_collinear {Point : Type*} (Line: Type*) [incidence_geometry Point Line
 end 
 end push_neg
 
+lemma exist_diff_point {Point : Type*} (Line: Type*) [incidence_geometry Point Line] (A : Point) :
+  ∃ B : Point, A ≠ B :=
+begin
+  sorry
+end
+
+lemma non_collinear_diff1 {Point : Type*} (Line: Type*) [incidence_geometry Point Line] {A B C : Point} (h_non_collinear: ¬ collinear Line A B C): 
+  A ≠ B :=
+begin
+  rw push_neg.non_collinear at h_non_collinear,
+  by_contra h_contra,
+  by_cases A ≠ C,
+  { 
+    let lAC := line Line h,
+    specialize h_non_collinear lAC.val,
+    rw [← push_neg.not_and_distrib_eq, ← push_neg.not_and_distrib_eq] at h_non_collinear,
+    have h_collinear : A ~ ↑lAC ∧ B ~ ↑lAC ∧ C ~ ↑lAC,
+    { rw ← h_contra,
+      exact ⟨lAC.property.left, lAC.property.left, lAC.property.right⟩ },
+    tauto },
+  { push_neg at h,
+    cases exist_diff_point Line A with P hP,
+    let l := line Line hP,
+    have h_collinear : A ~ l.val ∧ B ~ l.val ∧ C ~ l.val,
+    { rw [←h, ←h_contra],
+      exact ⟨l.property.left, l.property.left,l.property.left⟩ },
+    specialize h_non_collinear l.val,
+    rw [← push_neg.not_and_distrib_eq, ← push_neg.not_and_distrib_eq] at h_non_collinear,
+    tauto },
+end
+
+lemma non_collinear_diff {Point : Type*} (Line: Type*) [incidence_geometry Point Line] {A B C : Point} (h_non_collinear: ¬ collinear Line A B C): 
+  different3 A B C :=
+begin
+  by_contra h_contra,
+  rw [different3, push_neg.not_and_distrib_eq, push_neg.not_and_distrib_eq] at h_contra,
+  push_neg at h_contra,
+  cases h_contra,
+  { let h := non_collinear_diff1 Line h_non_collinear,
+    tauto },
+  { cases h_contra,
+    { rw [collinear_comm, collinear_comm2] at h_non_collinear,
+      let h := non_collinear_diff1 Line h_non_collinear, 
+      tauto }, 
+    { rw collinear_comm2 at h_non_collinear,
+      let h := non_collinear_diff1 Line h_non_collinear, 
+      tauto } },
+end
+
 /-- Determina si A es un punto común de dos líneas dadas -/
 def is_common_point {Point Line : Type*} [incidence_geometry Point Line] (A : Point) (l m : Line) := 
   A ~ l ∧ A ~ m 
