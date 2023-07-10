@@ -29,13 +29,6 @@ class order_geometry (Point Line : Type*) extends incidence_geometry Point Line 
       (hlABC : ¬ (A ~ l ∨ B ~ l ∨ C ~ l)) (hlD : D ~ l) (hADB : A * D * B)
       : xor (∃ E ,  E ~ l ∧ (A * E * C)) (∃ E, E ~ l ∧ (B * E * C)))
 
--- structure Triangle (Point : Type*) := (A B C : Point) (diff : different3 A B C)
-
--- instance (Point Line : Type) [order_geometry Point Line] : has_mem Point (Triangle Point) := 
---   ⟨λ P T, 
---       P ∈ (Segment.mk T.A T.B T.diff.1) 
---     ∨ P ∈ (Segment.mk T.A T.C T.diff.2.1) 
---     ∨ P ∈ (Segment.mk T.B T.C T.diff.2.2)⟩
 
 namespace order_geometry
 
@@ -53,22 +46,63 @@ end
 /-- 
 Los segmentos están implementados mediante estructuras determinadas por dos puntos distintos.
 -/
-structure Segment (Point : Type*) := (A B : Point) (diff : A ≠ B)
+structure Segment (Point : Type*) := 
+  (A B : Point) 
+  (diff : A ≠ B)
 
 /--
 Relación de pertenencia entre puntos y segmentos.
 Un punto está en un segmento si coincide con uno de los extremos o está entre ellos.
 -/
-instance : has_mem Point (Segment Point) := 
-⟨λ P S, P = S.A ∨ P = S.B ∨ (S.A * P * S.B)⟩
+instance : has_mem Point (Segment Point) := ⟨λ P seg, P = seg.A ∨ P = seg.B ∨ (seg.A * P * seg.B)⟩
 
 /--
 Relación de intersección entre segmentos y líneas.
 Un segmento se interseca con una línea si tienen un punto en común
-TODO: Usar instancia de has_mem
 -/
-def segment_intersect_line (S : Segment Point) (l : Line) := 
-∃ P : Point, (P = S.A ∨ P = S.B ∨ (S.A * P * S.B)) ∧ P ~ l
+def segment_intersect_line [order_geometry Point Line] (S : Segment Point) (l : Line) := 
+∃ P : Point, P ∈ S ∧ P ~ l
+
+/-- Un triángulo está determinado por tres puntos no alineados -/
+structure Triangle (Point Line: Type*) [order_geometry Point Line] := 
+  (A B C : Point) 
+  (non_collinear : ¬ collinear Line A B C)
+
+lemma Triangle.diff {Point Line: Type*} [order_geometry Point Line] (T : Triangle Point Line) : different3 T.A T.B T.C :=
+begin  
+  exact non_collinear_diff Line T.non_collinear,
+end
+
+-- instance (Point Line : Type) [order_geometry Point Line] : has_mem Point (Triangle Point) := 
+--   ⟨λ P T, 
+--       P ∈ (Segment.mk T.A T.B T.diff.1) 
+--     ∨ P ∈ (Segment.mk T.A T.C T.diff.2.1) 
+--     ∨ P ∈ (Segment.mk T.B T.C T.diff.2.2)⟩
+
+structure Ray (Point : Type*) := 
+  (A B: Point) 
+  (diff : A ≠ B)
+
+instance [order_geometry Point Line] : has_mem Point (Ray Point) :=
+  ⟨λ P ray, begin
+    by_cases P ≠ ray.B,
+    { exact P = ray.A ∨ ¬ ray.A ∈ Segment.mk P ray.B h },
+    { exact true, },
+  end ⟩
+
+structure Angle (Point Line: Type*) [order_geometry Point Line] :=
+  (r1 r2 : Ray Point)
+  (vertex : r1.A = r2.A)
+  (non_collinear : ¬ collinear Line r1.A r1.B r2.B)
+
+def Angle.mk_from_points [order_geometry Point Line] (B A C : Point) (h : ¬ collinear Line A B C): Angle Point Line := 
+begin
+  let diff := non_collinear_diff Line h,
+  let r1 := Ray.mk A B diff.left,
+  let r2 := Ray.mk A C diff.right.left,
+  have vertex : r1.A = r2.A, { refl },
+  exact ⟨r1, r2, vertex, h⟩
+end
 
 variable (Line)
 
@@ -89,8 +123,14 @@ begin
   cases hG with G hG,
   have hGE : G ≠ E, { sorry }, 
   let GE := line Line hGE,
-  have hB : segment_intersect_line
-
+  have sAC : Segment Point := {
+    A := A,
+    B := C,
+    diff := hAC,
+  },
+  let h :=@segment_intersect_line Point Line og sAC GE,
+  -- rw ← segment_intersect_line at h,
+  -- have hB : segment_intersect_line
   sorry
 end
 
@@ -114,6 +154,7 @@ begin
   refl,
 end 
 
+
 /-- La relación de estar del mismo lado de una línea es simétrica. -/
 lemma plane_same_side_symm (l : Line) : symmetric (@plane_same_side Point Line og l) := 
 begin
@@ -125,10 +166,9 @@ begin
     use h.symm,
     rw segment_intersect_line at h2 ⊢,
     push_neg at h2 ⊢, 
-    intro A,
-    specialize h2 A,
-    rw between_symm,
-    tauto },
+    intros A hA,
+    apply h2 A,
+    sorry },
 end
 
 -- /-- 
@@ -206,7 +246,7 @@ begin
           }}}},
 end
 
-/-- La relación de estar del mismo lado del plano respecto de una línea es transitiva. -/
+/-- La relación de estar del mismo lado del plano respecto de una línea es . -/
 theorem plane_same_side_equiv (l : Line) : equivalence (@plane_same_side Point Line og l) :=
 ⟨plane_same_side_refl Point l, plane_same_side_symm Point l, plane_same_side_trans Point l⟩
 
