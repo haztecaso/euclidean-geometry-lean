@@ -23,7 +23,7 @@ def I1 (i : incidence_geometry Point Line) : Prop :=
 def I2 (i : incidence_geometry Point Line) : Prop := 
   ∀ l : Line, ∃ A B : Point, A ≠ B ∧ i.lies_on A l ∧ i.lies_on B l
 def I3 (i : incidence_geometry Point Line) : Prop :=
-  ∃ A B C : Point, different3 A B C ∧ ¬ ∃ l : Line, i.lies_on A l ∧ i.lies_on B l ∧ i.lies_on C l
+  ∃ A B C : Point, neq3 A B C ∧ ¬ ∃ l : Line, i.lies_on A l ∧ i.lies_on B l ∧ i.lies_on C l
 
 def P (i : incidence_geometry Point Line) : Prop :=
   ∀ l : Line, ∀ A : Point, ∃! m : Line, i.lies_on A m ∧ parallel i l m

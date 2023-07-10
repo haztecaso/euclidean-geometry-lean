@@ -22,7 +22,7 @@ class congruence_geometry (Point Line : Type*) extends order_geometry Point Line
   )
   (C21 {s1 s2 s3: Segment Point} (h1 : seg_cong s1 s2) (h2 : seg_cong s1 s3) : seg_cong s2 s3)
   (C22 (s : Segment Point) : seg_cong s s)
-  (C3 {A B C D E F: Point} (hABC : different3 A B C ∧ between A B C) (hDEF : different3 D E F ∧ between D E F)
+  (C3 {A B C D E F: Point} (hABC : neq3 A B C ∧ between A B C) (hDEF : neq3 D E F ∧ between D E F)
     (h1 : seg_cong (Segment.mk A B hABC.left.left) (Segment.mk D E hDEF.left.left))
     (h2 : seg_cong (Segment.mk B C hABC.left.right.right) (Segment.mk E F hDEF.left.right.right)) :
     seg_cong (Segment.mk A C hABC.left.right.left) (Segment.mk D F hDEF.left.right.left)
@@ -33,10 +33,10 @@ class congruence_geometry (Point Line : Type*) extends order_geometry Point Line
   (C51 (α β γ : Angle Point Line) (hαβ : ang_cong α β) (hαγ : ang_cong α γ) : ang_cong β γ)
   (C52 (α : Angle Point Line) : ang_cong α α)
   (C6 (T1 T2 : Triangle Point Line) 
-    (h1: seg_cong (Segment.mk T1.A T1.B T1.diff.left) (Segment.mk T2.A T2.B T2.diff.left))
-    (h2: seg_cong (Segment.mk T1.A T1.C T1.diff.right.left) (Segment.mk T2.A T2.C T2.diff.right.left)) 
+    (h1: seg_cong (Segment.mk T1.A T1.B T1.neq.left) (Segment.mk T2.A T2.B T2.neq.left))
+    (h2: seg_cong (Segment.mk T1.A T1.C T1.neq.right.left) (Segment.mk T2.A T2.C T2.neq.right.left)) 
     (h3: ang_cong (Angle.mk_from_points T1.B T1.A T1.C T1.non_collinear) (Angle.mk_from_points T2.B T2.A T2.C T2.non_collinear)) :
-      seg_cong (Segment.mk T1.B T1.C T1.diff.right.right) (Segment.mk T2.B T2.C T2.diff.right.right)
+      seg_cong (Segment.mk T1.B T1.C T1.neq.right.right) (Segment.mk T2.B T2.C T2.neq.right.right)
       ∧ ang_cong 
         (Angle.mk_from_points T1.A T1.B T1.C T1.non_collinear_symm) 
         (Angle.mk_from_points T2.A T2.B T2.C T2.non_collinear_symm)

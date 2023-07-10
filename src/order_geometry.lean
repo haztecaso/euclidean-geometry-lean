@@ -1,5 +1,5 @@
 import basic
-import incidence_geometry
+import incidence.basic
 
 open incidence_geometry
 open_locale classical
@@ -21,7 +21,7 @@ entidades y demuestran resultados que dependen de estos axiomas.
 class order_geometry (Point Line : Type*) extends incidence_geometry Point Line :=
   (between: Point → Point → Point →  Prop)
   (notation A `*` B `*` C := between A B C)
-  (B11 {A B C: Point} (h : A * B * C) : different3 A B C ∧ collinear Line A B C ∧ C * B * A)
+  (B11 {A B C: Point} (h : A * B * C) : neq3 A B C ∧ collinear Line A B C ∧ C * B * A)
   (B12 {A B C: Point} (h : A * B * C) : C * B * A)
   (B2 {A B : Point} (h : A ≠ B): ∃ C : Point, A * B * C)
   (B3 {A B C : Point} (h : collinear Line A B C): xor3 (A * B * C) (B * A * C) (A * C * B))
@@ -48,7 +48,7 @@ Los segmentos están implementados mediante estructuras determinadas por dos pun
 -/
 structure Segment (Point : Type*) := 
   (A B : Point) 
-  (diff : A ≠ B)
+  (neq : A ≠ B)
 
 def Segment.in {Point : Type*} (seg : Segment Point) (Line : Type*) [og : order_geometry Point Line]  (P : Point) : Prop := 
   P = seg.A ∨ P = seg.B ∨ (og.between seg.A P seg.B)
@@ -83,20 +83,20 @@ begin
   exact T.non_collinear,
 end
 
-lemma Triangle.diff {Point Line: Type*} [order_geometry Point Line] (T : Triangle Point Line) : different3 T.A T.B T.C :=
+lemma Triangle.neq {Point Line: Type*} [order_geometry Point Line] (T : Triangle Point Line) : neq3 T.A T.B T.C :=
 begin  
-  exact non_collinear_diff Line T.non_collinear,
+  exact non_collinear_neq Line T.non_collinear,
 end
 
 -- instance (Point Line : Type) [order_geometry Point Line] : has_mem Point (Triangle Point) := 
 --   ⟨λ P T, 
---       P ∈ (Segment.mk T.A T.B T.diff.1) 
---     ∨ P ∈ (Segment.mk T.A T.C T.diff.2.1) 
---     ∨ P ∈ (Segment.mk T.B T.C T.diff.2.2)⟩
+--       P ∈ (Segment.mk T.A T.B T.neq.1) 
+--     ∨ P ∈ (Segment.mk T.A T.C T.neq.2.1) 
+--     ∨ P ∈ (Segment.mk T.B T.C T.neq.2.2)⟩
 
 structure Ray (Point : Type*) := 
   (A B: Point)
-  (diff : A ≠ B)
+  (neq : A ≠ B)
 
 instance [order_geometry Point Line] : has_mem Point (Ray Point) :=
   ⟨λ P ray, begin
@@ -117,16 +117,16 @@ def Angle.B {Point Line: Type*} [order_geometry Point Line] (α : Angle Point Li
 
 def Angle.C {Point Line: Type*} [order_geometry Point Line] (α : Angle Point Line) : Point := α.r2.B
 
-lemma Angle.diff {Point Line: Type*} [order_geometry Point Line] (α : Angle Point Line) : different3 α.A α.B α.C :=
+lemma Angle.neq {Point Line: Type*} [order_geometry Point Line] (α : Angle Point Line) : neq3 α.A α.B α.C :=
 begin  
-  exact non_collinear_diff Line α.non_collinear,
+  exact non_collinear_neq Line α.non_collinear,
 end
 
 def Angle.mk_from_points [order_geometry Point Line] (B A C : Point) (h : ¬ collinear Line A B C): Angle Point Line := 
 begin
-  let diff := non_collinear_diff Line h,
-  let r1 := Ray.mk A B diff.left,
-  let r2 := Ray.mk A C diff.right.left,
+  let neq := non_collinear_neq Line h,
+  let r1 := Ray.mk A B neq.left,
+  let r2 := Ray.mk A C neq.right.left,
   have vertex : r1.A = r2.A, { refl },
   exact ⟨r1, r2, vertex, h⟩
 end
@@ -153,7 +153,7 @@ begin
   have sAC : Segment Point := {
     A := A,
     B := C,
-    diff := hAC,
+    neq := hAC,
   },
   let h := @segment_intersect_line Point Line og sAC GE,
   -- rw ← segment_intersect_line at h,

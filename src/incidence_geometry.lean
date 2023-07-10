@@ -20,10 +20,9 @@ class incidence_geometry (Point Line : Type*) :=
   (infix ` ~ ` : 50 := lies_on)
   (I1 {A B : Point} (h : A ≠ B): ∃! l : Line, A ~ l ∧ B ~ l)
   (I2 (l : Line) : ∃ A B : Point, A ≠ B ∧ A ~ l ∧ B ~ l)
-  (I3 : ∃ A B C : Point, different3 A B C ∧ ¬ ∃ l : Line,  A ~ l ∧ B ~ l ∧ C ~ l)
+  (I3 : ∃ A B C : Point, neq3 A B C ∧ ¬ ∃ l : Line,  A ~ l ∧ B ~ l ∧ C ~ l)
 
 namespace incidence_geometry
-
 
 infix ` ~ ` : 50 := lies_on
 
@@ -110,13 +109,13 @@ lemma non_collinear {Point : Type*} (Line: Type*) [incidence_geometry Point Line
 end 
 end push_neg
 
-lemma exist_diff_point {Point : Type*} (Line: Type*) [incidence_geometry Point Line] (A : Point) :
+lemma exist_neq_point {Point : Type*} (Line: Type*) [incidence_geometry Point Line] (A : Point) :
   ∃ B : Point, A ≠ B :=
 begin
   sorry
 end
 
-lemma non_collinear_diff1 {Point : Type*} (Line: Type*) [incidence_geometry Point Line] {A B C : Point} (h_non_collinear: ¬ collinear Line A B C): 
+lemma non_collinear_neq1 {Point : Type*} (Line: Type*) [incidence_geometry Point Line] {A B C : Point} (h_non_collinear: ¬ collinear Line A B C): 
   A ≠ B :=
 begin
   rw push_neg.non_collinear at h_non_collinear,
@@ -131,7 +130,7 @@ begin
       exact ⟨lAC.property.left, lAC.property.left, lAC.property.right⟩ },
     tauto },
   { push_neg at h,
-    cases exist_diff_point Line A with P hP,
+    cases exist_neq_point Line A with P hP,
     let l := line Line hP,
     have h_collinear : A ~ l.val ∧ B ~ l.val ∧ C ~ l.val,
     { rw [←h, ←h_contra],
@@ -141,21 +140,21 @@ begin
     tauto },
 end
 
-lemma non_collinear_diff {Point : Type*} (Line: Type*) [incidence_geometry Point Line] {A B C : Point} (h_non_collinear: ¬ collinear Line A B C): 
-  different3 A B C :=
+lemma non_collinear_neq {Point : Type*} (Line: Type*) [incidence_geometry Point Line] {A B C : Point} (h_non_collinear: ¬ collinear Line A B C): 
+  neq3 A B C :=
 begin
   by_contra h_contra,
-  rw [different3, push_neg.not_and_distrib_eq, push_neg.not_and_distrib_eq] at h_contra,
+  rw [neq3, push_neg.not_and_distrib_eq, push_neg.not_and_distrib_eq] at h_contra,
   push_neg at h_contra,
   cases h_contra,
-  { let h := non_collinear_diff1 Line h_non_collinear,
+  { let h := non_collinear_neq1 Line h_non_collinear,
     tauto },
   { cases h_contra,
     { rw [collinear_comm, collinear_comm2] at h_non_collinear,
-      let h := non_collinear_diff1 Line h_non_collinear, 
+      let h := non_collinear_neq1 Line h_non_collinear, 
       tauto }, 
     { rw collinear_comm2 at h_non_collinear,
-      let h := non_collinear_diff1 Line h_non_collinear, 
+      let h := non_collinear_neq1 Line h_non_collinear, 
       tauto } },
 end
 
