@@ -80,7 +80,7 @@ end
 --     ∨ P ∈ (Segment.mk T.B T.C T.diff.2.2)⟩
 
 structure Ray (Point : Type*) := 
-  (A B: Point) 
+  (A B: Point)
   (diff : A ≠ B)
 
 instance [order_geometry Point Line] : has_mem Point (Ray Point) :=
@@ -94,6 +94,18 @@ structure Angle (Point Line: Type*) [order_geometry Point Line] :=
   (r1 r2 : Ray Point)
   (vertex : r1.A = r2.A)
   (non_collinear : ¬ collinear Line r1.A r1.B r2.B)
+
+
+def Angle.A {Point Line: Type*} [order_geometry Point Line] (α : Angle Point Line) : Point := α.r1.A
+
+def Angle.B {Point Line: Type*} [order_geometry Point Line] (α : Angle Point Line) : Point := α.r1.B
+
+def Angle.C {Point Line: Type*} [order_geometry Point Line] (α : Angle Point Line) : Point := α.r2.B
+
+lemma Angle.diff {Point Line: Type*} [order_geometry Point Line] (α : Angle Point Line) : different3 α.A α.B α.C :=
+begin  
+  exact non_collinear_diff Line α.non_collinear,
+end
 
 def Angle.mk_from_points [order_geometry Point Line] (B A C : Point) (h : ¬ collinear Line A B C): Angle Point Line := 
 begin
@@ -142,7 +154,11 @@ Dos puntos externos a una línea están del mismo lado de la línea si el segmen
 une no interseca a la línea.
 -/
 def plane_same_side (l: Line) (A B : outside_line_points Point l) := 
-A = B ∨ (∃ h : ↑A ≠ ↑B, ¬ @segment_intersect_line Point Line og (Segment.mk A B h) l)
+  A = B ∨ (∃ h : ↑A ≠ ↑B, ¬ @segment_intersect_line Point Line og (Segment.mk A B h) l)
+
+def plane_same_side' (l: Line) (A B : Point) := 
+  A = B ∨ (∃ h : A ≠ B, ¬ @segment_intersect_line Point Line og (Segment.mk A B h) l)
+
 
 variable (Point)
 
