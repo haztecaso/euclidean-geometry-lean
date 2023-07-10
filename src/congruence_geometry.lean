@@ -1,4 +1,3 @@
-import basic
 import order_geometry
 
 open order_geometry
