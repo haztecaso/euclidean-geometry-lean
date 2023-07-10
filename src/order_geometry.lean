@@ -1,5 +1,4 @@
-import basic
-import incidence.basic
+import incidence_geometry
 
 open incidence_geometry
 open_locale classical
