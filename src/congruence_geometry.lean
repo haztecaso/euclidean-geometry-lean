@@ -49,7 +49,7 @@ namespace congruence_geometry
 variables (Point Line : Type) [cg : congruence_geometry Point Line]
 
 /- Segment congruence is reflexive -/
-theorem seg_cong_refl : reflexive (cg.seg_cong ) :=
+theorem seg_cong_refl : reflexive (cg.seg_cong) :=
 begin
   intro seg,
   exact cg.C22 seg,
