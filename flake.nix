@@ -17,7 +17,7 @@
       systems = [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" "x86_64-darwin" ];
       perSystem = { config, self', inputs', pkgs, system, ... }:
         let
-          memoria = pkgs.callPackage ./memoria { };
+          memoria = pkgs.callPackage ./memoria.nix { };
         in
         {
           # Per-system attributes can be defined here. The self' and inputs'
