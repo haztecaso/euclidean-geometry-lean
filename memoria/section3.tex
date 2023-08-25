@@ -1,0 +1,246 @@
+\section{Introducción a Lean}
+
+\begin{description}
+	\item[Tipos y conjuntos] Analogías y diferencias
+	\item[hipótesis] Los resultados pueden depender de unas hipótesis,
+		enunciadas antes de los \lstinline{:}.
+	\item[El tipo Prop]
+	\item[Implicación y funciones]
+	\item[Doble implicación]
+	\item[and y or como tipos inductivos]
+	\item[Términos true y false]
+	\item[La negación]
+\end{description}
+
+% \subsection{Tácticas básicas}
+
+% \begin{description}[font=\sffamily\bfseries, leftmargin=1.5cm, style=nextline]
+% 	\item[refl] Sirve para demostrar metas de la forma \lstinline{A = A}. Por
+% 		ejemplo, podemos demostrar que todo punto es igual a si mismo:
+
+% 		\begin{lstlisting}
+% lemma point_refl (A : Point) : A = A :=
+% begin
+%   refl
+% end
+%         \end{lstlisting}
+% 	\item[rw] Para reescribir
+% 	\item[exact] Si la meta es  \lstinline{⊢ X} y \lstinline{x} es un término de
+% 		tipo \lstinline{X} se puede usar la táctica \lstinline{exact x} para
+% 		cerrar la meta.
+% 	\item[apply] Demostrar hacia atrás
+% 	\item[intro] Introducir hipótesis
+% 		\begin{lstlisting}
+% lemma equal_comm (A B : Point) : A = B → B = A :=
+% begin
+%   intro h,
+%   sorry
+% end
+%         \end{lstlisting}
+
+
+% 	\item[split] Dividir la meta
+% 	\item[left, right] Modificar la meta
+% 	\item[exfalso] Cambia la meta a false
+% 	\item[by_cases] Para dividir la demostración en casos.
+% 	\item[have] Demostrar resultados intermedios
+% 	\item[cases] Varios usos. Descomponer and, or o exists.
+
+% \end{description}
+
+% \subsection{Tácticas de nivel alto}
+
+% \begin{description}
+% 	\item[simp] Para demostrar igualdades
+% \end{description}
+
+\section{Introducción a Lean}
+\subsection{Teoría de tipos informal}
+
+Lo primero que se necesita en matemáticas para poder formalizar afirmaciones es
+un lenguaje formal con el cual expresarlas. Normalmente se utiliza la lógica de
+primer orden, en el contexto de la teoría de conjuntos. Lean, sin embargo,
+utiliza un sistema deductivo diferente, el de la teoría de tipos.
+
+En lógica de primer se tiene una aserción fundamental, \textit{que una
+	proposición dada tenga una prueba}. Es decir, cada proposición $P$ da lugar a la
+aserción correspondiente \textit{P tiene una prueba}. Mediante ciertas reglas de
+transformación, y a veces una serie de axiomas, se pueden construir nuevas
+pruebas. Por ejemplo, dada la regla de inferencia \textit{de $A$ se deduce $A$ o
+	$B$} y la aserción \textit{A tiene una prueba}, se obtiene la aserción \textit{A
+	o B tiene una prueba}.
+
+En teoría de tipos la aserción fundamental es \textit{que un término tenga un
+	tipo}. Dados un término $a$ y un tipo $A$, si \textit{$a$ tiene tipo $A$}
+escribimos $a:A$. Esta es misma notación es la utilizada por Lean, en el que por
+ejemplo podemos expresar la aserción \textit{3 es un número natural} con el
+código \lstinline{3 : ℕ}.
+
+Es importante no confundir esta notación con la de una
+relación interna a nuestro lenguaje. Mientras que en teoría de conjuntos
+utilizamos la relación de pertenencia $\in$ para expresar que un elemento
+primitivo (un conjunto) está contenido en otro, en teoría de tipos no podemos
+considerar los términos o los tipos por separado. La noción fundamental es la
+pertenencia de tipos y cada término tiene que estar siempre acompañado por su
+tipo. En teoría de tipos además existen otras aserciones, como la de igualdad
+entre términos de un mismo tipo. Dados $a:A$ y $b:A$, se tiene la aserción
+\textit{$a$ y $b$ son dos términos de tipo A iguales por definición}, y
+escribimos $a\equiv b : A$.
+
+La teoría de tipos también puede utilizarse para expresar afirmaciones y
+demostraciones matemáticas. Las afirmaciones se codifican mediante los tipos y
+las demostraciones mediante construcciones de términos de un tipo dado. Es
+decir, se puede interpretar la aserción $a : A$ como \textit{$a$ es una
+	demostración de $A$}. Esta interpretación da lugar a una analogía entre la
+lógica proposicional y la teoría de tipos, llamada correspondencia de
+Curry-Howard. Sin entrar en detalles, a cada proposición lógica se le puede
+asignar un tipo, y a cada demostración de un enunciado un término del tipo
+correspondiente al enunciado.
+
+\todoref{HTT}
+
+Existen distintas elecciones de reglas de transformación que considerar en
+teoría de tipos, que dan lugares a distintas versiones de la teoría de tipos.
+Lean implementa una una versión de la teoría de tipos dependiente conocida como
+el \textit{Calculus of Constructions}.
+
+La base de muchas teorías de tipos es el lambda cálculo, un modelo universal de
+computación introducido por \textit{Alonzo Church} en los años treinta. Sin
+entrar en su formalización, en el lambda cálculo se consideran dos operaciones
+fundamentales para tratar con funciones, la abstracción y la evaluación.
+
+\begin{itemize}
+
+	\item \textbf{Abstracción}. Es el mecanismo de definición de funciones mediante
+	      la introducción de parámetros. Dado un término \lstinline{x + 1 : ℕ},
+	      mediante la sintaxis \lstinline{λ x : ℕ, (x + 1 : ℕ)} se convierte la
+	      variable libre \lstinline{x} en una variable ligada por la abstracción, a la
+	      que llamamos parámetro de la función.
+
+	      Es importante recordar que cada término tiene que ir acompañado del tipo al
+	      que pertenece. En esta expresión estamos indicando que tanto el parámetro
+	      \lstinline{x} como el resultado de la función, \lstinline{x+1}, son de tipo
+	      \lstinline{ℕ}. Es decir, tenemos una función que dado un número natural
+	      devuelve otro número natural. Esto también puede escribirse como
+	      \lstinline{(λ x, x + 1) : ℕ → ℕ}.
+
+	      Lean además incluye notación para definir funciones que devuelven otras
+	      funciones, lo cual es muy útil para tratar funciones que reciben más de un
+	      parámetro (\todoref{Ver currificacion}). Las siguientes líneas de código
+	      definen expresiones equivalentes
+	      \begin{lstlisting}
+λ a : α, λ b : β, a
+λ (a : α) (b : β), a
+\end{lstlisting}
+	      que representan el mismo término, de tipo \lstinline{α → β → α}.
+
+	\item \textbf{Evaluación}. Consiste en aplicar funciones, pasándoles los
+	      valores de los argumentos que evaluar. Por ejemplo la expresión
+	      \lstinline{(λ x : ℕ, (x + 1) : ℕ) (1 : ℕ)} indica que estamos evaluando la
+	      función \lstinline{(λ x, x + 1) : ℕ → ℕ} con el parámetro \lstinline{x}
+	      sustituido por el término \lstinline{1 : ℕ} (para que la sustitución pueda
+	      realizarse los tipos deben coincidir). Mediante un proceso de
+	      reducción se obtiene el término \lstinline{2 : ℕ}.
+
+\end{itemize}
+
+\todoref{Theorem proving in Lean}
+
+Como se ve en los ejemplos, el código fuente de Lean se pueden incluir
+caracteres unicode, como \lstinline{λ}, \lstinline{→} o \lstinline{ℕ}. Esta
+característica del lenguaje es muy útil a la hora de escribir código lo más
+cercano posible a las notaciones a las que estamos acostumbrados a usar en
+matemáticas. La inclusión de estos caracteres está facilitada en el entorno de
+desarrollo, escribiendo comandos que empiecen por \texttt{\textbackslash} estos
+se reemplazarán por el caracter correspondiente. Por ejemplo al escribir
+\texttt{\textbackslash to} este comando se reemplazará automáticamente por el
+caracter \lstinline{→}, \texttt{\textbackslash lambda} por \lstinline{λ} y
+\texttt{\textbackslash N} por \lstinline{ℕ}.
+
+\todo{Incluir en algún lugar explicación sobre entorno de desarrollo (plugin vscode) y sus características (¿Apéndice?).}
+
+Que cada término sea siempre considerado junto a su tipo no significa que sea
+siempre necesario explicitar dicho tipo. Lean tiene un mecanismo llamado
+\textit{inferencia de tipos} que le permite deducir automáticamente el tipo de
+un término cuando no ha sido explicitado pero el contexto aporta información
+suficiente.
+Por ejemplo, cuando definimos la función \lstinline{λ x : ℕ, (x + 1 : ℕ)} no es
+necesario incluir la segunda anotación de tipo. Dada la expresión
+\lstinline{x + 1} y sabiendo por contexto que \lstinline{x : ℕ} el sistema de
+inferencia de tipos deduce que la suma de dos números naturales también es un
+número natural, por lo que se infiere el tipo \lstinline{ℕ}.
+
+\subsection{Proposiciones en Lean}
+
+En Lean se tiene el tipo \lstinline{Prop} para expresar las proposiciones
+mediante la analogía de \textit{proposiciones como tipos} dada por la
+correspondencia de Curry-Howard.
+
+La correspondencia de Curry-Howard afirma que estas funciones de la
+teoría de tipos se comportan de la misma forma que la implicación en lógica. Por
+tanto en Lean utilizaremos el símbolo \lstinline{→} para referirnos tanto a
+funciones como a implicaciones dentro de una proposición. Dadas dos
+proposiciones \lstinline{p q : Prop} podemos construir la proposición
+\lstinline{p → q : Prop}, que se interpreta como \lstinline{p} \textit{implica}
+\lstinline{q}.
+
+\subsection{Introducción de símbolos}
+
+En lean existen distintas formas de introducir nuevos símbolos en el entorno
+actual.
+
+\subsubsection{Constantes}%
+
+Mediante los comandos \lstinline{constant} y \lstinline{constants} se
+pueden introducir símbolos en el entorno, postulando su existencia. Este comando
+equivale por tanto a considerar nuevos axiomas sobre la existencia de los
+símbolos que introduce.
+\begin{lstlisting}
+constant a : ℕ
+constants (b : ℤ) (c : ℂ)
+\end{lstlisting}
+
+
+\subsubsection{Definiciones}%
+Si no queremos introducir nuevos axiomas podemos definir nuevos símbolos
+mediante el comando \lstinline{def}. Como estamos definiendo un símbolo, es
+necesario proporcionar el tipo y término que queremos asignar al símbolo:
+\begin{lstlisting}
+def succ : ℕ → ℕ := λ n, n + 1
+def succ' (n : ℕ) : ℕ := n + 1 -- Otra forma de definir succ
+\end{lstlisting}
+
+Para introducir parámetros de funciones se puede omitir la notación
+\lstinline{λ}, incluyendo las variables parametrizadas antes de los dos puntos
+que anotan el tipo de la definición.
+
+Esta notación de introducción de parámetros es muy útil y simple, pero puede
+resultar demasiado explícita. Veamos por ejemplo cómo se puede definir la
+función identidad, que dado un término de un tipo devuelve el mismo término.
+Si queremos que la identidad definida sea sea general y se le puedan aplicar términos
+de cualquier tipo necesitaremos introducir el tipo del término como un parámetro
+adicional.
+
+\begin{lstlisting}
+def id1 (α : Type*) (e : α) := e
+\end{lstlisting}
+
+El problema de esta definición es que cada vez que se quiera utilizar será
+necesario proporcionarle como primer argumento el tipo del término que se le
+quiere pasar, por ejemplo \lstlisting{id1 ℕ 0}.
+Pero la función identidad que queremos considerar recibe un solo argumento.
+Como a cada término acompaña siempre su tipo, dado el término \lstinline{e : α},
+el sistema de inferencia de tipos de Lean es capaz de deducir automáticamente el
+tipo \lstinline{α}. Solo falta indicar en la definición cuál es el parámetro
+cuya identificación queremos delegar al sistema de inferencia de tipos.
+
+\begin{lstlisting}
+def id2 {α : Type*} (e : α) := e
+\end{lstlisting}
+
+Así los parámetros indicados entre llaves, llamados \textit{parámetros
+	implícitos}, serán deducidos automaticamente.
+
+
+\newpage
+

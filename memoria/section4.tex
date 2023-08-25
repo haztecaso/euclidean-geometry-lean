@@ -1,0 +1,331 @@
+\section{Formalizando la geometría de Hilbert en Lean}
+\begin{itemize}
+	\item Otros trabajos
+	      \begin{itemize}
+		      \item Descubrimiento de saltos de intuicion en Hilbert
+		      \item Paper en el que se analizan las decisiones de diseño de
+		            software a la hora de formalizar.
+		      \item Formalización de la independencia del quinto postulado
+		            utilizando los axiomas de Tarski.
+	      \end{itemize}
+	\item Mi trabajo. Formalizando la geometría de Hilbert.
+	      \begin{itemize}
+
+		      \item Geometría de incidencia. Comparación entre los
+		            axiomas originales de Hilbert, su redacción moderna y
+		            mi formalización en Lean. Introducción a conceptos
+		            y funciones de Lean mediante ejemplos (clases,
+		            tipos de parámetros, etc)
+		      \item Otros grupos de axiomas y tratamientos.
+		      \item Idea demostración de independencia del axioma de
+		            las paralelas.
+	      \end{itemize}
+\end{itemize}
+
+En esta sección se presentan algunos axiomas y resultados elementales de la
+axiomática de Hilbert, comparando los enunciados y demostraciones expresados de
+forma natural (\todo{¿Cómo expresar esto bien?}) con sus correspondientes
+formalizaciones en Lean.
+
+\subsection{Geometría de incidencia}
+
+\todo{Explicar cómo funcionan las clases, comparar los axiomas de hilbert
+	expresados en lenguaje natural con sus formalizaciones. Diferencias entre
+	parámetros implícitos y explícitos.}
+
+
+\setaxsection{I}
+\begin{ax}\label{I1}
+	Para cada par de puntos distintos $A, B$ existe una única recta que los
+	contiene.
+\end{ax}
+
+\begin{ax}\label{I2}
+	Cada línea contiene al menos dos puntos distintos.
+\end{ax}
+
+\begin{ax}\label{I3}
+	Existen tres puntos no colineares. Es decir, existen $A$, $B$ y $C$ tales que
+	$AB\neq BC$.
+\end{ax}
+
+\begin{lstlisting}
+class incidence_geometry (Point Line : Type*) :=
+  (lies_on : Point → Line → Prop)
+  (infix ` ~ ` : 50 := lies_on)
+  (I1 {A B : Point} (h : A ≠ B): ∃! l : Line, A ~ l ∧ B ~ l)
+  (I2 (l : Line) : ∃ A B : Point, A ≠ B ∧ A ~ l ∧ B ~ l)
+  (I3 : ∃ A B C : Point, different3 A B C ∧ ¬ ∃ l : Line,  A ~ l ∧ B ~ l ∧ C ~ l)
+\end{lstlisting}
+
+\subsection{Resultados elementales}
+
+Uno de los primeros resultados que se pueden demostrar, utilizando sólamente los
+axiomas de incidencia es el siguiente:
+
+\begin{prop}
+	Dos líneas distintas pueden tener como mucho un punto en común.
+\end{prop}
+
+
+Su correspondiente formalización en Lean es:
+
+
+\begin{lstlisting}
+lemma disctinct_lines_one_common_point
+  {Point Line : Type*} [ig : incidence_geometry Point Line] :
+  ∀ l m : Line, l ≠ m →
+    (∃! A : Point, is_common_point A l m) ∨ (¬ have_common_point Point l m) :=
+begin
+  sorry
+end
+\end{lstlisting}
+
+
+Se puede observar que, gracias al uso de caracteres unicode, la formalización en
+Lean es muy fácil de leer y cercana a la forma de escribir matemáticas a la que
+estamos acostumbrados.
+
+\todo{¿Incidir sobre la diferencia entre parámetros explícitos e implícitos?}
+
+Observemos que en el enunciado se están utilizando algunas definiciones que se
+han declarado previamente:
+
+\begin{lstlisting}
+def is_common_point {Point Line : Type*} [incidence_geometry Point Line]
+  (A : Point) (l m : Line) := A ~ l ∧ A ~ m
+
+def have_common_point (Point : Type*) {Line : Type*} [incidence_geometry Point Line]
+  (l m : Line) := ∃ A : Point, is_common_point A l m
+\end{lstlisting}
+
+\todo{Aquí si que sería conveniente explicar por qué algunos parámetros son
+	implícitos y otros explícitos.}
+
+La demostración, como la presenta el libro de Hartshorne (\todo{citar}), es como
+sigue:
+\begin{proof}
+	Sean $l$ y $m$ dos líneas. Supongamos que ambas contienen los puntos $A$ y
+	$B$ con $A\ne B$. Por el axioma I1, existe una única línea que pasa por $A$
+	y $B$, por lo que $l$ y $m$ deben ser iguales.
+\end{proof}
+
+Esta demostración puede interpretarse como una demostración por absurdo sobre la
+condición de que las dos líneas sean iguales, o como una demostración por
+contraposición: si asumimos que no se cumple la conclusión (que las dos lineas
+no tengan más de un punto en común), entonces tampoco se cumple la premisa (que las
+dos líneas sean iguales).
+
+Al intentar implementar esta idea en Lean nos damos cuenta de que hay bastantes
+detalles que necesitamos tener en cuenta.
+
+Esta es la formalización completa del resultado en Lean, incluyendo el enunciado
+y su demostración:
+
+\begin{lstlisting}[numbers=left, caption={\lstinline{disctinct_lines_one_common_point}}]
+lemma disctinct_lines_one_common_point
+  {Point Line : Type*} [ig : incidence_geometry Point Line] :
+  ∀ l m : Line, l ≠ m →
+    (∃! A : Point, is_common_point A l m) ∨ (¬ have_common_point Point l m) :=
+begin
+  intros l m,
+  contrapose,
+  push_neg,
+  rintro ⟨not_unique, hlm⟩,
+  rw exists_unique at not_unique,
+  push_neg at not_unique,
+  cases hlm with A hA,
+  rcases not_unique A hA with ⟨B, ⟨hB, hAB⟩⟩,
+  rw ne_comm at hAB,
+  exact unique_of_exists_unique (ig.I1 hAB) ⟨hA.left,hB.left⟩ ⟨hA.right,hB.right⟩,
+end
+\end{lstlisting}
+
+\todo{Explicar qué es una demostración en Lean. Que es el estado táctico y la
+	meta, qué hacen las tácticas.}
+
+Analicemos detalladamente cada uno de los pasos:
+
+\begin{itemize}
+
+	\item El estado táctico inicial incluye los parámetros del lema. En este caso
+	      los tipos \lstinline{Point} y \lstinline{Line} e \lstinline{ig}, la
+	      instancia de la clase \lstinline{incidence_geometry}. Esta instancia
+	      representa el hecho de que los tipos \lstinline{Point} y \lstinline{Line}
+	      cumplen los axiomas de la geometría de incidencia.
+
+	      La meta se corresponde con el enunciado del lema, es decir lo que queremos
+	      demostrar.
+
+	\item \lstinline{intros l m,} La aplicación de la táctica \lstinline{intros}
+	      introduce las hipótesis \lstinline{l} y \lstinline{m}. Es decir, saca el
+	      cuantificador universal de la meta e introduce las variables cuantificadas
+	      en el estado táctico, pasando a tener ahora dos nuevos términos
+	      \lstinline{l : Line} y \lstinline{m : Line}. La nueva meta es
+	      \begin{lstlisting}
+l ≠ m → (∃! (A : Point), is\_common\_point A l m) ∨ ¬have\_common\_point Point l m
+          \end{lstlisting}
+	      Esto equivale a decir en lenguaje natural "sean l y m dos líneas"
+
+	\item \lstinline{contrapose,} La táctica \lstinline{contrapose} permite
+	      realizar una demostración por contraposición. Es decir, si nuestra meta es
+	      de la forma \lstinline{A → B}, la reemplaza por \lstinline{¬B → ¬A}. En
+	      este caso la meta resultante es
+	      \begin{lstlisting}
+⊢ ¬((∃! (A : Point), is_common_point A l m) ∨ ¬have_common_point Point l m) → ¬l ≠ m
+      \end{lstlisting}
+
+	\item \lstinline{push_neg, } La táctica \lstinline{push_neg} utiliza
+	      equivalencias lógicas para 'empujar' las negaciones dentro de la fórmula.
+	      En este caso, al no haber especificado una hipótesis concreta, se aplica
+	      sobre la meta.
+
+	      En la primera parte de la implicación se aplica una ley de De Morgan para
+	      introducir la negación dentro de una disjunción, convirtiéndola en una
+	      conjunción de negaciones. En la segunda, negar una desigualdad equivale a
+	      una igualdad.
+
+	      Por tanto la meta resultante es
+	      \begin{lstlisting}
+⊢ (¬∃! (A : Point), is_common_point A l m) ∧ have_common_point Point l m → l = m
+      \end{lstlisting}
+	      Es interesante notar que \lstinline{push_neg} no consigue 'empujar' la negación todo lo que podríamos desear.
+
+	      Esto es así porque no está reescribiendo las definiciones previas y de
+	      \lstinline{∃!}. Esto lo tendremos que hacer manualmente, como se verá
+	      enseguida.
+
+	\item \lstinline{rintro ⟨not_unique, hlm⟩,} La táctica \lstinline{rintro}
+	      funciona como \lstinline{intro}, en este caso aplicada para asumir la
+	      hipótesis de la implicación que queremos demostrar. La variante
+	      \lstinline{rintro} nos permite entrar en definiciones recursivas, en este
+	      caso en la del operador \lstinline{∧}, y mediante el uso de los paréntesis
+	      \lstinline{⟨⟩} introducir los dos lados de la conjunción como hipótesis
+	      separadas. Por tanto después de aplicar esta táctica obtendremos dos
+	      hipótesis adicionales:
+	      \begin{lstlisting}
+not_unique: ¬∃! (A : Point), is_common_point A l m
+hlm: have_common_point Point l m
+\end{lstlisting}
+	      y la meta resultante es el segundo lado de la implicación, es decir
+	      \lstinline{⊢ l = m}.
+
+	\item \lstinline{rw exists_unique at not_unique,}  La táctica \lstinline{rw}
+	      (abreviación de \lstinline{rewrite}) nos permite reescribir ocurrencias de
+	      fórmulas utilizando definiciones o lemas de la forma \lstinline{A ↔ B}. Al
+	      escribir \lstinline{at} indicamos dónde queremos realizar dicha
+	      reescritura, en este caso en la hipótesis \lstinline{not_unique}.
+
+	      En este caso utilizamos la definición de ∃!, con lo que se modifica la hipótesis
+	      \begin{lstlisting}
+not_unique : ¬∃ (x : Point), 
+  is_common_point x l m ∧ ∀ (y : Point), is_common_point y l m → y = x
+      \end{lstlisting}
+
+	\item \lstinline{push_neg at not_unique,}
+	      %   /- Como comentábamos antes, ahora que hemos reescrito la definición de ∃! podemos seguir "empujando" la negación en la hipótesis not_unique,
+	      %      obteniendo ∀ (x : Point), is_common_point x l m → (∃ (y : Point), is_common_point y l m ∧ y ≠ x)
+	      %   -/
+
+	\item \lstinline{cases hlm with A hA,} La táctica \lstinline{cases} nos
+	      permite, entre otras cosas, dada una hipótesis de existencia, obtener un
+	      término del tipo cuantificado por el existe y la correspondiente hipótesis
+	      particularizada para el nuevo término.
+
+	      En nuestro caso tenemos la hipótesis \lstinline{hlm: have_common_point
+		      Point l m} y la definición \\
+	      \lstinline{have_common_point Point l m := ∃ A : Point, is_common_point A l m}.
+
+	      Por tanto al aplicar la táctica, la hipótesis hlm se convierte en dos
+	      nuevas hipótesis
+	      \begin{lstlisting}
+A : Point 
+hA: is_common_point A l m
+      \end{lstlisting}
+
+	\item \lstinline{rcases not_unique A hA with ⟨B, ⟨hB, hAB⟩⟩,} En esta línea
+	      están ocurriendo distintas cosas:
+	      \begin{itemize}
+		      \item Recordemos que en el estado táctico actual tenemos la hipótesis
+		            \begin{lstlisting}
+not_unique: ∀ (x : Point), is_common_point x l m 
+              → (∃ (y : Point), is_common_point y l m ∧ y ≠ x) 
+            \end{lstlisting}
+
+		            Primero se está construyendo el término \lstinline{not_unique A hA},
+		            al que posteriormente se le aplicará la táctica {rcases}.
+
+		            En Lean los cuantificadores universales y las implicaciones pueden
+		            tratarse como funciones. Al pasar el primer argumento \lstinline{A}
+		            estamos particularizando la cuantificación sobre el punto
+		            \lstinline{x}, proporcionando el término \lstinline{A : Point} que
+		            tenemos entre nuestras hipótesis. Por tanto el término
+		            \lstinline{not_unique A} es igual a
+		            \begin{lstlisting}
+is_common_point A l m → (∃ (y : Point), is_common_point y l m ∧ y ≠ A)
+            \end{lstlisting}
+
+		            Ahora podemos observar que tenemos entre nuestras hipótesis la
+		            condición de esta implicación, \lstinline{hA: is_common_point A l m}
+		            Al pasar este término como segundo argumento obtenemos la conclusión
+		            de la implicación, y por tanto el término
+		            \lstinline{not_unique A hA} es igual a
+		            \begin{lstlisting}
+∃ (y : Point), is_common_point y l m ∧ y ≠ x
+            \end{lstlisting}
+
+		      \item La aplicación de la táctica \lstinline{rcases} nos permite, como
+		            anteriormente, obtener un término concreto del cuantificador
+		            existencial y además profundizar en la definición recursiva del
+		            \lstinline{∧}, generando así dos hipótesis separadas. Obtenemos por
+		            tanto las nuevas hipótesis
+		            \begin{lstlisting}
+B: Point 
+hB: is_common_point B l m 
+hAB: B ≠ A
+           \end{lstlisting}
+	      \end{itemize}
+
+	\item \lstinline{rw ne_comm at hAB,} Para tener la hipótesis
+	      \lstinline{hAB: B ≠ A} en el mismo orden que el utilizado en los axiomas y
+	      poder utilizarlos correctamente, reescribimos la hipótesis \lstinline{hAB}
+	      utilizando la propiedad conmutativa de la desigualdad, obteniendo así la
+	      hipóteis \lstinline{hAB: A ≠ B}.
+
+	\item \lstinline{exact unique_of_exists_unique (ig.I1 hAB) ⟨hA.left,hB.left⟩ ⟨hA.right,hB.right⟩,}
+
+	      La táctica \lstinline{exact} se utiliza para concluir la demostración
+	      proporcionando un término igual a la meta. Recordemos que la meta actual
+	      es \lstinline{⊢ l = m}.
+
+	      Analicemos entonces el término que estamos proporcionando a la táctica.
+
+	      El lema \lstinline{unique_of_exists_unique}, definido en la librería
+	      estándar de Lean, sirve para extrer la parte de unicidad del cuantificador
+	      \lstinline{∃!}. Dadas una fórmula de la forma \lstinline{∃! x, px} y dos
+	      fórmulas \lstinline{p a} y \lstinline{p b} , devuelve la fórmula que
+	      aserta la igualdad entre los términos que cumplen la propiedad
+	      \lstinline{p}: \lstinline{a = b}.
+
+	      Como primer argumento le estamos pasando el primer axioma de incidencia,
+	      particularizado con la hipóteis \lstinline{hAB : A ≠ B}. Es decir
+	      \lstinline{ig.I1 hAB} es igual a \lstinline{∃! l : Line, A ~ l ∧ B ~ l}.
+
+	      Ahora queremos pasar en los otros dos argumentos términos
+	      \lstinline{A ~ l ∧ B ~ l} y \lstinline{A ~ m ∧ B ~ m}, para obtener la
+	      igualdad \lstinline{l = m}. Para esto tenemos que recombinar las hipótesis
+	      \lstinline{hA} y \lstinline{hB}.
+
+	      \lstinline{hA.left} es igual a \lstinline{A ~ l} y \lstinline{hB.left} a
+	      \lstinline{B ~ l}, y mediante los paréntesis \lstinline{⟨⟩} combinamos
+	      estos términos en la conjunción \lstinline{⟨hA.left,hB.left⟩}, obteniendo
+	      \lstinline{A ~ l ∧ B ~ l}.
+
+	      El uso de los paréntesis nos permite construir una conjunción sin tener
+	      que especificar esplícitamente que queremos construir una conjunción, pero
+	      el sistema de tipos de Lean permite inferir que el término esperado es una
+	      conjunción.
+
+	      Análogamente para el segundo argumento.
+\end{itemize}
+
