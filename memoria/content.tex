@@ -281,6 +281,62 @@ proposiciones \lstinline{p q : Prop} podemos construir la proposición
 \lstinline{p → q : Prop}, que se interpreta como \lstinline{p} \textit{implica}
 \lstinline{q}.
 
+\subsection{Introducción de símbolos}
+
+En lean existen distintas formas de introducir nuevos símbolos en el entorno
+actual.
+
+\subsubsection{Constantes}%
+
+Mediante los comandos \lstinline{constant} y \lstinline{constants} se
+pueden introducir símbolos en el entorno, postulando su existencia. Este comando
+equivale por tanto a considerar nuevos axiomas sobre la existencia de los
+símbolos que introduce.
+\begin{lstlisting}
+constant a : ℕ
+constants (b : ℤ) (c : ℂ)
+\end{lstlisting}
+
+
+\subsubsection{Definiciones}%
+Si no queremos introducir nuevos axiomas podemos definir nuevos símbolos
+mediante el comando \lstinline{def}. Como estamos definiendo un símbolo, es
+necesario proporcionar el tipo y término que queremos asignar al símbolo:
+\begin{lstlisting}
+def succ : ℕ → ℕ := λ n, n + 1
+def succ' (n : ℕ) : ℕ := n + 1 -- Otra forma de definir succ
+\end{lstlisting}
+
+Para introducir parámetros de funciones se puede omitir la notación
+\lstinline{λ}, incluyendo las variables parametrizadas antes de los dos puntos
+que anotan el tipo de la definición.
+
+Esta notación de introducción de parámetros es muy útil y simple, pero puede
+resultar demasiado explícita. Veamos por ejemplo cómo se puede definir la
+función identidad, que dado un término de un tipo devuelve el mismo término.
+Si queremos que la identidad definida sea sea general y se le puedan aplicar términos
+de cualquier tipo necesitaremos introducir el tipo del término como un parámetro
+adicional.
+
+\begin{lstlisting}
+def id1 (α : Type*) (e : α) := e
+\end{lstlisting}
+
+El problema de esta definición es que cada vez que se quiera utilizar será
+necesario proporcionarle como primer argumento el tipo del término que se le
+quiere pasar, por ejemplo \lstlisting{id1 ℕ 0}.
+Pero la función identidad que queremos considerar recibe un solo argumento.
+Como a cada término acompaña siempre su tipo, dado el término \lstinline{e : α},
+el sistema de inferencia de tipos de Lean es capaz de deducir automáticamente el
+tipo \lstinline{α}. Solo falta indicar en la definición cuál es el parámetro
+cuya identificación queremos delegar al sistema de inferencia de tipos.
+
+\begin{lstlisting}
+def id2 {α : Type*} (e : α) := e
+\end{lstlisting}
+
+Así los parámetros indicados entre llaves, llamados \textit{parámetros
+	implícitos}, serán deducidos automaticamente.
 
 
 \newpage
@@ -614,6 +670,24 @@ hAB: B ≠ A
 
 	      Análogamente para el segundo argumento.
 \end{itemize}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
