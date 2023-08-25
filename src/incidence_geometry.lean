@@ -13,7 +13,7 @@ plana y se definen entidades y demuestran resultados que dependen de estos axiom
 
 -/
 
-/-- Geometría de incidencia, clase que engloba los axiomas para la relación de
+N-- Geometría de incidencia, clase que engloba los axiomas para la relación de
  incidencia. -/
 class incidence_geometry (Point Line : Type*) :=
   (lies_on : Point → Line → Prop)
@@ -170,26 +170,16 @@ def have_common_point (Point : Type*) {Line : Type*} [incidence_geometry Point L
   (l m : Line) := 
   ∃ A : Point, is_common_point A l m
 
--- TODO: resolver o borrar? Ahora mismo no se está usando...
--- lemma line_def_comm {Point : Type*} (Line : Type*) [incidence_geometry Point Line] 
--- {A B : Point} (hAB : A ≠ B): ∀ P: Point,  P ~ (line Line hAB).val ↔ P ~ (line Line hAB.symm).val := begin
---   intro P,
---   split,
---   { intro hP, by_contra h, sorry },
---   { sorry },
--- end
-
 /-- Un punto externo a la línea determinada por dos puntos es distinto de estos dos puntos. -/
 lemma line_external_ne {Point : Type*} (Line : Type*) [incidence_geometry Point Line] 
   {A B C: Point} (hAB : A ≠ B) (hC : ¬ C ~ (line Line hAB).val): A ≠ C ∧ B ≠ C :=
 begin
 let AB := line Line hAB,
-split,
-{ by_contra h,
-  have hC : C ~ AB.val,
-  { sorry },
-  sorry },
-{ sorry },
+rw [← push_neg.not_eq, ← push_neg.not_eq, ← push_neg.not_or_eq],
+intro h,
+cases h,
+{ rw ← h at hC, exact hC AB.property.1 },
+{ rw ← h at hC, exact hC AB.property.2 },
 end
 
 /-- 
