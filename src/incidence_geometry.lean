@@ -109,10 +109,13 @@ lemma non_collinear {Point : Type*} (Line: Type*) [incidence_geometry Point Line
 end 
 end push_neg
 
-lemma exist_neq_point {Point : Type*} (Line: Type*) [incidence_geometry Point Line] (A : Point) :
+lemma exist_neq_point {Point : Type*} (Line: Type*) [ig: incidence_geometry Point Line] (A : Point) :
   ∃ B : Point, A ≠ B :=
 begin
-  sorry
+  rcases ig.I3 with ⟨P, Q, _, ⟨⟨hPQ, _, _⟩, _⟩⟩,
+  by_cases A = P,
+  { use Q, rw h, exact hPQ }, 
+  { use P }, 
 end
 
 lemma non_collinear_neq1 {Point : Type*} (Line: Type*) [incidence_geometry Point Line] {A B C : Point} (h_non_collinear: ¬ collinear Line A B C): 
@@ -167,14 +170,14 @@ def have_common_point (Point : Type*) {Line : Type*} [incidence_geometry Point L
   (l m : Line) := 
   ∃ A : Point, is_common_point A l m
 
-
-lemma line_def_comm {Point : Type*} (Line : Type*) [incidence_geometry Point Line] 
-{A B : Point} (hAB : A ≠ B): ∀ P: Point,  P ~ (line Line hAB).val ↔ P ~ (line Line hAB.symm).val := begin
-  intro P,
-  split,
-  { intro hP, by_contra h, sorry },
-  { sorry },
-end
+-- TODO: resolver o borrar? Ahora mismo no se está usando...
+-- lemma line_def_comm {Point : Type*} (Line : Type*) [incidence_geometry Point Line] 
+-- {A B : Point} (hAB : A ≠ B): ∀ P: Point,  P ~ (line Line hAB).val ↔ P ~ (line Line hAB.symm).val := begin
+--   intro P,
+--   split,
+--   { intro hP, by_contra h, sorry },
+--   { sorry },
+-- end
 
 /-- Un punto externo a la línea determinada por dos puntos es distinto de estos dos puntos. -/
 lemma line_external_ne {Point : Type*} (Line : Type*) [incidence_geometry Point Line] 
