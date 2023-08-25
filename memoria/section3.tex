@@ -1,16 +1,16 @@
 \section{Introducción a Lean}
 
-\begin{description}
-	\item[Tipos y conjuntos] Analogías y diferencias
-	\item[hipótesis] Los resultados pueden depender de unas hipótesis,
-		enunciadas antes de los \lstinline{:}.
-	\item[El tipo Prop]
-	\item[Implicación y funciones]
-	\item[Doble implicación]
-	\item[and y or como tipos inductivos]
-	\item[Términos true y false]
-	\item[La negación]
-\end{description}
+% \begin{description}
+% 	\item[Tipos y conjuntos] Analogías y diferencias
+% 	\item[hipótesis] Los resultados pueden depender de unas hipótesis,
+% 		enunciadas antes de los \lstinline{:}.
+% 	\item[El tipo Prop]
+% 	\item[Implicación y funciones]
+% 	\item[Doble implicación]
+% 	\item[and y or como tipos inductivos]
+% 	\item[Términos true y false]
+% 	\item[La negación]
+% \end{description}
 
 % \subsection{Tácticas básicas}
 
@@ -54,7 +54,6 @@
 % 	\item[simp] Para demostrar igualdades
 % \end{description}
 
-\section{Introducción a Lean}
 \subsection{Teoría de tipos informal}
 
 Lo primero que se necesita en matemáticas para poder formalizar afirmaciones es
@@ -227,7 +226,7 @@ def id1 (α : Type*) (e : α) := e
 
 El problema de esta definición es que cada vez que se quiera utilizar será
 necesario proporcionarle como primer argumento el tipo del término que se le
-quiere pasar, por ejemplo \lstlisting{id1 ℕ 0}.
+quiere pasar, por ejemplo \lstinline{id1 ℕ 0}.
 Pero la función identidad que queremos considerar recibe un solo argumento.
 Como a cada término acompaña siempre su tipo, dado el término \lstinline{e : α},
 el sistema de inferencia de tipos de Lean es capaz de deducir automáticamente el
@@ -238,9 +237,7 @@ cuya identificación queremos delegar al sistema de inferencia de tipos.
 def id2 {α : Type*} (e : α) := e
 \end{lstlisting}
 
-Así los parámetros indicados entre llaves, llamados \textit{parámetros
-	implícitos}, serán deducidos automaticamente.
-
+Así los parámetros indicados entre llaves, llamados \textit{parámetros implícitos}, serán deducidos automaticamente.
 
 \newpage
 
