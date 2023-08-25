@@ -25,7 +25,13 @@
 
 \RequirePackage{enumitem}
 \setlist[enumerate]{topsep=0mm}
+\setlist[enumerate]{leftmargin=*}
 \setlist[itemize]{topsep=0mm}
+\setlist[itemize]{leftmargin=*}
+
+\renewcommand{\labelitemi}{$\bullet$}
+\renewcommand{\labelitemii}{$\bullet$}
+\renewcommand{\labelitemiii}{$\bullet$}
 
 \setlength\parindent{0pt}
 \setlength\parskip{1em plus 0.1em minus 0.2em}
@@ -35,6 +41,7 @@
 \RequirePackage{titlesec}
 
 \newcommand{\emptypage}{\newpage\null\thispagestyle{empty}\newpage}
+\RequirePackage[margin=2.7cm]{geometry}
 
 % Lean3 formatting
 \RequirePackage{amssymb}
@@ -42,6 +49,7 @@
 \RequirePackage{upgreek}
 \RequirePackage{listings}
 \RequirePackage{xcolor}
+\definecolor{backcolor}{rgb}{0.9, 0.9, 0.9}   % grey
 \definecolor{keywordcolor}{rgb}{0.7, 0.1, 0.1}   % red
 \definecolor{commentcolor}{rgb}{0.4, 0.4, 0.4}   % grey
 \definecolor{symbolcolor}{rgb}{0.0, 0.1, 0.6}    % blue
@@ -50,10 +58,24 @@
 \definecolor{stringcolor}{rgb}{0.5, 0.3, 0.2}    % brown
 \definecolor{tacticcolor}{rgb}{0.0, 0.1, 0.6}
 
-\RequirePackage[margin=3cm]{geometry}
+\RequirePackage{lstautogobble}
 
+\renewcommand{\lstlistingname}{Listado}
 \def\lstlanguagefiles{lstlean.tex}
-\lstset{language=lean}
+\lstset
+{
+	language=lean,
+	% backgroundcolor=\color{backcolor}, % background color
+	% numbers=left, % numbers
+	% numbersep=5pt,
+	frame=tb,
+	% xleftmargin=2em,
+	% framexleftmargin=2.5em,
+	belowskip=-.5em,
+	framesep=10pt,
+	numberstyle=\ttfamily,
+	basicstyle=\fontsize{10}{11}\selectfont\ttfamily,
+}
 
 \newtheorem{prop}{Proposición}
 
@@ -111,6 +133,32 @@
 
 
 \bibliographystyle{plain}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

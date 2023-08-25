@@ -52,16 +52,16 @@ morekeywords=[4]{
 % modifiers, taken from lean-syntax.el
 % note: 'otherkeywords' is needed because these use a different symbol.
 % this command doesn't allow us to specify a number -- they are put with [1]
-% otherkeywords={
-% [persistent], [notation], [visible], [instance], [trans_instance],
-% [class], [parsing-only], [coercion], [unfold_full], [constructor],
-% [reducible], [irreducible], [semireducible], [quasireducible], [wf],
-% [whnf], [multiple_instances], [none], [decl], [declaration],
-% [relation], [symm], [subst], [refl], [trans], [simp], [simps], [congr], [unify],
-% [backward], [forward], [no_pattern], [begin_end], [tactic], [abbreviation],
-% [reducible], [unfold], [alias], [eqv], [intro], [intro!], [elim], [grinder],
-% [localrefinfo], [recursor], @
-% },
+otherkeywords={
+		[persistent], [notation], [visible], [instance], [trans_instance],
+		[class], [parsing-only], [coercion], [unfold_full], [constructor],
+		[reducible], [irreducible], [semireducible], [quasireducible], [wf],
+		[whnf], [multiple_instances], [none], [decl], [declaration],
+		[relation], [symm], [subst], [refl], [trans], [simp], [simps], [congr], [unify],
+		[backward], [forward], [no_pattern], [begin_end], [tactic], [abbreviation],
+		[reducible], [unfold], [alias], [eqv], [intro], [intro!], [elim], [grinder],
+		[localrefinfo], [recursor], @
+	},
 
 % Various symbols
 literate=
@@ -252,7 +252,8 @@ literate=
 {<|>}{{\color{symbolcolor}<|>}}1
 {+}{{\color{symbolcolor}+}}1
 {*}{{\color{symbolcolor}\ensuremath{{}^{*}}}}1
-{\#}{{\color{keywordcolor}\#}}1, % is usually part of a keyword, like #check
+{\#}{{\color{keywordcolor}\#}}1 % is usually part of a keyword, like #check
+{~}{{\fontfamily{ptm}\selectfont \textasciitilde}}1, % is usually part of a keyword, like #check
 
 % Comments
 %comment=[s][\itshape \color{commentcolor}]{/-}{-/},
@@ -268,11 +269,8 @@ keepspaces=true,
 % String delimiters
 morestring=[b]{"},
 
-% Size of tabulations
-tabsize=3,
-
-% Enables ASCII chars 128 to 255
-extendedchars=false,
+tabsize=2, % Size of tabulations
+extendedchars=false, % Enables ASCII chars 128 to 255
 
 % Case sensitivity
 sensitive=true,
@@ -290,33 +288,50 @@ captionpos=b,
 % Full flexible columns
 columns=[l]fullflexible,
 
-
 % Style for (listings') identifiers
 identifierstyle={\ttfamily\color{black}},
 % Note : highlighting of Coq identifiers is done through a new
 % delimiter definition through an lstset at the begining of the
 % document. Don't know how to do better.
 
-% Style for declaration keywords
-keywordstyle=[1]{\ttfamily\color{keywordcolor}},
-
-% Style for sorts
-keywordstyle=[2]{\ttfamily\color{sortcolor}},
-
-% Style for errors
-keywordstyle=[3]{\ttfamily\color{errorcolor}},
-
-% Style for tactics keywords
-keywordstyle=[4]{\ttfamily\color{tacticcolor}},
-
-% Style for attributes
-keywordstyle=[5]{\ttfamily\color{attributecolor}},
-
-% Style for strings
-stringstyle={\ttfamily\color{stringcolor}},
-
-% Style for comments
-commentstyle={\ttfamily\itshape\color{commentcolor}},
+keywordstyle=[1]{\ttfamily\color{keywordcolor}}, % Style for declaration keywords
+keywordstyle=[2]{\ttfamily\color{sortcolor}}, % Style for sorts
+keywordstyle=[3]{\ttfamily\color{errorcolor}}, % Style for errors
+keywordstyle=[4]{\ttfamily\color{tacticcolor}}, % Style for tactics keywords
+keywordstyle=[5]{\ttfamily\color{attributecolor}}, % Style for attributes
+stringstyle={\ttfamily\color{stringcolor}}, % Style for strings
+commentstyle={\ttfamily\itshape\color{commentcolor}}, % Style for comments
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
