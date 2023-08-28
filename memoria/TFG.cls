@@ -41,7 +41,7 @@
 \RequirePackage{titlesec}
 
 \newcommand{\emptypage}{\newpage\null\thispagestyle{empty}\newpage}
-\RequirePackage[margin=2.7cm]{geometry}
+\RequirePackage[margin=3.5cm]{geometry}
 
 % Lean3 formatting
 \RequirePackage{amssymb}
@@ -64,17 +64,24 @@
 \def\lstlanguagefiles{lstlean.tex}
 \lstdefinestyle{leanSimple}{
 	language=lean,
-	frame=tb,
+	frame=trlb,
 	framesep=10pt,
+	rulecolor=\color{gray},
 	numberstyle=\ttfamily,
 	basicstyle=\fontsize{10}{11}\selectfont\ttfamily,
+	xleftmargin=-1.5cm,
+	xrightmargin=-1.5cm,
+	aboveskip=1em,
+	belowskip=.5em,
+	% framexleftmargin=1em,
+	% framexrightmargin=1em,
 }
 \lstdefinestyle{leanFull}{
 	style=leanSimple,
 	numbers=left,
 	% numbersep=5pt,
-	xleftmargin=2.5em,
-	framexleftmargin=2.5em,
+	xleftmargin=2.5cm,
+	framexleftmargin=3.5cm,
 	% belowskip=-.5em,
 	% backgroundcolor=\color{backcolor}, % background color
 }
@@ -137,6 +144,45 @@
 
 
 \RequirePackage[citestyle=alphabetic,bibstyle=alphabetic]{biblatex}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
