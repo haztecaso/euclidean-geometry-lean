@@ -116,6 +116,9 @@ contraposición: si asumimos que no se cumple la conclusión (que las dos lineas
 no tengan más de un punto en común), entonces tampoco se cumple la premisa (que las
 dos líneas sean iguales).
 
+\todo{Explicar qué es una demostración en Lean. Que es el estado táctico y la
+	meta, qué hacen las tácticas.}
+
 Al intentar implementar esta idea en Lean nos damos cuenta de que hay bastantes
 detalles que necesitamos tener en cuenta.
 
@@ -124,11 +127,8 @@ y su demostración:
 
 \lstinputlisting[style=leanFull, caption={\lstinline{disctinct_lines_one_common_point}}]{listing1.lean}
 
-\todo{Explicar qué es una demostración en Lean. Que es el estado táctico y la
-	meta, qué hacen las tácticas.}
-
 Analicemos la demostración línea por línea:
-\begin{enumerate}[label=L.\arabic*, nosep]
+\begin{enumerate}[label=L.\arabic*, topsep=0mm]
 	\setcounter{enumi}{4}
 
 	\item El estado táctico inicial incluye los parámetros del lema. En este caso
@@ -313,6 +313,10 @@ hAB: B ≠ A
 
 	      Análogamente para el segundo argumento.
 \end{enumerate}
+
+
+
+
 
 
 
