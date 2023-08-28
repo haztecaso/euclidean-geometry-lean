@@ -1,7 +1,7 @@
 { stdenv, texlive }:
 stdenv.mkDerivation {
   name = "euclidean-geometry-lean-memoria";
-  version = "0.0.1";
+  version = "0.0.2";
 
   src = ./.;
 
@@ -9,12 +9,12 @@ stdenv.mkDerivation {
 
   buildPhase = ''
     mkdir -p .cache/texmf-var
-    TEXMFHOME=.cache TEXMFVAR=.cache/texmf-var latexmk -interaction=nonstopmode -pdf -lualatex main.tex
+    TEXMFHOME=.cache TEXMFVAR=.cache/texmf-var latexmk -interaction=nonstopmode -pdf -lualatex memoria.tex
   '';
 
   installPhase = ''
     mkdir -p $out
-    cp main.pdf $out/
+    cp memoria.pdf $out/
   '';
 
 }
