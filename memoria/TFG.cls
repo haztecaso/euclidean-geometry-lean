@@ -62,20 +62,24 @@
 
 \renewcommand{\lstlistingname}{Listado}
 \def\lstlanguagefiles{lstlean.tex}
-\lstset
-{
+\lstdefinestyle{leanSimple}{
 	language=lean,
-	% backgroundcolor=\color{backcolor}, % background color
-	% numbers=left, % numbers
-	% numbersep=5pt,
 	frame=tb,
-	% xleftmargin=2em,
-	% framexleftmargin=2.5em,
-	% belowskip=-.5em,
 	framesep=10pt,
 	numberstyle=\ttfamily,
 	basicstyle=\fontsize{10}{11}\selectfont\ttfamily,
 }
+\lstdefinestyle{leanFull}{
+	style=leanSimple,
+	numbers=left,
+	% numbersep=5pt,
+	xleftmargin=2.5em,
+	framexleftmargin=2.5em,
+	% belowskip=-.5em,
+	% backgroundcolor=\color{backcolor}, % background color
+}
+
+\lstset{style=leanSimple}
 
 \newtheorem{prop}{Proposición}
 
@@ -133,4 +137,17 @@
 
 
 \RequirePackage[citestyle=alphabetic,bibstyle=alphabetic]{biblatex}
+
+
+
+
+
+
+
+
+
+
+
+
+
 

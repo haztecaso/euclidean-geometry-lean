@@ -122,31 +122,14 @@ detalles que necesitamos tener en cuenta.
 Esta es la formalización completa del resultado en Lean, incluyendo el enunciado
 y su demostración:
 
-\begin{lstlisting}[numbers=left, caption={\lstinline{disctinct_lines_one_common_point}}]
-lemma disctinct_lines_one_common_point
-  {Point Line : Type*} [ig : incidence_geometry Point Line] :
-  ∀ l m : Line, l ≠ m →
-    (∃! A : Point, is_common_point A l m) ∨ (¬ have_common_point Point l m) :=
-begin
-  intros l m,
-  contrapose,
-  push_neg,
-  rintro ⟨not_unique, hlm⟩,
-  rw exists_unique at not_unique,
-  push_neg at not_unique,
-  cases hlm with A hA,
-  rcases not_unique A hA with ⟨B, ⟨hB, hAB⟩⟩,
-  rw ne_comm at hAB,
-  exact unique_of_exists_unique (ig.I1 hAB) ⟨hA.left,hB.left⟩ ⟨hA.right,hB.right⟩,
-end
-\end{lstlisting}
+\lstinputlisting[style=leanFull, caption={\lstinline{disctinct_lines_one_common_point}}]{listing1.lean}
 
 \todo{Explicar qué es una demostración en Lean. Que es el estado táctico y la
 	meta, qué hacen las tácticas.}
 
-Analicemos detalladamente cada uno de los pasos:
-
-\begin{itemize}
+Analicemos la demostración línea por línea:
+\begin{enumerate}[label=L.\arabic*, nosep]
+	\setcounter{enumi}{4}
 
 	\item El estado táctico inicial incluye los parámetros del lema. En este caso
 	      los tipos \lstinline{Point} y \lstinline{Line} e \lstinline{ig}, la
@@ -157,14 +140,15 @@ Analicemos detalladamente cada uno de los pasos:
 	      La meta se corresponde con el enunciado del lema, es decir lo que queremos
 	      demostrar.
 
+
 	\item \lstinline{intros l m,} La aplicación de la táctica \lstinline{intros}
 	      introduce las hipótesis \lstinline{l} y \lstinline{m}. Es decir, saca el
 	      cuantificador universal de la meta e introduce las variables cuantificadas
 	      en el estado táctico, pasando a tener ahora dos nuevos términos
 	      \lstinline{l : Line} y \lstinline{m : Line}. La nueva meta es
 	      \begin{lstlisting}
-l ≠ m → (∃! (A : Point), is\_common\_point A l m) ∨ ¬have\_common\_point Point l m
-          \end{lstlisting}
+l ≠ m → (∃! (A : Point), is_common_point A l m) ∨ ¬have_common_point Point l m
+\end{lstlisting}
 	      Esto equivale a decir en lenguaje natural "sean l y m dos líneas"
 
 	\item \lstinline{contrapose,} La táctica \lstinline{contrapose} permite
@@ -173,10 +157,10 @@ l ≠ m → (∃! (A : Point), is\_common\_point A l m) ∨ ¬have\_common\_poin
 	      este caso la meta resultante es
 	      \begin{lstlisting}
 ⊢ ¬((∃! (A : Point), is_common_point A l m) ∨ ¬have_common_point Point l m) → ¬l ≠ m
-      \end{lstlisting}
+\end{lstlisting}
 
 	\item \lstinline{push_neg, } La táctica \lstinline{push_neg} utiliza
-	      equivalencias lógicas para 'empujar' las negaciones dentro de la fórmula.
+	      equivalencias lógicas para \guillemotleft empujar\guillemotright las negaciones dentro de la fórmula.
 	      En este caso, al no haber especificado una hipótesis concreta, se aplica
 	      sobre la meta.
 
@@ -185,10 +169,12 @@ l ≠ m → (∃! (A : Point), is\_common\_point A l m) ∨ ¬have\_common\_poin
 	      conjunción de negaciones. En la segunda, negar una desigualdad equivale a
 	      una igualdad.
 
-	      Por tanto la meta resultante es
-	      \begin{lstlisting}
-⊢ (¬∃! (A : Point), is_common_point A l m) ∧ have_common_point Point l m → l = m
-      \end{lstlisting}
+	      \todo{fix latex problem}
+	      % Por tanto la meta resultante es
+	      % \begin{lstlisting}
+	      % ⊢ (¬∃! (A : Point), is_common_point A l m) ∧ have_common_point Point l m → l = m
+	      % \end{lstlisting}
+
 	      Es interesante notar que \lstinline{push_neg} no consigue 'empujar' la negación todo lo que podríamos desear.
 
 	      Esto es así porque no está reescribiendo las definiciones previas y de
@@ -216,11 +202,11 @@ hlm: have_common_point Point l m
 	      escribir \lstinline{at} indicamos dónde queremos realizar dicha
 	      reescritura, en este caso en la hipótesis \lstinline{not_unique}.
 
-	      En este caso utilizamos la definición de ∃!, con lo que se modifica la hipótesis
+	      En este caso utilizamos la definición de \lstinline{∃!}, con lo que se modifica la hipótesis
 	      \begin{lstlisting}
 not_unique : ¬∃ (x : Point), 
-  is_common_point x l m ∧ ∀ (y : Point), is_common_point y l m → y = x
-      \end{lstlisting}
+is_common_point x l m ∧ ∀ (y : Point), is_common_point y l m → y = x
+\end{lstlisting}
 
 	\item \lstinline{push_neg at not_unique,}
 	      %   /- Como comentábamos antes, ahora que hemos reescrito la definición de ∃! podemos seguir "empujando" la negación en la hipótesis not_unique,
@@ -232,8 +218,7 @@ not_unique : ¬∃ (x : Point),
 	      término del tipo cuantificado por el existe y la correspondiente hipótesis
 	      particularizada para el nuevo término.
 
-	      En nuestro caso tenemos la hipótesis \lstinline{hlm: have_common_point
-		      Point l m} y la definición \\
+	      En nuestro caso tenemos la hipótesis \lstinline{hlm: have_common_point Point l m} y la definición
 	      \lstinline{have_common_point Point l m := ∃ A : Point, is_common_point A l m}.
 
 	      Por tanto al aplicar la táctica, la hipótesis hlm se convierte en dos
@@ -241,7 +226,7 @@ not_unique : ¬∃ (x : Point),
 	      \begin{lstlisting}
 A : Point 
 hA: is_common_point A l m
-      \end{lstlisting}
+\end{lstlisting}
 
 	\item \lstinline{rcases not_unique A hA with ⟨B, ⟨hB, hAB⟩⟩,} En esta línea
 	      están ocurriendo distintas cosas:
@@ -249,8 +234,8 @@ hA: is_common_point A l m
 		      \item Recordemos que en el estado táctico actual tenemos la hipótesis
 		            \begin{lstlisting}
 not_unique: ∀ (x : Point), is_common_point x l m 
-              → (∃ (y : Point), is_common_point y l m ∧ y ≠ x) 
-            \end{lstlisting}
+→ (∃ (y : Point), is_common_point y l m ∧ y ≠ x) 
+\end{lstlisting}
 
 		            Primero se está construyendo el término \lstinline{not_unique A hA},
 		            al que posteriormente se le aplicará la táctica {rcases}.
@@ -263,7 +248,7 @@ not_unique: ∀ (x : Point), is_common_point x l m
 		            \lstinline{not_unique A} es igual a
 		            \begin{lstlisting}
 is_common_point A l m → (∃ (y : Point), is_common_point y l m ∧ y ≠ A)
-            \end{lstlisting}
+\end{lstlisting}
 
 		            Ahora podemos observar que tenemos entre nuestras hipótesis la
 		            condición de esta implicación, \lstinline{hA: is_common_point A l m}
@@ -272,7 +257,7 @@ is_common_point A l m → (∃ (y : Point), is_common_point y l m ∧ y ≠ A)
 		            \lstinline{not_unique A hA} es igual a
 		            \begin{lstlisting}
 ∃ (y : Point), is_common_point y l m ∧ y ≠ x
-            \end{lstlisting}
+\end{lstlisting}
 
 		      \item La aplicación de la táctica \lstinline{rcases} nos permite, como
 		            anteriormente, obtener un término concreto del cuantificador
@@ -283,7 +268,7 @@ is_common_point A l m → (∃ (y : Point), is_common_point y l m ∧ y ≠ A)
 B: Point 
 hB: is_common_point B l m 
 hAB: B ≠ A
-           \end{lstlisting}
+\end{lstlisting}
 	      \end{itemize}
 
 	\item \lstinline{rw ne_comm at hAB,} Para tener la hipótesis
@@ -327,5 +312,21 @@ hAB: B ≠ A
 	      conjunción.
 
 	      Análogamente para el segundo argumento.
-\end{itemize}
+\end{enumerate}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
