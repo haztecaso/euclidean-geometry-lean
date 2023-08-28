@@ -1,6 +1,6 @@
 \documentclass{TFG}
-
 \usepackage{lipsum}
+\addbibresource{referencias.bib}
 
 \title{Formalización de las matemáticas con Lean.\\ Un caso de estudio: Geometría euclídea plana.}
 \date{Septiembre de 2023}
@@ -29,7 +29,8 @@
 \newpage
 
 % \addcontentsline{toc}{section}{Referencias}
-% \bibliography{referencias}
+% \printbibheading
+\printbibliography[heading=bibintoc, title={Referencias}]{referencias}
 
 \end{document}
 

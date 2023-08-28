@@ -13,14 +13,14 @@
 \RequirePackage[none]{hyphenat}
 \RequirePackage[utf8]{inputenc}
 \RequirePackage[T1]{fontenc}
+\RequirePackage{csquotes}
 \RequirePackage[spanish]{babel}
 \RequirePackage{enumitem}
 \RequirePackage{array}
-\RequirePackage{cite}
 \RequirePackage{graphicx}
 \RequirePackage{microtype}
 
-\RequirePackage[colorlinks=true, linktocpage=true, pagebackref=true, citecolor=red, linkcolor=blue]{hyperref}
+\RequirePackage[colorlinks=true, linktocpage=true, citecolor=red, linkcolor=blue]{hyperref}
 \setcounter{tocdepth}{1}
 
 \RequirePackage{enumitem}
@@ -47,7 +47,7 @@
 \RequirePackage{amssymb}
 \RequirePackage{amsthm}
 \RequirePackage{upgreek}
-\RequirePackage{listings}
+\RequirePackage[final]{listings}
 \RequirePackage{xcolor}
 \definecolor{backcolor}{rgb}{0.9, 0.9, 0.9}   % grey
 \definecolor{keywordcolor}{rgb}{0.7, 0.1, 0.1}   % red
@@ -71,7 +71,7 @@
 	frame=tb,
 	% xleftmargin=2em,
 	% framexleftmargin=2.5em,
-	belowskip=-.5em,
+	% belowskip=-.5em,
 	framesep=10pt,
 	numberstyle=\ttfamily,
 	basicstyle=\fontsize{10}{11}\selectfont\ttfamily,
@@ -132,41 +132,5 @@
 % \titlespacing*{\subsubsection}{0pt}{.2em plus 0.1em minus 0.1em}{0em plus 0.1em minus 0.1em}
 
 
-\bibliographystyle{plain}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+\RequirePackage[citestyle=alphabetic,bibstyle=alphabetic]{biblatex}
 
