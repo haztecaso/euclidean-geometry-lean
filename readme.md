@@ -71,5 +71,4 @@ clone https://github.com/haztecaso/euclidean-geometry-lean`.
 
 El editor de texto recomendado para trabajar con Lean es Visual Studio Code (es
 recomendable usar su distribución open source,
-[VSCodium](https://vscodium.com/))
-
+[VSCodium](https://vscodium.com/)).
