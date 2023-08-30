@@ -28,7 +28,7 @@ begin
     B := C,
     neq := hAC,
   },
-  let h := @segment_intersect_line Point Line og sAC GE,
+  let h := @seg_intersect_line Point Line og sAC GE,
   -- rw ← segment_intersect_line at h,
   -- have hB : segment_intersect_line
   sorry
