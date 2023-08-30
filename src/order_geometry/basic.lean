@@ -74,13 +74,13 @@ structure Triangle (Point Line: Type*) [order_geometry Point Line] :=
 
 lemma Triangle.non_collinear_symm {Point Line: Type*} [order_geometry Point Line] (T : Triangle Point Line) : ¬ collinear Line T.B T.A T.C :=
 begin  
-  rw collinear_comm,
+  rw collinear_symm,
   exact T.non_collinear,
 end
 
 lemma Triangle.non_collinear_symm' {Point Line: Type*} [order_geometry Point Line] (T : Triangle Point Line) : ¬ collinear Line T.C T.A T.B :=
 begin  
-  rw [collinear_comm2, collinear_comm],
+  rw [collinear_symm2, collinear_symm],
   exact T.non_collinear,
 end
 

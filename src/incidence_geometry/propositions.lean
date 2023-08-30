@@ -2,22 +2,27 @@ import .basic
 
 namespace incidence_geometry
 
-
-/-- Un punto externo a la línea determinada por dos puntos es distinto de estos dos puntos. -/
-lemma line_external_ne {Point : Type*} (Line : Type*) [incidence_geometry Point Line] 
-  {A B C: Point} (hAB : A ≠ B) (hC : ¬ C ~ (line Line hAB).val): A ≠ C ∧ B ≠ C :=
+/-- Un punto externo a la línea determinada por dos puntos es distinto de estos 
+dos puntos. -/
+lemma line_external_ne 
+  {Point : Type*} (Line : Type*) [incidence_geometry Point Line] 
+  {A B C: Point} (hAB : A ≠ B) (hC : ¬ C ~ (line Line hAB).val) : 
+  A ≠ C ∧ B ≠ C :=
 begin
-let AB := line Line hAB,
-rw [← push_neg.not_eq, ← push_neg.not_eq, ← push_neg.not_or_eq],
-intro h,
-cases h,
-{ rw ← h at hC, exact hC AB.property.1 },
-{ rw ← h at hC, exact hC AB.property.2 },
+  let AB := line Line hAB,
+  rw [← push_neg.not_eq, ← push_neg.not_eq, ← push_neg.not_or_eq],
+  intro h,
+  cases h,
+  { rw ← h at hC, exact hC AB.property.1 },
+  { rw ← h at hC, exact hC AB.property.2 },
 end
 
 /-- Dos líneas distintas tienen como mucho un punto en común. -/
-lemma disctinct_lines_one_common_point {Point Line : Type*} [ig : incidence_geometry Point Line] :
-  ∀ l m : Line, l ≠ m → (∃! A : Point, is_common_point A l m) ∨ (¬ have_common_point Point l m) := 
+lemma disctinct_lines_one_common_point 
+  {Point Line : Type*} [ig : incidence_geometry Point Line] :
+  ∀ l m : Line, l ≠ m → 
+    (∃! A : Point, is_common_point A l m) 
+    ∨ (¬ have_common_point Point l m) := 
 begin
   intros l m,
   contrapose,
@@ -28,14 +33,23 @@ begin
   cases hlm with A hA,
   rcases not_unique A hA with ⟨B, ⟨hB, hAB⟩⟩,
   rw ne_comm at hAB,
-  exact unique_of_exists_unique (ig.I1 hAB) ⟨hA.left,hB.left⟩ ⟨hA.right,hB.right⟩,
+  exact 
+    unique_of_exists_unique (ig.I1 hAB) ⟨hA.left,hB.left⟩ ⟨hA.right,hB.right⟩,
 end
 
-lemma non_collinear_ne_lines {Point : Type*} (Line : Type*) [ig: incidence_geometry Point Line] (A B C: Point) (hAB : A ≠ B) (hAC : A ≠ C) (hBC : B ≠ C):
- ¬ collinear Line A B C → (line Line hAB).val ≠ (line Line hAC).val ∧ (line Line hAB).val ≠ (line Line hBC).val ∧ (line Line hAC).val ≠ (line Line hBC).val
- := 
+/-- Tres puntos no colineares determinan tres líneas distintas. -/
+lemma non_collinear_ne_lines 
+  {Point : Type*} (Line : Type*) [ig: incidence_geometry Point Line] 
+  (A B C: Point) 
+  (h_noncollinear : ¬ collinear Line A B C)
+  -- Las hipótesis de que los puntos son distintos son innecesarias puesto que 
+  -- podrían derivarse de  `non_collinear_neq`. Están incluidas para darles un 
+  -- nombre y poder construir las líneas correspondientes en el enunciado.
+  (hAB : A ≠ B) (hAC : A ≠ C) (hBC : B ≠ C) :
+  (line Line hAB).val ≠ (line Line hAC).val 
+  ∧ (line Line hAB).val ≠ (line Line hBC).val 
+  ∧ (line Line hAC).val ≠ (line Line hBC).val := 
  begin
-  intro h_noncollinear,
   rw push_neg.non_collinear at h_noncollinear,
   by_contra h,
   rw [push_neg.not_and_distrib_eq, push_neg.not_and_distrib_eq] at h,
@@ -60,9 +74,13 @@ lemma non_collinear_ne_lines {Point : Type*} (Line : Type*) [ig: incidence_geome
  end
 
 /-- Existen tres líneas distintas que no pasan por ningún punto común. -/
-lemma disctinct_lines_not_concurrent {Point Line : Type*} [ig : incidence_geometry Point Line] :
-  ∃ l m n: Line, (l ≠ m ∧ l ≠ n ∧ m ≠ n) ∧
-  ¬ ∃ P : Point, is_common_point P l m ∧ is_common_point P l n ∧ is_common_point P m n
+lemma disctinct_lines_not_concurrent 
+  {Point Line : Type*} [ig : incidence_geometry Point Line] :
+  ∃ l m n: Line, 
+    (l ≠ m ∧ l ≠ n ∧ m ≠ n) 
+    ∧ ¬ ∃ P : Point, is_common_point P l m 
+    ∧ is_common_point P l n 
+    ∧ is_common_point P m n
   :=
 begin
   rcases ig.I3 with ⟨A, B, C, ⟨⟨hAB, hAC, hBC⟩, h_noncollinear⟩⟩,
@@ -70,7 +88,7 @@ begin
   let AC := line Line hAC,
   let BC := line Line hBC,
   use [AB, AC, BC],
-  let hABC := non_collinear_ne_lines Line A B C hAB hAC hBC h_noncollinear,
+  let hABC := non_collinear_ne_lines Line A B C h_noncollinear hAB hAC hBC,
   refine ⟨hABC, _⟩, 
   by_contra h,
   cases h with P hP,
@@ -82,11 +100,13 @@ begin
     push_neg at h_noncollinear,
     exact h_noncollinear BC hPBC BC.prop.left BC.prop.right,
   },
-  exact hABC.left (unique_of_exists_unique (ig.I1 hAP) ⟨hPAB, AB.prop.left⟩ ⟨hPAC, AC.prop.left⟩),
+  exact hABC.left (unique_of_exists_unique 
+    (ig.I1 hAP) ⟨hPAB, AB.prop.left⟩ ⟨hPAC, AC.prop.left⟩),
 end
 
 /-- Para cada línea existe un punto externo a ella. -/
-lemma line_external_point {Point Line : Type*} [ig : incidence_geometry Point Line] :
+lemma line_external_point 
+  {Point Line : Type*} [ig : incidence_geometry Point Line] :
   ∀ l : Line, ∃ A : Point, ¬ A ~ l :=
 begin
   rcases ig.I3 with ⟨A, B, C, ⟨_, h1⟩⟩,
@@ -102,7 +122,8 @@ begin
 end
 
 /-- Para caada punto existe una línea que no pasa por él. -/
-lemma point_external_line {Point Line : Type*} [ig : incidence_geometry Point Line]: 
+lemma point_external_line 
+  {Point Line : Type*} [ig : incidence_geometry Point Line] : 
   ∀ A: Point, ∃ l: Line, ¬ A ~ l :=
 begin
   intro A,
@@ -118,17 +139,21 @@ begin
   { use n },
 end
 
-/-- Si dos líneas que determinan tres puntos son iguales, entonces la tercera también coincide. -/
-lemma eq_lines_determined_by_points {Point : Type*} (Line : Type*) [ig: incidence_geometry Point Line] {A B C : Point} 
-  (hAB : A ≠ B) (hAC : A ≠ C) (hBC : B ≠ C) :
-  ((line Line hAB).val = (line Line hAC).val) → (line Line hAB).val = (line Line hBC).val := 
+/-- Si dos líneas que determinan tres puntos son iguales, entonces la tercera 
+también coincide. -/
+lemma eq_lines_determined_by_points 
+  {Point : Type*} (Line : Type*) [ig: incidence_geometry Point Line] 
+  {A B C : Point} (hAB : A ≠ B) (hAC : A ≠ C) (hBC : B ≠ C) :
+  ((line Line hAB).val = (line Line hAC).val) → 
+    (line Line hAB).val = (line Line hBC).val := 
 begin
   intro hABAC,
   sorry
 end
 
 /-- Para cada punto existen al menos dos líneas que pasan por él. -/
-lemma point_has_two_lines {Point Line : Type*} [ig: incidence_geometry Point Line]: 
+lemma point_has_two_lines 
+  {Point Line : Type*} [ig: incidence_geometry Point Line] :
   ∀ A: Point, ∃ l m: Line, l ≠ m ∧ A ~ l ∧ A ~ m :=
 begin
   intro P,
