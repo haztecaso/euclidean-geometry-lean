@@ -1,5 +1,4 @@
-import ..order.basic
-import ..order.sideness
+import ..order_geometry.basic ..order_geometry.sideness
 
 open order_geometry
 open incidence_geometry 

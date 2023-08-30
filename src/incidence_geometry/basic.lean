@@ -1,5 +1,4 @@
-import geometry.euclidean.basic
-import ..basic_defs
+import tactic ..basic_defs
 
 /-!
 # Axiomas de incidencia

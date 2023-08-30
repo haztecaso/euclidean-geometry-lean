@@ -1,5 +1,5 @@
 [package]
-name = "geoclid"
+name = "euclidean_geometry"
 version = "0.1"
 lean_version = "leanprover-community/lean:3.50.3"
 path = "src"

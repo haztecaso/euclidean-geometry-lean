@@ -1,4 +1,4 @@
-import ..incidence.basic
+import ..incidence_geometry.basic
 
 open incidence_geometry
 open_locale classical
