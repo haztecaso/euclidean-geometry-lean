@@ -1,5 +1,19 @@
 import .basic ..incidence_geometry.propositions
 
+/-!
+# Sideness
+
+En este fichero se plantea una formalización de la demostración de que la 
+relación de estar del mismo lado del plano respecto de una línea es una relación 
+de equivalencia. Queda pendiente terminar la demostración de la transitividad.
+
+**Atención:** la relación considerada no es la misma que la definida en 
+`order_geometry.basic`. En ese fichero se define la relación entre todos los 
+puntos del plano, mientras que aquí se consideran sólo los externos a la recta 
+considerada, como en el libro de Hartshorne.
+
+-/
+
 namespace incidence_geometry
 
 /-- Conjunto de puntos de una línea. -/
@@ -56,56 +70,25 @@ TODO: Cambiar? Esta no es exactamente la definición del Hartshorne ya que en el
 libro está definida solo cuando los puntos son externos a la línea. Nosotros 
 incluiremos esta hipótesis sólo en los casos donde sea necesario.
 -/
-def same_side_line (l: Line) (A B : outside_line_points Point l) := 
+def same_side_line' (l: Line) (A B : outside_line_points Point l) := 
   A = B ∨ (∃ h : ↑A ≠ ↑B, 
     ¬ @segment_intersect_line Point Line og (Seg.mk A B h) l)
 
-def same_side_line' (l: Line) (A B : Point) := 
-  A = B ∨ (∃ h : A ≠ B, 
-    ¬ @segment_intersect_line Point Line og (Seg.mk A B h) l)
-
-def same_side_line'_non_collinear 
-  {A B C D: Point} [og: order_geometry Point Line] 
-  (hAB : A ≠ B) (hC : ¬  C ~ (line Line hAB).val) 
-  (h : same_side_line' (line Line hAB).val C D) :
-  ¬ collinear Line A B D := 
-begin
-  by_contra h_contra,
-  let lAB := (line Line hAB),
-  cases h_contra with l hl,
-  have h2 : l = lAB.val,
-  { rcases og.I1 hAB with ⟨_, ⟨_, hm⟩⟩,
-    rw [hm l ⟨hl.left, hl.right.left⟩, ← hm lAB lAB.property],
-    refl,
-    },
-  rw h2 at hl,
-  cases h, 
-  { rw ← h at hl, tauto },
-  { cases h with hCD h,
-    rw segment_intersect_line at h,
-    push_neg at h,
-    have hD : D ∈ (Seg.mk C D hCD),
-    { let a : Point → Seg Point → Prop := has_mem.mem,
-      sorry },
-    specialize h D hD,
-    tauto },
-end
 
 variable (Point)
 
 /-- La relación de estar del mismo lado de una línea es reflexiva. -/
-lemma same_side_line_refl (l : Line) : 
-  reflexive (@same_side_line Point Line og l) := 
+lemma same_side_line'_refl (l : Line) : 
+  reflexive (@same_side_line' Point Line og l) := 
 begin
   intro P,
   left,
   refl,
 end 
 
-
 /-- La relación de estar del mismo lado de una línea es simétrica. -/
-lemma same_side_line_symm (l : Line) : 
-  symmetric (@same_side_line Point Line og l) := 
+lemma same_side_line'_symm (l : Line) : 
+  symmetric (@same_side_line' Point Line og l) := 
 begin
   intros P Q h,
   cases h with h1 h2,
@@ -124,10 +107,10 @@ end
 -- Lema útil para demostrar la transitividad de la relación de estar del mismo lado de una línea.
 -- Se demuestra la transitividad para puntos no colineares.
 -- -/
--- lemma same_side_line_trans_noncollinear_case 
+-- lemma same_side_line'_trans_noncollinear_case 
 --   (l : Line) (A B C : outside_line_points Point l) 
 --   (h: ¬ collinear Line (↑A:Point) ↑B ↑C) :
--- (same_side_line l A B) → (same_side_line l B C) → (same_side_line l A C):= 
+-- (same_side_line' l A B) → (same_side_line' l B C) → (same_side_line' l A C):= 
 -- begin
 --   sorry
 -- end
@@ -139,8 +122,8 @@ Para esto reducimos la demostración a dos casos:
 - Tres puntos no colineares. Tratado en el lema anterior.
 - Tres puntos colineares. Reducible mediante construcciones al caso anterior.
 -/
-lemma same_side_line_trans (l : Line) : 
-  transitive (@same_side_line Point Line og l) := 
+lemma same_side_line'_trans (l : Line) : 
+  transitive (@same_side_line' Point Line og l) := 
 begin
   intros A B C hAB hBC,
   cases hAB,
@@ -203,17 +186,17 @@ end
 
 /-- La relación de estar del mismo lado del plano respecto de una línea es de 
 equivalencia. -/
-theorem same_side_line_equiv (l : Line) :
-  equivalence (@same_side_line Point Line og l) :=
-  ⟨same_side_line_refl Point l, 
-    same_side_line_symm Point l, 
-    same_side_line_trans Point l⟩
+theorem same_side_line'_equiv (l : Line) :
+  equivalence (@same_side_line' Point Line og l) :=
+  ⟨same_side_line'_refl Point l, 
+    same_side_line'_symm Point l, 
+    same_side_line'_trans Point l⟩
 
 /-- Instancia de la clase setoid para la relación. -/
 def PlaneSide.setoid 
   [og : order_geometry Point Line] (l : Line) : 
   setoid (outside_line_points Point l) :=
-  { r := same_side_line l, iseqv := same_side_line_equiv Point l }
+  { r := same_side_line' l, iseqv := same_side_line'_equiv Point l }
 
 local attribute [instance] PlaneSide.setoid
 
@@ -223,7 +206,7 @@ def PlaneSide [og : order_geometry Point Line] (l : Line) :=
 
 def PlaneSide.reduce [og : order_geometry Point Line] (l : Line) : 
   outside_line_points Point l → PlaneSide Point l := 
-  quot.mk (same_side_line l)
+  quot.mk (same_side_line' l)
 
 instance [og : order_geometry Point Line] (l : Line) : 
   has_lift (outside_line_points Point l) (PlaneSide Point l) := 
@@ -253,9 +236,5 @@ end
 --   (Point : Type*) {Line : Type*} [incidence_geometry Point Line] 
 --   (l: Line) (P : line_points Point l) := 
 --   { A : Point | A ~ l ∧ A ≠ P }
-
-def same_side_points {Point : Type*} (Line : Type*) [order_geometry Point Line] 
-  (A B C : Point) (hBC : B ≠ C) := 
-  collinear Line A B C ∧ A ∉ (Seg.mk B C hBC) 
 
 end order_geometry

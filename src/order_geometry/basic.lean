@@ -138,4 +138,39 @@ begin
   exact ⟨r1, r2, vertex, h⟩
 end
 
+def same_side_line (l: Line) (A B : Point) := 
+  A = B ∨ (∃ h : A ≠ B, 
+    ¬ @segment_intersect_line Point Line og (Seg.mk A B h) l)
+
+def same_side_line_non_collinear 
+  {A B C D: Point} [og: order_geometry Point Line] 
+  (hAB : A ≠ B) (hC : ¬  C ~ (line Line hAB).val) 
+  (h : same_side_line (line Line hAB).val C D) :
+  ¬ collinear Line A B D := 
+begin
+  by_contra h_contra,
+  let lAB := (line Line hAB),
+  cases h_contra with l hl,
+  have h2 : l = lAB.val,
+  { rcases og.I1 hAB with ⟨_, ⟨_, hm⟩⟩,
+    rw [hm l ⟨hl.left, hl.right.left⟩, ← hm lAB lAB.property],
+    refl,
+    },
+  rw h2 at hl,
+  cases h, 
+  { rw ← h at hl, tauto },
+  { cases h with hCD h,
+    rw segment_intersect_line at h,
+    push_neg at h,
+    have hD : D ∈ (Seg.mk C D hCD),
+    { let a : Point → Seg Point → Prop := has_mem.mem,
+      sorry },
+    specialize h D hD,
+    tauto },
+end
+
+def same_side_point {Point : Type*} (Line : Type*) [order_geometry Point Line] 
+  (A B C : Point) (hBC : B ≠ C) := 
+  collinear Line A B C ∧ A ∉ (Seg.mk B C hBC) 
+
 end order_geometry

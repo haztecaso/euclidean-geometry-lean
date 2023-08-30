@@ -1,4 +1,4 @@
-import ..order_geometry.basic ..order_geometry.sideness
+import ..order_geometry.basic ..order_geometry.basic
 
 open order_geometry
 open incidence_geometry 
@@ -25,7 +25,7 @@ class congruence_geometry (Point Line : Type*)
   (acong : Ang Point Line → Ang Point Line → Prop)
   (C1 (s : Seg Point) (A B : Point) (hAB : A ≠ B) :
     ∃! C : Point, ∃ hBC : B ≠ C, ∃ hAC : A ≠ C, 
-      (same_side_points Line A B C hBC) 
+      (same_side_point Line A B C hBC) 
       ∧ (scong s (Seg.mk A C hAC))
   )
   (C21 {s1 s2 s3: Seg Point} (h1 : scong s1 s2) (h2 : scong s1 s3) :
@@ -40,8 +40,8 @@ class congruence_geometry (Point Line : Type*)
   )
   (C4 (α : Ang Point Line) (A B Side : Point) (hAB : A ≠ B) 
     (hSide :  ¬ Side ~ (line Line hAB).val) :
-    ∃! C : Point, ∃ h : same_side_line' (line Line hAB).val Side C,
-      (acong α (Ang.mk_from_points B A C (same_side_line'_non_collinear hAB hSide h))))
+    ∃! C : Point, ∃ h : same_side_line (line Line hAB).val Side C,
+      (acong α (Ang.mk_from_points B A C (same_side_line_non_collinear hAB hSide h))))
   (C51 {α β γ : Ang Point Line} (hαβ : acong α β) (hαγ : acong α γ) : 
     acong β γ)
   (C52 (α : Ang Point Line) : acong α α)
