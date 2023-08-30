@@ -30,7 +30,7 @@ class congruence_geometry (Point Line : Type*) extends order_geometry Point Line
   (C4 (α : Angle Point Line) (A B Side : Point) (hAB : A ≠ B) (hSide :  ¬ Side ~ (line Line hAB).val) :
     ∃! C : Point, ∃ h : same_side_line' (line Line hAB).val Side C,
       (ang_cong α (Angle.mk_from_points B A C (same_side_line'_non_collinear hAB hSide h))) )
-  (C51 (α β γ : Angle Point Line) (hαβ : ang_cong α β) (hαγ : ang_cong α γ) : ang_cong β γ)
+  (C51 {α β γ : Angle Point Line} (hαβ : ang_cong α β) (hαγ : ang_cong α γ) : ang_cong β γ)
   (C52 (α : Angle Point Line) : ang_cong α α)
   (C6 (T1 T2 : Triangle Point Line) 
     (h1: seg_cong (Segment.mk T1.A T1.B T1.neq.left) (Segment.mk T2.A T2.B T2.neq.left))
@@ -50,14 +50,14 @@ namespace congruence_geometry
 variables (Point Line : Type) [cg : congruence_geometry Point Line]
 
 /- Segment congruence is reflexive -/
-theorem seg_cong_refl : reflexive (cg.seg_cong) :=
+lemma seg_cong_refl : reflexive (cg.seg_cong) :=
 begin
   intro seg,
   exact cg.C22 seg,
 end
 
-/- Segment congruence is reflexive -/
-theorem seg_cong_symm : symmetric (cg.seg_cong) :=
+/- Segment congruence is symmetric -/
+lemma seg_cong_symm : symmetric (cg.seg_cong) :=
 begin
   intros s1 s2 h1,
   let h2 := seg_cong_refl Point Line,
@@ -67,7 +67,7 @@ begin
 end
 
 /- Segment congruence is transitive -/
-theorem seg_cong_trans : transitive (cg.seg_cong) :=
+lemma seg_cong_trans : transitive (cg.seg_cong) :=
 begin
   sorry
 end
@@ -76,7 +76,32 @@ end
 theorem seg_cong_equiv : equivalence (cg.seg_cong) := 
   ⟨seg_cong_refl Point Line, seg_cong_symm Point Line, seg_cong_trans Point Line⟩
 
+/- Angle congruence is reflexive -/
+lemma ang_cong_refl : reflexive (cg.ang_cong) :=
+begin
+  intro ang,
+  exact cg.C52 ang,
+end
+
+/- Segment congruence is symmetric -/
+lemma ang_cong_symm : symmetric (cg.ang_cong) :=
+begin
+  intros a1 a2 h1,
+  let h2 := ang_cong_refl Point Line,
+  rw reflexive at h2,
+  specialize h2 a1,
+  exact cg.C51 h1 h2,
+end
+
+/- Segment congruence is transitive -/
+lemma ang_cong_trans : transitive (cg.ang_cong) :=
+begin
+  sorry
+end
+
 /- Angle congruence is an equivalence relation -/
+theorem ang_cong_equiv : equivalence (cg.ang_cong) := 
+  ⟨ang_cong_refl Point Line, ang_cong_symm Point Line, ang_cong_trans Point Line⟩
 
 
 end congruence_geometry
