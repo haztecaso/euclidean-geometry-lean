@@ -72,7 +72,7 @@ incluiremos esta hipótesis sólo en los casos donde sea necesario.
 -/
 def same_side_line' (l: Line) (A B : outside_line_points Point l) := 
   A = B ∨ (∃ h : ↑A ≠ ↑B, 
-    ¬ @segment_intersect_line Point Line og (Seg.mk A B h) l)
+    ¬ @seg_intersect_line Point Line og (Seg.mk A B h) l)
 
 
 variable (Point)
@@ -96,7 +96,7 @@ begin
   { cases h2 with h h2, 
     right,
     use h.symm,
-    rw segment_intersect_line at h2 ⊢,
+    rw seg_intersect_line at h2 ⊢,
     push_neg at h2 ⊢, 
     intros A hA,
     apply h2 A,
@@ -137,7 +137,7 @@ begin
       { right, 
         let hAC' := (outside_line_points_lift_ne Point l A C).mp hAC,
         use hAC',
-        rw segment_intersect_line at hAB hBC ⊢, 
+        rw seg_intersect_line at hAB hBC ⊢, 
         push_neg at hAB hBC ⊢, 
         rintros P (h1|h2|h3),
         { apply hAB P, left, exact h1 },
@@ -219,12 +219,12 @@ instance [og : order_geometry Point Line] (l : Line) :
 theorem plane_separation 
   (Point Line : Type*) [og : order_geometry Point Line] 
   (l : Line) (A B : outside_line_points Point l) (hAB: A ≠ B) :
-  @segment_intersect_line Point Line og 
+  @seg_intersect_line Point Line og 
     (Seg.mk A B ((outside_line_points_lift_ne Point l A B).mp hAB)) l
     ↔ ¬ A ≈ B :=
 begin
   split,
-  { rw segment_intersect_line, 
+  { rw seg_intersect_line, 
     intro h, 
     cases h with P hP,
     rcases hP with ⟨hP, hPl⟩,
