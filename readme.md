@@ -2,6 +2,8 @@
 
 [Código fuente](./src) y [memoria](./memoria/memoria.pdf) del Trabajo de Fin de Grado del grado en Matemáticas de la Universidad Complutense de Madrid. 
 
+![Captura de pantalla del entorno de desarrollo de Lean3 en VS Code.](./memoria/imgs/captura.png)
+
 ## Estructura del repositorio
 
 En la carpeta `/memoria` se encuentra la memoria del trabajo, en formato `LaTeX` y pdf.
