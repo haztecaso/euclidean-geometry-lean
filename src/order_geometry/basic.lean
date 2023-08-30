@@ -70,7 +70,7 @@ instance [order_geometry Point Line] : has_mem Point (Seg Point) :=
 Relación de intersección entre segmentos y líneas.
 Un segmento se interseca con una línea si tienen un punto en común.
 -/
-def segment_intersect_line 
+def seg_intersect_line 
   [order_geometry Point Line] (S : Seg Point) (l : Line) := 
   ∃ P : Point, P ∈ S ∧ P ~ l
 
@@ -140,7 +140,7 @@ end
 
 def same_side_line (l: Line) (A B : Point) := 
   A = B ∨ (∃ h : A ≠ B, 
-    ¬ @segment_intersect_line Point Line og (Seg.mk A B h) l)
+    ¬ @seg_intersect_line Point Line og (Seg.mk A B h) l)
 
 def same_side_line_non_collinear 
   {A B C D: Point} [og: order_geometry Point Line] 
@@ -160,7 +160,7 @@ begin
   cases h, 
   { rw ← h at hl, tauto },
   { cases h with hCD h,
-    rw segment_intersect_line at h,
+    rw seg_intersect_line at h,
     push_neg at h,
     have hD : D ∈ (Seg.mk C D hCD),
     { let a : Point → Seg Point → Prop := has_mem.mem,

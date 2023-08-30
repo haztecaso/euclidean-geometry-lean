@@ -23,7 +23,7 @@ begin
   cases hG with G hG,
   have hGE : G ≠ E, { sorry }, 
   let GE := line Line hGE,
-  have sAC : Segment Point := {
+  have sAC : Seg Point := {
     A := A,
     B := C,
     neq := hAC,

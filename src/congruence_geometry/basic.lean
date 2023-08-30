@@ -41,7 +41,8 @@ class congruence_geometry (Point Line : Type*)
   (C4 (α : Ang Point Line) (A B Side : Point) (hAB : A ≠ B) 
     (hSide :  ¬ Side ~ (line Line hAB).val) :
     ∃! C : Point, ∃ h : same_side_line (line Line hAB).val Side C,
-      (acong α (Ang.mk_from_points B A C (same_side_line_non_collinear hAB hSide h))))
+      (acong α (Ang.mk_from_points B A C 
+        (same_side_line_non_collinear hAB hSide h))))
   (C51 {α β γ : Ang Point Line} (hαβ : acong α β) (hαγ : acong α γ) : 
     acong β γ)
   (C52 (α : Ang Point Line) : acong α α)
