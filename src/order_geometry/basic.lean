@@ -16,8 +16,8 @@ demuestran resultados elementales que dependen de estos axiomas.
 open incidence_geometry
 open_locale classical
 
-/-- Geometría del orden, clase que engloba los axiomas para la relación de 
-orden. -/
+/-- Geometría del orden, clase que extiende la geometría de incidencia y añade 
+los axiomas para la relación de orden. -/
 class order_geometry (Point Line : Type*) 
   extends incidence_geometry Point Line :=
   (between: Point → Point → Point →  Prop)
@@ -58,11 +58,8 @@ def Seg.in
   [og : order_geometry Point Line]  (P : Point) : Prop := 
   P = seg.A ∨ P = seg.B ∨ (og.between seg.A P seg.B)
 
-/--
-Relación de pertenencia entre puntos y segmentos.
-Un punto está en un segmento si coincide con uno de los extremos o está entre 
-ellos.
--/
+/-- Relación de pertenencia entre puntos y segmentos utilizando la clase has_mem 
+que permite utilizar el operador ∈. -/
 instance [order_geometry Point Line] : has_mem Point (Seg Point) := 
   ⟨λ P seg, seg.in Line P⟩
 
@@ -115,6 +112,8 @@ structure Tri (Point Line: Type*) [order_geometry Point Line] :=
   {A B C : Point}
   (non_collinear : ¬ collinear Line A B C)
 
+/-- Utilidad para obtener la propiedad de no colinearidad de un segmento con la 
+propiedad de simetría entre el primer y segundo argumento aplicada. -/
 lemma Tri.non_collinear_symm 
   {Point Line: Type*} [order_geometry Point Line] (T : Tri Point Line) : 
   ¬ collinear Line T.B T.A T.C :=
@@ -123,6 +122,8 @@ begin
   exact T.non_collinear,
 end
 
+/-- Utilidad para obtener la propiedad de no colinearidad de un segmento con la 
+propiedad de simetría entre el primer y tercer argumento aplicada. -/
 lemma Tri.non_collinear_symm' 
   {Point Line: Type*} [order_geometry Point Line] (T : Tri Point Line) : 
   ¬ collinear Line T.C T.A T.B :=
@@ -131,13 +132,17 @@ begin
   exact T.non_collinear,
 end
 
+/-- Los vértices de un triángulo son distintos entre ellos. -/
 lemma Tri.neq 
   {Point Line: Type*} [order_geometry Point Line] (T : Tri Point Line) : 
   neq3 T.A T.B T.C :=
 by exact non_collinear_neq Line T.non_collinear
 
+/-- Un rayo está determinado por dos puntos. El primero de estos se llama 
+extremo del rayo. -/
 structure Ray (Point : Type*) := {A B: Point} (neq : A ≠ B)
 
+/-- Relación de pertenencia entre puntos y rayos. -/
 instance [order_geometry Point Line] : has_mem Point (Ray Point) :=
   ⟨λ P ray, begin
     by_cases P ≠ ray.B,
@@ -145,24 +150,32 @@ instance [order_geometry Point Line] : has_mem Point (Ray Point) :=
     { exact true, },
   end ⟩
 
+/-- Un ángulo está determinado por dos rayos con el mismo extremo. 
+Además los rayos no pueden pertenecer a una misma línea. -/
 structure Ang (Point Line: Type*) [order_geometry Point Line] :=
   (r1 r2 : Ray Point)
   (vertex : r1.A = r2.A)
   (non_collinear : ¬ collinear Line r1.A r1.B r2.B)
 
+/-- Vértice del ángulo. -/
 def Ang.A {Point Line: Type*} [order_geometry Point Line]
   (α : Ang Point Line) : Point := α.r1.A
 
+/-- Punto que define uno de los rayos. -/
 def Ang.B {Point Line: Type*} [order_geometry Point Line] 
   (α : Ang Point Line) : Point := α.r1.B
 
+/-- Punto que define uno de los rayos. -/
 def Ang.C {Point Line: Type*} [order_geometry Point Line] 
   (α : Ang Point Line) : Point := α.r2.B
 
+/-- Los puntos que definen un ángulo son distintos entre ellos. -/
 lemma Ang.neq {Point Line: Type*} [order_geometry Point Line] 
   (α : Ang Point Line) : neq3 α.A α.B α.C :=
 by exact non_collinear_neq Line α.non_collinear
 
+/-- Los ángulos también se pueden construir a partir de tres puntos no 
+alineados. -/
 def Ang.mk_from_points [order_geometry Point Line] (B A C : Point)
   (h : ¬ collinear Line A B C) : Ang Point Line := 
 begin
@@ -173,10 +186,14 @@ begin
   exact ⟨r1, r2, vertex, h⟩
 end
 
+/-- Relación de estar del mismo lado del plano respecto de una línea. 
+En `order_geometry.propositions` se demuestra que esta es una relación de 
+equivalencia.
+-/
 def same_side_line (l: Line) (A B : Point) := 
   A = B ∨ (∃ h : A ≠ B, ¬ @seg_intersect_line Point Line og (Seg.mk h) l)
 
-def same_side_line_non_collinear 
+lemma same_side_line_non_collinear 
   {A B C D: Point} [og: order_geometry Point Line] 
   (hAB : A ≠ B) (hC : ¬  C ~ (line Line hAB).val) 
   (h_same_side : same_side_line (line Line hAB).val C D) :
@@ -200,6 +217,7 @@ begin
     tauto },
 end
 
+/-- Relación de estar del mismo lado de una línea respecto de un punto. -/
 def same_side_point {Point : Type*} (Line : Type*) [order_geometry Point Line] 
   (A B C : Point) (hBC : B ≠ C) := 
   collinear Line A B C ∧ A ∉ (Seg.mk hBC) 

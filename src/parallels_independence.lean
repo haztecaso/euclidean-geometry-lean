@@ -2,18 +2,14 @@ import data.set.function data.finset.card .congruence_geometry.basic
 
 open incidence_geometry
 
+/-- Dos líneas son paralelas si no tienen ningún punto en común. -/
 def parallel (Point : Type*) {Line : Type*} [ig : incidence_geometry Point Line] 
   (l m : Line) : Prop := ¬ ∃ P : Point, is_common_point P l m
 
-lemma not_exists_unique (P : Type → Prop) : 
-  (¬ ∃! m : Type, P m) ↔ (∀ x : Type, P x → ∃ (y : Type), P y ∧ y ≠ x) :=
-begin
-  rw exists_unique,
-  push_neg,
-end
-
-def P (Point Line : Type*) [ig : incidence_geometry Point Line] : Prop :=
-  ∀ (l : Line) (A : Point), ∃! m : Line, A ~ m ∧ parallel Point l m
+/-- **Axioma de las paralelas**: Dadas una línea y un punto externo a ella existe 
+una única línea que pasa por el punto y es paralela a la primera línea. -/
+def P (Point Line : Type*) [ig : incidence_geometry Point Line] := 
+  ∀ (l : Line) (A : Point), ¬ A ~ l → ∃! m : Line, A ~ m ∧ parallel Point l m
 
 inductive myPoint
   | A | B | C | D | E

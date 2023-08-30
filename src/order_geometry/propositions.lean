@@ -95,7 +95,7 @@ begin
               by_cases hQm : Q ~ m,
               { use R, 
                 refine ⟨hQR.2.2, _⟩,
-                cases neq_lines_one_common_point Point l m hlm with h,
+                cases neq_lines_have_at_most_one_common_point Point l m hlm with h,
                 { cases h with O hO, 
                   by_contra h_contra,
                   let hR := hO.2 R ⟨hQR.2.2, h_contra⟩,
@@ -137,7 +137,7 @@ begin
               have h_have_common : ¬¬ have_common_point Point ↑AE l, 
               { push_neg, rw have_common_point, use D, exact hDAEl },
               let hhh := (or_iff_left h_have_common).mp 
-                (neq_lines_one_common_point Point ↑AE l hAEl),
+                (neq_lines_have_at_most_one_common_point Point ↑AE l hAEl),
               rw exists_unique at hhh,
               cases hhh with Q hQ,
               by_contra,

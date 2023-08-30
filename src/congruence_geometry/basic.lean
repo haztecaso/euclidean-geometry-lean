@@ -3,7 +3,7 @@ import ..order_geometry.basic
 open order_geometry
 open incidence_geometry 
 
-/-- 
+/-! 
 
 # Axiomas de congruencia
 
@@ -19,18 +19,31 @@ C4 : Given a proper ang `α` and points `a` `b`, we can find `c` such that `∠c
 
 -/
 
+/-- Geometría de congruencia. Clase que extiende la geometría del orden y la de 
+incidencia, añadiendo los axiomas para las relaciones de congruencia de 
+segmentos y congruencia de ángulos. -/
 class congruence_geometry (Point Line : Type*) 
   extends order_geometry Point Line :=
+  -- Relación de congruencia entre segmentos
   (scong : Seg Point → Seg Point → Prop)
+  -- Relación de congruencia entre ángulos
   (acong : Ang Point Line → Ang Point Line → Prop)
+  -- Axioma C1: Dados un segmento s y dos puntos distintos A y B, existe un 
+  -- único punto C del mismo lado de B respecto de A tal que el segmento AC es 
+  -- congruente a s.
   (C1 (s : Seg Point) (A B : Point) (hAB : A ≠ B) :
     ∃! C : Point, ∃ hBC : B ≠ C, ∃ hAC : A ≠ C, 
       (same_side_point Line A B C hBC) 
       ∧ (scong s (Seg.mk hAC))
   )
+  -- Axioma C2: Dados tres segmentos, si el primero es congruente al segundo y 
+  -- al tercero, entonces el segundo y tercero son congruentes. Además cada 
+  -- segmento es congruente con sí mismo.
   (C21 {s1 s2 s3: Seg Point} (h1 : scong s1 s2) (h2 : scong s1 s3) :
     scong s2 s3)
   (C22 (s : Seg Point) : scong s s)
+  -- Axioma C3 (Suma de segmentos): Dados tres puntos A, B y C tales que 
+  -- A * B * C, y otros tres puntos D E F
   (C3 {A B C D E F: Point} 
     (hABC : neq3 A B C ∧ between A B C)
     (hDEF : neq3 D E F ∧ between D E F)

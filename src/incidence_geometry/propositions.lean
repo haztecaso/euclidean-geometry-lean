@@ -18,7 +18,7 @@ begin
 end
 
 /-- Dos líneas distintas tienen como mucho un punto en común. -/
-lemma neq_lines_one_common_point 
+lemma neq_lines_have_at_most_one_common_point 
   (Point : Type*) {Line : Type*} [ig : incidence_geometry Point Line] :
   ∀ l m : Line, l ≠ m → 
     (∃! A : Point, is_common_point A l m) 
@@ -73,7 +73,7 @@ lemma non_collinear_ne_lines
  end
 
 /-- Existen tres líneas distintas que no pasan por ningún punto común. -/
-lemma neq_lines_not_concurrent 
+lemma exist_neq_lines_not_concurrent 
   {Point Line : Type*} [ig : incidence_geometry Point Line] :
   ∃ l m n: Line, 
     (l ≠ m ∧ l ≠ n ∧ m ≠ n) 
@@ -104,7 +104,7 @@ begin
 end
 
 /-- Para cada línea existe un punto externo a ella. -/
-lemma line_external_point 
+lemma line_has_external_point 
   {Point Line : Type*} [ig : incidence_geometry Point Line] :
   ∀ l : Line, ∃ A : Point, ¬ A ~ l :=
 begin
@@ -113,20 +113,20 @@ begin
   push_neg at h1,
   push_neg at h2,
   cases h2 with l hl,
-  have hAl: A ~ l, { tauto },
-  have hBl: B ~ l, { tauto },
-  have hCl: C ~ l, { tauto },
+  have hAl : A ~ l, { tauto },
+  have hBl : B ~ l, { tauto },
+  have hCl : C ~ l, { tauto },
   specialize h1 l hAl hBl,
   exact h1 hCl
 end
 
 /-- Para caada punto existe una línea que no pasa por él. -/
-lemma point_external_line 
+lemma point_has_external_line 
   {Point Line : Type*} [ig : incidence_geometry Point Line] : 
   ∀ A: Point, ∃ l: Line, ¬ A ~ l :=
 begin
   intro A,
-  rcases @neq_lines_not_concurrent Point Line ig with ⟨l, m, n, ⟨-, h⟩⟩,
+  rcases @exist_neq_lines_not_concurrent Point Line ig with ⟨l, m, n, ⟨-, h⟩⟩,
   rw push_neg.not_exists_eq at h,
   specialize h A,
   repeat { rw is_common_point at h },
