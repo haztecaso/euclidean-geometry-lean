@@ -2,10 +2,11 @@ import data.set.function data.finset.card .congruence_geometry.basic
 
 open incidence_geometry
 
-def parallel (Point : Type*) {Line : Type*} [ig : incidence_geometry Point Line] (l m : Line) : Prop := 
-  ¬ ∃ P : Point, is_common_point P l m
+def parallel (Point : Type*) {Line : Type*} [ig : incidence_geometry Point Line] 
+  (l m : Line) : Prop := ¬ ∃ P : Point, is_common_point P l m
 
-lemma not_exists_unique (P : Type → Prop) : (¬ ∃! m : Type, P m) ↔ (∀ x : Type, P x → ∃ (y : Type), P y ∧ y ≠ x):=
+lemma not_exists_unique (P : Type → Prop) : 
+  (¬ ∃! m : Type, P m) ↔ (∀ x : Type, P x → ∃ (y : Type), P y ∧ y ≠ x) :=
 begin
   rw exists_unique,
   push_neg,
@@ -127,9 +128,10 @@ begin
   sorry
 end
 
-/-- El axioma de las paralelas es independiente de los axiomas de congruencia . -/
+/-- El axioma de las paralelas es independiente de los axiomas de congruencia.-/
 theorem congruence_geometry_parallels_independence (Point Line : Type*) : 
-  ¬ (∀ cg: congruence_geometry Point Line, @P Point Line cg.to_incidence_geometry) := 
+  ¬ (∀ cg: congruence_geometry Point Line, 
+      @P Point Line cg.to_incidence_geometry) := 
 begin
   push_neg,
   sorry

@@ -2,7 +2,8 @@ import tactic data.set .incidence_geometry.basic
 
 def Point := ℝ × ℝ
 
-@[simp] lemma point_neq_by_coords (A B : Point) : (A ≠ B) ↔ (A.1 ≠ B.1 ∨ A.2 ≠ B.2) :=
+@[simp] lemma point_neq_by_coords (A B : Point) : 
+  (A ≠ B) ↔ (A.1 ≠ B.1 ∨ A.2 ≠ B.2) :=
 begin
   rw ← not_iff_not,
   push_neg,
@@ -11,7 +12,8 @@ end
 
 @[ext] structure LineEq := (a b c : ℝ) (h : a ≠ 0 ∨ b ≠ 0)
 
-definition line_eq (l m : LineEq) : Prop := ∃ (x : ℝ), x≠ 0 ∧ l.a = x * m.a ∧ l.b = x * m.b ∧ l.c = x * m.c
+definition line_eq (l m : LineEq) : Prop := 
+  ∃ (x : ℝ), x≠ 0 ∧ l.a = x * m.a ∧ l.b = x * m.b ∧ l.c = x * m.c
 
 lemma line_eq_refl : reflexive line_eq :=
 begin
@@ -47,7 +49,8 @@ begin
   { rw [hc₁, hc₂, mul_assoc] },
 end
 
-theorem line_equiv : equivalence line_eq := ⟨line_eq_refl, line_eq_symm, line_eq_trans⟩
+theorem line_equiv : equivalence line_eq := 
+  ⟨line_eq_refl, line_eq_symm, line_eq_trans⟩
 
 def Line.setoid : setoid LineEq := { r := line_eq, iseqv := line_equiv }
 
@@ -64,16 +67,28 @@ def Line.mk (a b c : ℝ) (h : a ≠ 0 ∨ b ≠ 0) : Line := ↑(LineEq.mk a b 
 
 def has_point' (l : LineEq) (P : Point) : Prop := l.a*P.1 + l.b*P.2 + l.c = 0
 
-theorem has_point_well_defined {l m : LineEq} (h : l ≈ m) (P : Point): has_point' l P ↔ has_point' m P :=
+theorem has_point_well_defined {l m : LineEq} (h : l ≈ m) (P : Point) :
+  has_point' l P ↔ has_point' m P :=
 begin
   cases h with x h,
   rcases h with ⟨hx, ha, hb, hc⟩,
-  rw [has_point', ha, hb, hc, mul_assoc, mul_assoc, ← left_distrib, ← left_distrib],
+  rw [ 
+    has_point', 
+    ha, 
+    hb, 
+    hc, 
+    mul_assoc, 
+    mul_assoc, 
+    ← left_distrib, 
+    ← left_distrib 
+  ],
   rw has_point',
   finish, /- TODO: remove finish -/
 end
 
-lemma has_point_well_defined' {l m : LineEq} (h: l ≈ m) : has_point' l = has_point' m := begin
+lemma has_point_well_defined' {l m : LineEq} (h: l ≈ m) : 
+  has_point' l = has_point' m := 
+begin
   rw function.funext_iff,
   intro P,
   rw has_point_well_defined,
