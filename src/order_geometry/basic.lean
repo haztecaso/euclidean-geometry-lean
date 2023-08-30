@@ -49,7 +49,7 @@ end
 
 /-- Los segmentos están implementados mediante estructuras determinadas por 
 dos puntos distintos.  -/
-structure Seg (Point : Type*) := (A B : Point) (neq : A ≠ B)
+structure Seg (Point : Type*) := {A B : Point} (neq : A ≠ B)
 
 /-- Un punto pertenece a un segmento si coincide con uno de los extremos o está 
 entre ellos. -/
@@ -77,7 +77,7 @@ by refl
 lemma seg_contains_extremes 
   {Point : Type*} (Line : Type*) [og : order_geometry Point Line]
   {A B : Point} (hAB : A ≠ B) : 
-  A ∈ (Seg.mk A B hAB) ∧ B ∈ (Seg.mk A B hAB) :=
+  A ∈ (Seg.mk hAB) ∧ B ∈ (Seg.mk hAB) :=
 begin
   rw [seg_has_mem_def, Seg.in, seg_has_mem_def, Seg.in],
   split,
@@ -95,7 +95,7 @@ def seg_intersect_line
 
 /-- Un triángulo está determinado por tres puntos no alineados -/
 structure Tri (Point Line: Type*) [order_geometry Point Line] := 
-  (A B C : Point) 
+  {A B C : Point}
   (non_collinear : ¬ collinear Line A B C)
 
 lemma Tri.non_collinear_symm 
@@ -119,12 +119,12 @@ lemma Tri.neq
   neq3 T.A T.B T.C :=
 by exact non_collinear_neq Line T.non_collinear
 
-structure Ray (Point : Type*) := (A B: Point) (neq : A ≠ B)
+structure Ray (Point : Type*) := {A B: Point} (neq : A ≠ B)
 
 instance [order_geometry Point Line] : has_mem Point (Ray Point) :=
   ⟨λ P ray, begin
     by_cases P ≠ ray.B,
-    { exact P = ray.A ∨ ¬ ray.A ∈ Seg.mk P ray.B h },
+    { exact P = ray.A ∨ ¬ ray.A ∈ Seg.mk h },
     { exact true, },
   end ⟩
 
@@ -132,7 +132,6 @@ structure Ang (Point Line: Type*) [order_geometry Point Line] :=
   (r1 r2 : Ray Point)
   (vertex : r1.A = r2.A)
   (non_collinear : ¬ collinear Line r1.A r1.B r2.B)
-
 
 def Ang.A {Point Line: Type*} [order_geometry Point Line]
   (α : Ang Point Line) : Point := α.r1.A
@@ -147,19 +146,19 @@ lemma Ang.neq {Point Line: Type*} [order_geometry Point Line]
   (α : Ang Point Line) : neq3 α.A α.B α.C :=
 by exact non_collinear_neq Line α.non_collinear
 
-def Ang.mk_from_points [order_geometry Point Line] (B A C : Point) 
+def Ang.mk_from_points [order_geometry Point Line] (B A C : Point)
   (h : ¬ collinear Line A B C) : Ang Point Line := 
 begin
   let neq := non_collinear_neq Line h,
-  let r1 := Ray.mk A B neq.left,
-  let r2 := Ray.mk A C neq.right.left,
+  let r1 := Ray.mk neq.left,
+  let r2 := Ray.mk neq.right.left,
   have vertex : r1.A = r2.A, { refl },
   exact ⟨r1, r2, vertex, h⟩
 end
 
 def same_side_line (l: Line) (A B : Point) := 
   A = B ∨ (∃ h : A ≠ B, 
-    ¬ @seg_intersect_line Point Line og (Seg.mk A B h) l)
+    ¬ @seg_intersect_line Point Line og (Seg.mk h) l)
 
 def same_side_line_non_collinear 
   {A B C D: Point} [og: order_geometry Point Line] 
@@ -180,14 +179,13 @@ begin
   { cases h_same_side with hCD h,
     rw seg_intersect_line at h,
     push_neg at h,
-    let sCD := Seg.mk C D hCD,
-    have hD : D ∈ sCD, { exact (seg_contains_extremes Line hCD).2 },
+    have hD : D ∈ Seg.mk hCD, { exact (seg_contains_extremes Line hCD).2 },
     specialize h D hD,
     tauto },
 end
 
 def same_side_point {Point : Type*} (Line : Type*) [order_geometry Point Line] 
   (A B C : Point) (hBC : B ≠ C) := 
-  collinear Line A B C ∧ A ∉ (Seg.mk B C hBC) 
+  collinear Line A B C ∧ A ∉ (Seg.mk hBC) 
 
 end order_geometry

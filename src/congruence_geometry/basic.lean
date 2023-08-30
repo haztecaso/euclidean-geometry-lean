@@ -26,7 +26,7 @@ class congruence_geometry (Point Line : Type*)
   (C1 (s : Seg Point) (A B : Point) (hAB : A ≠ B) :
     ∃! C : Point, ∃ hBC : B ≠ C, ∃ hAC : A ≠ C, 
       (same_side_point Line A B C hBC) 
-      ∧ (scong s (Seg.mk A C hAC))
+      ∧ (scong s (Seg.mk hAC))
   )
   (C21 {s1 s2 s3: Seg Point} (h1 : scong s1 s2) (h2 : scong s1 s3) :
     scong s2 s3)
@@ -34,9 +34,9 @@ class congruence_geometry (Point Line : Type*)
   (C3 {A B C D E F: Point} 
     (hABC : neq3 A B C ∧ between A B C)
     (hDEF : neq3 D E F ∧ between D E F)
-    (h1 : scong (Seg.mk A B hABC.1.1) (Seg.mk D E hDEF.1.1))
-    (h2 : scong (Seg.mk B C hABC.1.2.2) (Seg.mk E F hDEF.1.2.2)) :
-    scong (Seg.mk A C hABC.1.2.1) (Seg.mk D F hDEF.1.2.1)
+    (h1 : scong (Seg.mk hABC.1.1) (Seg.mk hDEF.1.1))
+    (h2 : scong (Seg.mk hABC.1.2.2) (Seg.mk hDEF.1.2.2)) :
+    scong (Seg.mk hABC.1.2.1) (Seg.mk hDEF.1.2.1)
   )
   (C4 (α : Ang Point Line) (A B Side : Point) (hAB : A ≠ B) 
     (hSide :  ¬ Side ~ (line Line hAB).val) :
@@ -47,11 +47,11 @@ class congruence_geometry (Point Line : Type*)
     acong β γ)
   (C52 (α : Ang Point Line) : acong α α)
   (C6 (T1 T2 : Tri Point Line) 
-    (h1: scong (Seg.mk T1.A T1.B T1.neq.1) (Seg.mk T2.A T2.B T2.neq.1))
-    (h2: scong (Seg.mk T1.A T1.C T1.neq.2.1) (Seg.mk T2.A T2.C T2.neq.2.1)) 
+    (h1: scong (Seg.mk T1.neq.1) (Seg.mk T2.neq.1))
+    (h2: scong (Seg.mk T1.neq.2.1) (Seg.mk T2.neq.2.1)) 
     (h3: acong (Ang.mk_from_points T1.B T1.A T1.C T1.non_collinear) 
                (Ang.mk_from_points T2.B T2.A T2.C T2.non_collinear)) :
-      scong (Seg.mk T1.B T1.C T1.neq.2.2) (Seg.mk T2.B T2.C T2.neq.2.2)
+      scong (Seg.mk T1.neq.2.2) (Seg.mk T2.neq.2.2)
       ∧ acong 
         (Ang.mk_from_points T1.A T1.B T1.C T1.non_collinear_symm) 
         (Ang.mk_from_points T2.A T2.B T2.C T2.non_collinear_symm)
