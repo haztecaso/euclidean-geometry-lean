@@ -7,7 +7,7 @@ variables {Point : Type*} (Line : Type*) [og : order_geometry Point Line]
 local notation A `*` B `*` C := og.between A B C
 
 /-- 
-Hilbert's theorem 3
+Hilbert's theorem 3.
 Para dos puntos distintos existe un tercero entre ellos
 -/
 lemma point_between_given {A C : Point} (hAC : A ≠ C): ∃ B : Point, A * B * C := 

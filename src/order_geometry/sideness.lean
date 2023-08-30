@@ -8,21 +8,25 @@ local notation A `*` B `*` C := og.between A B C
 
 /--
 Relación de estar del mismo lado del plano respecto de una línea.
-Dos puntos externos a una línea están del mismo lado de la línea si el segmento que los 
-une no interseca a la línea.
+Dos puntos externos a una línea están del mismo lado de la línea si el segmento 
+que los une no interseca a la línea.
 
-TODO: Cambiar? Esta no es exactamente la definición del Hartshorne ya que en el libro está definida 
-solo cuando los puntos son externos a la línea. Nosotros incluiremos esta hipótesis 
-sólo en los casos donde sea necesario.
+TODO: Cambiar? Esta no es exactamente la definición del Hartshorne ya que en el 
+libro está definida solo cuando los puntos son externos a la línea. Nosotros 
+incluiremos esta hipótesis sólo en los casos donde sea necesario.
 -/
 def same_side_line (l: Line) (A B : outside_line_points Point l) := 
-  A = B ∨ (∃ h : ↑A ≠ ↑B, ¬ @segment_intersect_line Point Line og (Segment.mk A B h) l)
+  A = B ∨ (∃ h : ↑A ≠ ↑B, 
+    ¬ @segment_intersect_line Point Line og (Seg.mk A B h) l)
 
 def same_side_line' (l: Line) (A B : Point) := 
-  A = B ∨ (∃ h : A ≠ B, ¬ @segment_intersect_line Point Line og (Segment.mk A B h) l)
+  A = B ∨ (∃ h : A ≠ B, 
+    ¬ @segment_intersect_line Point Line og (Seg.mk A B h) l)
 
-def same_side_line'_non_collinear {A B C D: Point}  [og: order_geometry Point Line] 
-  (hAB : A ≠ B) (hC : ¬  C ~ (line Line hAB).val) (h : same_side_line' (line Line hAB).val C D) :
+def same_side_line'_non_collinear 
+  {A B C D: Point} [og: order_geometry Point Line] 
+  (hAB : A ≠ B) (hC : ¬  C ~ (line Line hAB).val) 
+  (h : same_side_line' (line Line hAB).val C D) :
   ¬ collinear Line A B D := 
 begin
   by_contra h_contra,
@@ -39,8 +43,8 @@ begin
   { cases h with hCD h,
     rw segment_intersect_line at h,
     push_neg at h,
-    have hD : D ∈ (Segment.mk C D hCD),
-    { let a : Point → Segment Point → Prop := has_mem.mem,
+    have hD : D ∈ (Seg.mk C D hCD),
+    { let a : Point → Seg Point → Prop := has_mem.mem,
       sorry },
     specialize h D hD,
     tauto },
@@ -49,7 +53,8 @@ end
 variable (Point)
 
 /-- La relación de estar del mismo lado de una línea es reflexiva. -/
-lemma same_side_line_refl (l : Line) : reflexive (@same_side_line Point Line og l) := 
+lemma same_side_line_refl (l : Line) : 
+  reflexive (@same_side_line Point Line og l) := 
 begin
   intro P,
   left,
@@ -58,7 +63,8 @@ end
 
 
 /-- La relación de estar del mismo lado de una línea es simétrica. -/
-lemma same_side_line_symm (l : Line) : symmetric (@same_side_line Point Line og l) := 
+lemma same_side_line_symm (l : Line) : 
+  symmetric (@same_side_line Point Line og l) := 
 begin
   intros P Q h,
   cases h with h1 h2,
@@ -77,7 +83,9 @@ end
 -- Lema útil para demostrar la transitividad de la relación de estar del mismo lado de una línea.
 -- Se demuestra la transitividad para puntos no colineares.
 -- -/
--- lemma same_side_line_trans_noncollinear_case (l : Line) (A B C : outside_line_points Point l) (h: ¬ incidence_geometry.collinear Line (↑A:Point) ↑B ↑C) :
+-- lemma same_side_line_trans_noncollinear_case 
+--   (l : Line) (A B C : outside_line_points Point l) 
+--   (h: ¬ collinear Line (↑A:Point) ↑B ↑C) :
 -- (same_side_line l A B) → (same_side_line l B C) → (same_side_line l A C):= 
 -- begin
 --   sorry
@@ -90,7 +98,8 @@ Para esto reducimos la demostración a dos casos:
 - Tres puntos no colineares. Tratado en el lema anterior.
 - Tres puntos colineares. Reducible mediante construcciones al caso anterior.
 -/
-lemma same_side_line_trans (l : Line) : transitive (@same_side_line Point Line og l) := 
+lemma same_side_line_trans (l : Line) : 
+  transitive (@same_side_line Point Line og l) := 
 begin
   intros A B C hAB hBC,
   cases hAB,
@@ -112,7 +121,8 @@ begin
         { by_cases h_collinear : ¬ collinear Line (↑A: Point) ↑B ↑C,
           { /- Case 1 in Hartshorne -/
             by_contra hDl,
-            rw [collinear_comm2, collinear_comm, collinear_comm2] at h_collinear,
+            rw [collinear_symm2, collinear_symm, collinear_symm2] 
+              at h_collinear,
             have hlABC : ¬ (↑A ~ l ∨ ↑C ~ l ∨ ↑B ~ l),
             { push_neg, 
               split,
@@ -141,34 +151,53 @@ begin
             have hD : ∃ D : Point, D ~ l ∧ ¬ D ~ m, { sorry },
             cases hD with D hD,
             have hDA : D ≠ ↑A , { sorry },
-            have hE : ∃ E : Point, D * ↑A * E, { cases (og.B2 hDA) with E hE, use E, exact hE },
+            have hE : ∃ E : Point, D * ↑A * E,
+              { cases (og.B2 hDA) with E hE, use E, exact hE },
             cases hE with E hE,
-            have hDAE_collinear : collinear Line D A E, { exact (og.B11 hE).right.left },
+            have hDAE_collinear : collinear Line D A E,
+              { exact (og.B11 hE).right.left },
             sorry }
           }}}},
 end
 
-/-- La relación de estar del mismo lado del plano respecto de una línea es de equivalencia. -/
-theorem same_side_line_equiv (l : Line) : equivalence (@same_side_line Point Line og l) :=
-  ⟨same_side_line_refl Point l, same_side_line_symm Point l, same_side_line_trans Point l⟩
+/-- La relación de estar del mismo lado del plano respecto de una línea es de 
+equivalencia. -/
+theorem same_side_line_equiv (l : Line) :
+  equivalence (@same_side_line Point Line og l) :=
+  ⟨same_side_line_refl Point l, 
+    same_side_line_symm Point l, 
+    same_side_line_trans Point l⟩
 
 /-- Instancia de la clase setoid para la relación. -/
-def PlaneSide.setoid [og : order_geometry Point Line] (l : Line) : setoid (outside_line_points Point l) :=
-{ r := same_side_line l, iseqv := same_side_line_equiv Point l }
+def PlaneSide.setoid 
+  [og : order_geometry Point Line] (l : Line) : 
+  setoid (outside_line_points Point l) :=
+  { r := same_side_line l, iseqv := same_side_line_equiv Point l }
+
 local attribute [instance] PlaneSide.setoid
 
 /-- Conjunto cociente de los lados de una línea. -/
-def PlaneSide [og : order_geometry Point Line] (l : Line) := quotient (PlaneSide.setoid Point l)
-def PlaneSide.reduce [og : order_geometry Point Line] (l : Line) : outside_line_points Point l → PlaneSide Point l := quot.mk (same_side_line l)
-instance [og : order_geometry Point Line] (l : Line) : has_lift (outside_line_points Point l) (PlaneSide Point l) := ⟨PlaneSide.reduce Point l⟩ 
-instance [og : order_geometry Point Line] (l : Line) : has_coe  (outside_line_points Point l) (PlaneSide Point l) := ⟨PlaneSide.reduce Point l⟩ 
+def PlaneSide [og : order_geometry Point Line] (l : Line) := 
+  quotient (PlaneSide.setoid Point l)
 
-/-- 
-Teorema de separación del plano.
-El enunciado original consiste en dos partes. La primera se corresponde con demostrar que la relación de estar 
--/
-theorem plane_separation (Point Line : Type*) [og : order_geometry Point Line] (l : Line) (A B : outside_line_points Point l) (hAB: A ≠ B): 
-  @segment_intersect_line Point Line og (Segment.mk A B ((outside_line_points_lift_ne Point l A B).mp hAB)) l ↔ ¬ A ≈ B :=
+def PlaneSide.reduce [og : order_geometry Point Line] (l : Line) : 
+  outside_line_points Point l → PlaneSide Point l := 
+  quot.mk (same_side_line l)
+
+instance [og : order_geometry Point Line] (l : Line) : 
+  has_lift (outside_line_points Point l) (PlaneSide Point l) := 
+  ⟨PlaneSide.reduce Point l⟩ 
+instance [og : order_geometry Point Line] (l : Line) : 
+  has_coe  (outside_line_points Point l) (PlaneSide Point l) := 
+  ⟨PlaneSide.reduce Point l⟩ 
+
+/-- Teorema de separación del plano. -/
+theorem plane_separation 
+  (Point Line : Type*) [og : order_geometry Point Line] 
+  (l : Line) (A B : outside_line_points Point l) (hAB: A ≠ B) :
+  @segment_intersect_line Point Line og 
+    (Seg.mk A B ((outside_line_points_lift_ne Point l A B).mp hAB)) l
+    ↔ ¬ A ≈ B :=
 begin
   split,
   { rw segment_intersect_line, 
@@ -179,9 +208,13 @@ begin
   { sorry }
 end
 
--- def line_points_different_to (Point : Type*) {Line : Type*} [incidence_geometry Point Line] (l: Line) (P : line_points Point l) := { A : Point | A ~ l ∧ A ≠ P }
+-- def line_points_different_to 
+--   (Point : Type*) {Line : Type*} [incidence_geometry Point Line] 
+--   (l: Line) (P : line_points Point l) := 
+--   { A : Point | A ~ l ∧ A ≠ P }
 
-def same_side_points {Point : Type*} (Line : Type*) [order_geometry Point Line] (A B C : Point) (hBC : B ≠ C):= 
-  collinear Line A B C ∧ A ∉ (Segment.mk B C hBC) 
+def same_side_points {Point : Type*} (Line : Type*) [order_geometry Point Line] 
+  (A B C : Point) (hBC : B ≠ C) := 
+  collinear Line A B C ∧ A ∉ (Seg.mk B C hBC) 
 
 end order_geometry

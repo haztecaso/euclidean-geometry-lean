@@ -17,7 +17,7 @@ incidencia. -/
 class incidence_geometry (Point Line : Type*) :=
   (lies_on : Point → Line → Prop)
   (infix ` ~ ` : 50 := lies_on)
-  (I1 {A B : Point} (h : A ≠ B): ∃! l : Line, A ~ l ∧ B ~ l)
+  (I1 {A B : Point} (h : A ≠ B) : ∃! l : Line, A ~ l ∧ B ~ l)
   (I2 (l : Line) : ∃ A B : Point, A ≠ B ∧ A ~ l ∧ B ~ l)
   (I3 : ∃ A B C : Point, neq3 A B C ∧ ¬ ∃ l : Line,  A ~ l ∧ B ~ l ∧ C ~ l)
 
