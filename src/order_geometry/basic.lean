@@ -66,6 +66,25 @@ ellos.
 instance [order_geometry Point Line] : has_mem Point (Seg Point) := 
   ⟨λ P seg, seg.in Line P⟩
 
+/-- Lema auxiliar para reescribir la pertenencia de puntos en segmentos. -/
+lemma seg_has_mem_def 
+  {Point : Type*} (seg : Seg Point) (Line : Type*) 
+  [og : order_geometry Point Line]  (P : Point) : 
+  P ∈ seg ↔ seg.in Line P :=
+by refl
+
+/-- Los extremos de un segmento están contenidos en él. -/
+lemma seg_contains_extremes 
+  {Point : Type*} (Line : Type*) [og : order_geometry Point Line]
+  {A B : Point} (hAB : A ≠ B) : 
+  A ∈ (Seg.mk A B hAB) ∧ B ∈ (Seg.mk A B hAB) :=
+begin
+  rw [seg_has_mem_def, Seg.in, seg_has_mem_def, Seg.in],
+  split,
+  { left, refl },
+  { right, left, refl }
+end
+
 /--
 Relación de intersección entre segmentos y líneas.
 Un segmento se interseca con una línea si tienen un punto en común.
@@ -145,7 +164,7 @@ def same_side_line (l: Line) (A B : Point) :=
 def same_side_line_non_collinear 
   {A B C D: Point} [og: order_geometry Point Line] 
   (hAB : A ≠ B) (hC : ¬  C ~ (line Line hAB).val) 
-  (h : same_side_line (line Line hAB).val C D) :
+  (h_same_side : same_side_line (line Line hAB).val C D) :
   ¬ collinear Line A B D := 
 begin
   by_contra h_contra,
@@ -154,17 +173,15 @@ begin
   have h2 : l = lAB.val,
   { rcases og.I1 hAB with ⟨_, ⟨_, hm⟩⟩,
     rw [hm l ⟨hl.left, hl.right.left⟩, ← hm lAB lAB.property],
-    refl,
-    },
+    refl },
   rw h2 at hl,
-  cases h, 
-  { rw ← h at hl, tauto },
-  { cases h with hCD h,
+  cases h_same_side, 
+  { rw ← h_same_side at hl, tauto },
+  { cases h_same_side with hCD h,
     rw seg_intersect_line at h,
     push_neg at h,
-    have hD : D ∈ (Seg.mk C D hCD),
-    { let a : Point → Seg Point → Prop := has_mem.mem,
-      sorry },
+    let sCD := Seg.mk C D hCD,
+    have hD : D ∈ sCD, { exact (seg_contains_extremes Line hCD).2 },
     specialize h D hD,
     tauto },
 end
