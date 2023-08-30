@@ -1,6 +1,6 @@
 import tactic
 import data.set
-import incidence_geometry
+import .incidence.basic
 
 def Point := ℝ × ℝ
 
@@ -163,7 +163,7 @@ instance : incidence_geometry Point Line := {
     let B : Point := (1, 0), use B, 
     let C : Point := (1, 1), use C, 
     split,
-    { rw [different3, point_neq_by_coords, point_neq_by_coords, point_neq_by_coords], 
+    { rw [neq3, point_neq_by_coords, point_neq_by_coords, point_neq_by_coords], 
       refine ⟨_, _, _⟩,
       { left, exact zero_ne_one },
       { left, exact zero_ne_one },

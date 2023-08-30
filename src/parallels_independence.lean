@@ -1,6 +1,6 @@
 import data.set.function
 import data.finset.card
-import congruence_geometry
+import .congruence.basic
 
 open incidence_geometry
 
