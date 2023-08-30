@@ -1,0 +1,62 @@
+\documentclass{beamer}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{frametitle}[default][center]
+\addtobeamertemplate{frametitle}{\let\insertframetitle\insertsectionhead}{}
+\addtobeamertemplate{frametitle}{\let\insertframesubtitle\insertsubsectionhead}{}
+
+\makeatletter
+\CheckCommand*\beamer@checkframetitle{\@ifnextchar\bgroup\beamer@inlineframetitle{}}
+\renewcommand*\beamer@checkframetitle{\global\let\beamer@frametitle\relax\@ifnextchar\bgroup\beamer@inlineframetitle{}}
+\makeatother
+
+\usepackage{graphicx}
+\usepackage[export]{adjustbox}
+\usepackage{caption}
+\captionsetup[figure]{font=small}
+\usepackage{float}
+
+\usepackage{multicol}
+
+\usepackage[final]{listings}
+% \def\lstlanguagefiles{lstlean.tex}
+% \lstset{language=lean}
+
+\usepackage{xcolor}
+\definecolor{backcolor}{rgb}{0.9, 0.9, 0.9}   % grey
+\definecolor{keywordcolor}{rgb}{0.7, 0.1, 0.1}   % red
+\definecolor{commentcolor}{rgb}{0.4, 0.4, 0.4}   % grey
+\definecolor{symbolcolor}{rgb}{0.0, 0.1, 0.6}    % blue
+\definecolor{sortcolor}{rgb}{0.1, 0.5, 0.1}      % green
+\definecolor{errorcolor}{rgb}{1, 0, 0}           % bright red
+\definecolor{stringcolor}{rgb}{0.5, 0.3, 0.2}    % brown
+\definecolor{tacticcolor}{rgb}{0.0, 0.1, 0.6}
+
+\title{Formalización de las matemáticas con Lean.\\ Un caso de estudio: Geometría euclídea plana.}
+\author{Adrián Lattes Grassi}
+\date{Septiembre de 2023}
+\subtitle{Facultad de Ciencias Matemáticas.\\Trabajo dirigido por Jorge Carmona Ruber.}
+
+\begin{document}
+\frame{\titlepage}
+
+\section{sec1}
+\subsection{subsec1.1}
+\begin{frame}
+	Prueba
+	\pause
+	\vspace{.1em}
+	\begin{center}
+		\begin{multicols}{2}
+			\begin{enumerate}
+				\item asdasd
+				\item skdjahaksd
+			\end{enumerate}
+		\end{multicols}
+	\end{center}
+\end{frame}
+
+\end{document}
+
+
+
+
