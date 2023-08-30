@@ -80,11 +80,11 @@ lemma seg_mem_symm
   P ∈ Seg.mk hAB ↔ P ∈ Seg.mk hAB.symm:=
 begin
   split,
-  { intro hP, rw [seg_has_mem_def, Seg.in] at hP, rw [seg_has_mem_def, Seg.in],
+  { intro hP, rw [seg_mem_def, Seg.in] at hP, rw [seg_mem_def, Seg.in],
     cases hP, { right, left, exact hP },
     { cases hP, { left, exact hP }, { right, right, rw between_symm, exact hP },
   }},
-  { intro hP, rw [seg_has_mem_def, Seg.in] at hP, rw [seg_mem_def, Seg.in],
+  { intro hP, rw [seg_mem_def, Seg.in] at hP, rw [seg_mem_def, Seg.in],
     cases hP, { right, left, exact hP },
     { cases hP, { left, exact hP }, { right, right, rw between_symm, exact hP },
   }},

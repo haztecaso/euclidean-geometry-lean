@@ -18,7 +18,7 @@ begin
 end
 
 /-- Dos líneas distintas tienen como mucho un punto en común. -/
-lemma disctinct_lines_one_common_point 
+lemma neq_lines_one_common_point 
   (Point : Type*) {Line : Type*} [ig : incidence_geometry Point Line] :
   ∀ l m : Line, l ≠ m → 
     (∃! A : Point, is_common_point A l m) 
@@ -73,7 +73,7 @@ lemma non_collinear_ne_lines
  end
 
 /-- Existen tres líneas distintas que no pasan por ningún punto común. -/
-lemma disctinct_lines_not_concurrent 
+lemma neq_lines_not_concurrent 
   {Point Line : Type*} [ig : incidence_geometry Point Line] :
   ∃ l m n: Line, 
     (l ≠ m ∧ l ≠ n ∧ m ≠ n) 
@@ -126,7 +126,7 @@ lemma point_external_line
   ∀ A: Point, ∃ l: Line, ¬ A ~ l :=
 begin
   intro A,
-  rcases @disctinct_lines_not_concurrent Point Line ig with ⟨l, m, n, ⟨-, h⟩⟩,
+  rcases @neq_lines_not_concurrent Point Line ig with ⟨l, m, n, ⟨-, h⟩⟩,
   rw push_neg.not_exists_eq at h,
   specialize h A,
   repeat { rw is_common_point at h },
