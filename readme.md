@@ -8,8 +8,6 @@
 preconfigurado y con el código de este repositorio es utilizando el servicio en
 línea *gitpod*. Se puede acceder a este entorno desde [este enlace](https://gitpod.io/#/https://github.com/haztecaso/euclidean-geometry-lean).
 
-[id]:https://www.url.com "https://www.url.com"
-
 ## Organización del repositorio
 
 En la carpeta [`/memoria`](./memoria/) se encuentran la
@@ -21,6 +19,8 @@ En la carpeta [`/src`](./src/) se encuentra el código fuente del trabajo en Lea
 de Hilbert de la geometría euclídea plana. Los ficheros están organizados
 siguiendo la estructura de la geometría de Hilbert:
 
+- El fichero [`basic_defs.lean`](./src/basic_defs.lean) contiene definiciones
+  elementales de lógica que se utilizan en el resto de ficheros.
 - La carpeta [`incidence_geometry`](./src/incidence_geometry/) contiene
   resultados relativos a la relación de incidencia.
   - El fichero [`basic.lean`](./src/incidence_geometry/basic.lean) contiene los 
