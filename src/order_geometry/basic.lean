@@ -73,6 +73,23 @@ lemma seg_has_mem_def
   P ∈ seg ↔ seg.in Line P :=
 by refl
 
+/-- La pertenencia de puntos en segmentos es simétrica. -/
+lemma seg_mem_symm
+  {Point : Type*} (Line : Type*) [og : order_geometry Point Line] 
+  {A B : Point} (P : Point) (hAB : A ≠ B): 
+  P ∈ Seg.mk hAB ↔ P ∈ Seg.mk hAB.symm:=
+begin
+  split,
+  { intro hP, rw [seg_has_mem_def, Seg.in] at hP, rw [seg_has_mem_def, Seg.in],
+    cases hP, { right, left, exact hP },
+    { cases hP, { left, exact hP }, { right, right, rw between_symm, exact hP },
+  }},
+  { intro hP, rw [seg_has_mem_def, Seg.in] at hP, rw [seg_has_mem_def, Seg.in],
+    cases hP, { right, left, exact hP },
+    { cases hP, { left, exact hP }, { right, right, rw between_symm, exact hP },
+  }},
+end
+
 /-- Los extremos de un segmento están contenidos en él. -/
 lemma seg_contains_extremes 
   {Point : Type*} (Line : Type*) [og : order_geometry Point Line]
