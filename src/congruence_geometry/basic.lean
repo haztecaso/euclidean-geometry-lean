@@ -114,5 +114,4 @@ end
 theorem acong_equiv : equivalence (cg.acong) := 
   ⟨acong_refl Point Line, acong_symm Point Line, acong_trans Point Line⟩
 
-
 end congruence_geometry
