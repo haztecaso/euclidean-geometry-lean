@@ -1,7 +1,7 @@
 import .basic ..incidence_geometry.propositions
 
 /-!
-# Sideness
+# Sidedness
 
 En este fichero se plantea una formalización de la demostración de que la 
 relación de estar del mismo lado del plano respecto de una línea es una relación 
