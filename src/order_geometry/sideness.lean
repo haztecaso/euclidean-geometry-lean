@@ -1,5 +1,46 @@
 import .basic ..incidence_geometry.propositions
 
+namespace incidence_geometry
+
+/-- Conjunto de puntos de una línea. -/
+def line_points (Point : Type*) {Line : Type*} [incidence_geometry Point Line] 
+  (l: Line) := { A : Point | A ~ l }
+
+/-- Conjunto de puntos externos a una línea. -/
+def outside_line_points 
+  (Point : Type*) {Line : Type*} [incidence_geometry Point Line] (l: Line) := 
+  { A : Point | ¬ A ~ l }
+
+instance (Point Line : Type*) [incidence_geometry Point Line] : 
+  has_coe Line (set Point) := 
+  { coe := line_points Point }
+
+lemma line_points_lift_eq 
+  (Point : Type*) {Line : Type*} [incidence_geometry Point Line] 
+  (l : Line) (A B : line_points Point l) : 
+  A = B ↔ (↑A : Point) = ↑B :=
+by exact subtype.ext_iff
+
+lemma line_points_lift_ne 
+  (Point : Type*) {Line : Type*} [incidence_geometry Point Line] 
+  (l : Line) (A B : line_points Point l) : 
+  A ≠ B ↔ (↑A : Point) ≠ ↑B :=
+by rw [ne.def, line_points_lift_eq]
+
+lemma outside_line_points_lift_eq 
+  (Point : Type*) {Line : Type*} [incidence_geometry Point Line] 
+  (l : Line) (A B : outside_line_points Point l) : 
+  A = B ↔ (↑A : Point) = ↑B :=
+by exact subtype.ext_iff
+
+lemma outside_line_points_lift_ne 
+  (Point : Type*) {Line : Type*} [incidence_geometry Point Line] 
+  (l : Line) (A B : outside_line_points Point l) :
+  A ≠ B ↔ (↑A : Point) ≠ ↑B :=
+by rw [ne.def, outside_line_points_lift_eq]
+
+end incidence_geometry
+
 open incidence_geometry
 
 namespace order_geometry
