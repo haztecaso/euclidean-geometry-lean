@@ -19,7 +19,7 @@ end
 
 /-- Dos líneas distintas tienen como mucho un punto en común. -/
 lemma disctinct_lines_one_common_point 
-  {Point Line : Type*} [ig : incidence_geometry Point Line] :
+  (Point : Type*) {Line : Type*} [ig : incidence_geometry Point Line] :
   ∀ l m : Line, l ≠ m → 
     (∃! A : Point, is_common_point A l m) 
     ∨ (¬ have_common_point Point l m) := 
@@ -33,8 +33,7 @@ begin
   cases hlm with A hA,
   rcases not_unique A hA with ⟨B, ⟨hB, hAB⟩⟩,
   rw ne_comm at hAB,
-  exact 
-    unique_of_exists_unique (ig.I1 hAB) ⟨hA.left,hB.left⟩ ⟨hA.right,hB.right⟩,
+  exact unique_of_exists_unique (ig.I1 hAB) ⟨hA.1, hB.1⟩ ⟨hA.2, hB.2⟩
 end
 
 /-- Tres puntos no colineares determinan tres líneas distintas. -/
@@ -139,67 +138,65 @@ begin
   { use n },
 end
 
-/-- Si dos líneas que determinan tres puntos son iguales, entonces la tercera 
-también coincide. -/
-lemma eq_lines_determined_by_points 
-  {Point : Type*} (Line : Type*) [ig: incidence_geometry Point Line] 
-  {A B C : Point} (hAB : A ≠ B) (hAC : A ≠ C) (hBC : B ≠ C) :
-  ((line Line hAB).val = (line Line hAC).val) → 
-    (line Line hAB).val = (line Line hBC).val := 
-begin
-  intro hABAC,
-  sorry
-end
+-- /-- Si dos líneas que determinan tres puntos son iguales, entonces la tercera 
+-- también coincide. -/
+-- lemma eq_lines_determined_by_points 
+--   {Point : Type*} (Line : Type*) [ig: incidence_geometry Point Line] 
+--   {A B C : Point} (hAB : A ≠ B) (hAC : A ≠ C) (hBC : B ≠ C) :
+--   ((line Line hAB).val = (line Line hAC).val) → 
+--     (line Line hAB).val = (line Line hBC).val := 
+-- begin
+--   intro hABAC,
+--   sorry
+-- end
 
-/-- Para cada punto existen al menos dos líneas que pasan por él. -/
-lemma point_has_two_lines 
-  {Point Line : Type*} [ig: incidence_geometry Point Line] :
-  ∀ A: Point, ∃ l m: Line, l ≠ m ∧ A ~ l ∧ A ~ m :=
-begin
-  intro P,
-  rcases ig.I3 with ⟨A, B, C, ⟨⟨hAB, hAC, hBC⟩, h_noncollinear⟩⟩,
-  push_neg at h_noncollinear,
-  let AB := line Line hAB,
-  by_cases hPAB : P ~ ↑AB,
-  { 
-    let h2 := h_noncollinear,
-    specialize h2 AB AB.property.1 AB.property.2,
-    have hCP : C ≠ P, { by_contra h', rw ← h' at hPAB, tauto },
-    let CP := line Line hCP,
-    use [AB, CP],
-    refine ⟨_, hPAB, CP.property.right⟩,
-    by_contra h3,
-    have h3' : AB.val = CP.val, { tauto },
-    let hlCP := CP.property,
-    rw ← h3' at hlCP,
-    tauto,
-  },
-  { 
-    -- IDEA: AP y BP pasan por P y deben ser distintas 
-    -- Ya que si AP = BP entonces A B y P son colineares 
-    -- y P ~ AB, lo que contradice la que ¬ P ~ AB.
-    have hAP : A ≠ P,
-    { by_contra h, 
-      rw ← h at hPAB,
-      exact hPAB AB.prop.left },
-    have hBP : B ≠ P,
-    { by_contra h, 
-      rw ← h at hPAB,
-      exact hPAB AB.prop.right },
-    let AP := line Line hAP,
-    let BP := line Line hBP,
-    have h2 : AP.val ≠ BP.val, 
-    { by_contra h,
-      let hhh := AP.prop,
-
-      let HHH := eq_lines_determined_by_points Line hAB hAP hBP,
-
-      have hPAB' : P ~ AB.val, 
-      { sorry },
-      exact hPAB hPAB',
-      },
-    use [AP, BP],
-    exact ⟨h2, AP.property.right, BP.property.right⟩ },
-end
+-- /-- Para cada punto existen al menos dos líneas que pasan por él. -/
+-- lemma point_has_two_lines 
+--   {Point Line : Type*} [ig: incidence_geometry Point Line] :
+--   ∀ A: Point, ∃ l m: Line, l ≠ m ∧ A ~ l ∧ A ~ m :=
+-- begin
+--   intro P,
+--   rcases ig.I3 with ⟨A, B, C, ⟨⟨hAB, hAC, hBC⟩, h_noncollinear⟩⟩,
+--   push_neg at h_noncollinear,
+--   let AB := line Line hAB,
+--   by_cases hPAB : P ~ ↑AB,
+--   { 
+--     let h2 := h_noncollinear,
+--     specialize h2 AB AB.property.1 AB.property.2,
+--     have hCP : C ≠ P, { by_contra h', rw ← h' at hPAB, tauto },
+--     let CP := line Line hCP,
+--     use [AB, CP],
+--     refine ⟨_, hPAB, CP.property.right⟩,
+--     by_contra h3,
+--     have h3' : AB.val = CP.val, { tauto },
+--     let hlCP := CP.property,
+--     rw ← h3' at hlCP,
+--     tauto,
+--   },
+--   { 
+--     -- IDEA: AP y BP pasan por P y deben ser distintas 
+--     -- Ya que si AP = BP entonces A B y P son colineares 
+--     -- y P ~ AB, lo que contradice la que ¬ P ~ AB.
+--     have hAP : A ≠ P,
+--     { by_contra h, 
+--       rw ← h at hPAB,
+--       exact hPAB AB.prop.left },
+--     have hBP : B ≠ P,
+--     { by_contra h, 
+--       rw ← h at hPAB,
+--       exact hPAB AB.prop.right },
+--     let AP := line Line hAP,
+--     let BP := line Line hBP,
+--     have h2 : AP.val ≠ BP.val, 
+--     { by_contra h,
+--       let hhh := AP.prop,
+--       let HHH := eq_lines_determined_by_points Line hAB hAP hBP,
+--       have hPAB' : P ~ AB.val, 
+--       { sorry },
+--       exact hPAB hPAB',
+--       },
+--     use [AP, BP],
+--     exact ⟨h2, AP.property.right, BP.property.right⟩ },
+-- end
 
 end incidence_geometry

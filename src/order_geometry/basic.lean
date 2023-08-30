@@ -67,7 +67,7 @@ instance [order_geometry Point Line] : has_mem Point (Seg Point) :=
   ⟨λ P seg, seg.in Line P⟩
 
 /-- Lema auxiliar para reescribir la pertenencia de puntos en segmentos. -/
-lemma seg_has_mem_def 
+lemma seg_mem_def 
   {Point : Type*} (seg : Seg Point) (Line : Type*) 
   [og : order_geometry Point Line]  (P : Point) : 
   P ∈ seg ↔ seg.in Line P :=
@@ -84,7 +84,7 @@ begin
     cases hP, { right, left, exact hP },
     { cases hP, { left, exact hP }, { right, right, rw between_symm, exact hP },
   }},
-  { intro hP, rw [seg_has_mem_def, Seg.in] at hP, rw [seg_has_mem_def, Seg.in],
+  { intro hP, rw [seg_has_mem_def, Seg.in] at hP, rw [seg_mem_def, Seg.in],
     cases hP, { right, left, exact hP },
     { cases hP, { left, exact hP }, { right, right, rw between_symm, exact hP },
   }},
@@ -96,7 +96,7 @@ lemma seg_contains_extremes
   {A B : Point} (hAB : A ≠ B) : 
   A ∈ (Seg.mk hAB) ∧ B ∈ (Seg.mk hAB) :=
 begin
-  rw [seg_has_mem_def, Seg.in, seg_has_mem_def, Seg.in],
+  rw [seg_mem_def, Seg.in, seg_mem_def, Seg.in],
   split,
   { left, refl },
   { right, left, refl }
@@ -174,8 +174,7 @@ begin
 end
 
 def same_side_line (l: Line) (A B : Point) := 
-  A = B ∨ (∃ h : A ≠ B, 
-    ¬ @seg_intersect_line Point Line og (Seg.mk h) l)
+  A = B ∨ (∃ h : A ≠ B, ¬ @seg_intersect_line Point Line og (Seg.mk h) l)
 
 def same_side_line_non_collinear 
   {A B C D: Point} [og: order_geometry Point Line] 
