@@ -64,57 +64,53 @@ namespace congruence_geometry
 
 variables (Point Line : Type) [cg : congruence_geometry Point Line]
 
-/- Seg congruence is reflexive -/
+/- La congruencia de segmentos es reflexiva.-/
 lemma scong_refl : reflexive (cg.scong) :=
 begin
   intro seg,
   exact cg.C22 seg,
 end
 
-/- Seg congruence is symmetric -/
+/- La congruencia de segmentos es simétrica.-/
 lemma scong_symm : symmetric (cg.scong) :=
 begin
   intros s1 s2 h1,
-  let h2 := scong_refl Point Line,
-  rw reflexive at h2,
-  specialize h2 s1,
-  exact cg.C21 h1 h2,
+  exact cg.C21 h1 (scong_refl Point Line s1),
 end
 
-/- Seg congruence is transitive -/
+/- La congruencia de segmentos es transitiva.-/
 lemma scong_trans : transitive (cg.scong) :=
 begin
-  sorry
+  intros s1 s2 s3 h12 h23,
+  exact cg.C21 (scong_symm Point Line h12) h23,
 end
 
-/- Seg congruence is an equivalence relation -/
+/- La congruencia de segmentos es una relación de equivalencia.-/
 theorem scong_equiv : equivalence (cg.scong) := 
   ⟨scong_refl Point Line, scong_symm Point Line, scong_trans Point Line⟩
 
-/- Ang congruence is reflexive -/
+/- La congruencia de ángulos es reflexiva.-/
 lemma acong_refl : reflexive (cg.acong) :=
 begin
   intro ang,
   exact cg.C52 ang,
 end
 
-/- Seg congruence is symmetric -/
+/- La congruencia de ángulos es simétrica.-/
 lemma acong_symm : symmetric (cg.acong) :=
 begin
   intros a1 a2 h1,
-  let h2 := acong_refl Point Line,
-  rw reflexive at h2,
-  specialize h2 a1,
-  exact cg.C51 h1 h2,
+  exact cg.C51 h1 (acong_refl Point Line a1),
 end
 
-/- Seg congruence is transitive -/
+/- La congruencia de ángulos es transitiva.-/
 lemma acong_trans : transitive (cg.acong) :=
 begin
-  sorry
+  intros a1 a2 a3 h12 h23,
+  exact cg.C51 (acong_symm Point Line h12) h23,
 end
 
-/- Ang congruence is an equivalence relation -/
+/- La congruencia de ángulos es una relación de equivalencia.-/
 theorem acong_equiv : equivalence (cg.acong) := 
   ⟨acong_refl Point Line, acong_symm Point Line, acong_trans Point Line⟩
 
