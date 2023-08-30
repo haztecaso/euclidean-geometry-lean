@@ -1,6 +1,4 @@
-import tactic
-import data.set
-import .incidence.basic
+import tactic data.set .incidence_geometry.basic
 
 def Point := ℝ × ℝ
 
