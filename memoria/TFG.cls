@@ -20,6 +20,9 @@
 \RequirePackage{graphicx}
 \RequirePackage{microtype}
 
+% _ escaping
+\catcode`\_=12
+
 \RequirePackage[colorlinks=true, linktocpage=true, citecolor=red, linkcolor=blue]{hyperref}
 \setcounter{tocdepth}{1}
 
@@ -67,10 +70,9 @@
 	frame=trlb,
 	framesep=10pt,
 	rulecolor=\color{gray},
-	numberstyle=\ttfamily,
 	basicstyle=\fontsize{10}{11}\selectfont\ttfamily,
-	xleftmargin=-1.5cm,
-	xrightmargin=-1.5cm,
+	xleftmargin=-.75cm,
+	xrightmargin=-.75cm,
 	aboveskip=1em,
 	belowskip=.5em,
 	% framexleftmargin=1em,
@@ -80,13 +82,24 @@
 	style=leanSimple,
 	numbers=left,
 	% numbersep=5pt,
-	xleftmargin=2.5cm,
-	framexleftmargin=3.5cm,
+	xleftmargin=0cm,
+	framexleftmargin=.75cm,
+	numberstyle=\scriptsize\ttfamily\color{gray},
 	% belowskip=-.5em,
 	% backgroundcolor=\color{backcolor}, % background color
 }
 
 \lstset{style=leanSimple}
+
+\newcommand{\lstleanfull}[3]{
+	\lstinputlisting[
+		style=leanFull,
+		firstnumber=#2,
+		firstline=#2,
+		lastline=#3,
+		title={\ttfamily \footnotesize src/#1}
+	]{../src/#1}
+}
 
 \newtheorem{prop}{Proposición}
 
@@ -144,55 +157,6 @@
 
 
 \RequirePackage[citestyle=alphabetic,bibstyle=alphabetic]{biblatex}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

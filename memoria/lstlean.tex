@@ -253,7 +253,13 @@ literate=
 {+}{{\color{symbolcolor}+}}1
 {*}{{\color{symbolcolor}\ensuremath{{}^{*}}}}1
 {\#}{{\color{keywordcolor}\#}}1 % is usually part of a keyword, like #check
-{~}{{\fontfamily{ptm}\selectfont \textasciitilde}}1, % is usually part of a keyword, like #check
+{~}{{\fontfamily{ptm}\selectfont \textasciitilde}}1% is usually part of a keyword, like #check
+
+% Spanish accents
+{á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
+{Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1
+{ü}{{\"u}}1 {Ü}{{\"U}}1
+,
 
 % Comments
 %comment=[s][\itshape \color{commentcolor}]{/-}{-/},
@@ -303,6 +309,8 @@ stringstyle={\ttfamily\color{stringcolor}}, % Style for strings
 commentstyle={\ttfamily\itshape\color{commentcolor}}, % Style for comments
 
 }
+
+
 
 
 
