@@ -1,64 +1,113 @@
-\section{Formalizando la geometría de Hilbert en Lean}
-\begin{itemize}
-	\item Otros trabajos
-	      \begin{itemize}
-		      \item Descubrimiento de saltos de intuicion en Hilbert
-		      \item Paper en el que se analizan las decisiones de diseño de
-		            software a la hora de formalizar.
-		      \item Formalización de la independencia del quinto postulado
-		            utilizando los axiomas de Tarski.
-	      \end{itemize}
-	\item Mi trabajo. Formalizando la geometría de Hilbert.
-	      \begin{itemize}
-
-		      \item Geometría de incidencia. Comparación entre los
-		            axiomas originales de Hilbert, su redacción moderna y
-		            mi formalización en Lean. Introducción a conceptos
-		            y funciones de Lean mediante ejemplos (clases,
-		            tipos de parámetros, etc)
-		      \item Otros grupos de axiomas y tratamientos.
-		      \item Idea demostración de independencia del axioma de
-		            las paralelas.
-	      \end{itemize}
-\end{itemize}
-
-En esta sección se presentan algunos axiomas y resultados elementales de la
-axiomática de Hilbert, comparando los enunciados y demostraciones expresados de
-forma natural (\todo{¿Cómo expresar esto bien?}) con sus correspondientes
-formalizaciones en Lean.
-
 \subsection{Geometría de incidencia}
 
-\todo{Explicar cómo funcionan las clases, comparar los axiomas de hilbert
-	expresados en lenguaje natural con sus formalizaciones. Diferencias entre
-	parámetros implícitos y explícitos.}
-
+El primer grupo de axiomas establece propiedades de la relación de
+\textit{incidencia}, una relación binaria entre \textit{puntos} y
+\textit{líneas}. Dado un punto $A$ y una recta $l$ escribiremos $A\sim l$ para
+denotar que $A$ y $l$ están relacionados mediante la relación de incidencia.
+Los tres \textit{axiomas de incidencia} son los siguientes:
 
 \setaxsection{I}
-\begin{ax}\label{I1}
-	Para cada par de puntos distintos $A, B$ existe una única recta que los
+\begin{ax}\label{ax:I1}
+	Para cada par de puntos distintos $A$ y $B$ existe una única recta que los
 	contiene.
 \end{ax}
 
-\begin{ax}\label{I2}
+\begin{ax}\label{ax:I2}
 	Cada línea contiene al menos dos puntos distintos.
 \end{ax}
 
-\begin{ax}\label{I3}
+\begin{ax}\label{ax:I3}
 	Existen tres puntos no colineares. Es decir, existen $A$, $B$ y $C$ tales que
 	$AB\neq BC$.
 \end{ax}
 
-\begin{lstlisting}
-class incidence_geometry (Point Line : Type*) :=
-  (lies_on : Point → Line → Prop)
-  (infix ` ~ ` : 50 := lies_on)
-  (I1 {A B : Point} (h : A ≠ B): ∃! l : Line, A ~ l ∧ B ~ l)
-  (I2 (l : Line) : ∃ A B : Point, A ≠ B ∧ A ~ l ∧ B ~ l)
-  (I3 : ∃ A B C : Point, different3 A B C ∧ ¬ ∃ l : Line,  A ~ l ∧ B ~ l ∧ C ~ l)
-\end{lstlisting}
+Para formalizar estos axiomas en Lean podríamos utilizar el comando
+\lstinline{constant} o \lstinline{axiom}, pero existen otras construcciones que
+permiten explicitar mejor y tener más control sobre qué axiomas se están
+usando en cada momento. En lugar de enunciar un axioma y a partir de entonces
+darlo siempre por válido, definiremos un objeto (un nuevo tipo) en el que
+agruparemos nociones primitivas y axiomas sobre estas.
 
-\subsection{Resultados elementales}
+Se procederá de forma análoga a la definición usual de un \textit{grupo}, en el
+se consideran un conjunto (en \textit{Lean} trabajaremos con tipos) con una
+operación, un elemento distinguido y unos axiomas. Para definir la
+\textit{geometría de incidencia} se toman dos tipos (uno para los puntos y otro
+para las líneas), una relación entre estos tipos (la incidencia) y los axiomas.
+
+Para hacer esto \textit{Lean} consta de dos construcciones muy similares, las
+\textit{estructuras} y las \textit{clases}, mediante las cuales se pueden
+agrupar tipos y proposiciones sobre estos tipos.
+\todo{Explicar brevemente diferencia entre estructuras y clases.}
+Esta es la definición de clase mediante la que
+hemos digitalizado las nociones y conceptos de la \textit{geometría de incidencia}:
+
+\lstleanfull{incidence_geometry/basic.lean}{17}{22}
+
+Como se puede intuir leyendo el código, los tipos \lstinline{Point} y
+\lstinline{Line} son parámetros de la clase. Las siguientes líneas explicitan
+términos que tienen que existir y tener el tipo especificado después de los dos
+puntos.
+
+La relación de incidencia se ha formalizado como una función que dados un punto
+y una línea devuelve la proposición que determina si el punto está en la línea.
+En la línea 19 se introduce la notación mencionada anteriormente, mediante el
+comando \lstinline{infix}. En los axiomas, siguiendo el estilo de la libería
+\textit{mathlib}, se ha evitado el uso de cuantificadores universales, y en su
+lugar se han incluido los términos correspondientes como parámetros, lo que es
+equivalente en teoría de tipos pero más cómodo de leer.
+
+Es interesante observar lo cercano que es el código en \textit{Lean} a la forma
+en la que escribiríamos los axiomas utilizando los símbolos usuales de la
+lógica. No es necesario tener conocimientos de \textit{Lean} para entender la
+mayoría de los enunciados (no se da el mismo caso con las demostraciones).
+
+\todo{Explicar cómo se usan las clases. Parámetros con corchetes e instancias.}
+
+\subsubsection{Definiciones}
+
+Las siguientes definiciones son útiles para tratar con puntos y líneas y
+continuar el desarrollo de la teoría.
+
+En las demostraciones es útil tenér una forma de, dados dos puntos distintos,
+construir el término de la línea que pasa por ellos, aprovechando el
+axioma~\hyperref[ax:I1]{I1}.
+
+\lstleanfull{incidence_geometry/basic.lean}{30}{40}
+
+El tipo de esta definición (línea 33) es un \textit{tipo dependiente}: al tipo
+\lstinline{Line} se le asocia la propiedad de que los puntos pertenezcan al
+término correspondiente. En el código fuente completo hemos desarrollado también
+una versión de esta función, \lstinline{line_unique}, que también devuelve la
+propiedad de unicidad dada por el axioma~\hyperref[ax:I2]{I2}.
+
+\begin{defin*}[Colinearidad]
+	Decimos que tres puntos distintos son \textbf{colineares} si existe una
+	línea que los contiene (todos los puntos inciden en la línea).
+\end{defin*}
+
+\lstleanfull{incidence_geometry/basic.lean}{60}{61}
+
+En esta definición el parámetro del tipo \lstinline{Point : Type*} es implícito,
+puesto que se puede inferir a partir de los términos \lstinline{A B C : Point}.
+\lstinline{Line : Type*} sin embargo tiene que ser explícito ya que los demás
+parámetros no proporcionan información suficiente para inferirlo
+automáticamente.
+
+\begin{defin*}[Puntos comunes]
+	Decimos que un punto es \textbf{común} a dos líneas si está en ambas líneas.
+	Si dadas dos líneas existe un punto común, decimos que las líneas
+	\textbf{tienen} un punto en común.
+\end{defin*}
+
+\lstleanfull{incidence_geometry/basic.lean}{173}{176}
+
+En este caso los parámetros \lstinline{Point Line : Type*} son ambos implícitos
+porque los argumentos \lstinline{A : Point} y \lstinline{l m : Line}
+proporcionan la información necesaria para la inferencia automática.
+
+\lstleanfull{incidence_geometry/basic.lean}{179}{182}
+
+\subsubsection{Resultados elementales}
 
 Uno de los primeros resultados que se pueden demostrar, utilizando sólamente los
 axiomas de incidencia es el siguiente:
@@ -67,69 +116,27 @@ axiomas de incidencia es el siguiente:
 	Dos líneas distintas pueden tener como mucho un punto en común.
 \end{prop}
 
-
-Su correspondiente formalización en Lean es:
-
-
-\begin{lstlisting}
-lemma disctinct_lines_one_common_point
-  {Point Line : Type*} [ig : incidence_geometry Point Line] :
-  ∀ l m : Line, l ≠ m →
-    (∃! A : Point, is_common_point A l m) ∨ (¬ have_common_point Point l m) :=
-begin
-  sorry
-end
-\end{lstlisting}
-
-
-Se puede observar que, gracias al uso de caracteres unicode, la formalización en
-Lean es muy fácil de leer y cercana a la forma de escribir matemáticas a la que
-estamos acostumbrados.
-
-\todo{¿Incidir sobre la diferencia entre parámetros explícitos e implícitos?}
-
-Observemos que en el enunciado se están utilizando algunas definiciones que se
-han declarado previamente:
-
-\begin{lstlisting}
-def is_common_point {Point Line : Type*} [incidence_geometry Point Line]
-  (A : Point) (l m : Line) := A ~ l ∧ A ~ m
-
-def have_common_point (Point : Type*) {Line : Type*} [incidence_geometry Point Line]
-  (l m : Line) := ∃ A : Point, is_common_point A l m
-\end{lstlisting}
-
-\todo{Aquí si que sería conveniente explicar por qué algunos parámetros son
-	implícitos y otros explícitos.}
-
-La demostración, como la presenta el libro de Hartshorne (\todo{citar}), es como
-sigue:
 \begin{proof}
 	Sean $l$ y $m$ dos líneas. Supongamos que ambas contienen los puntos $A$ y
 	$B$ con $A\ne B$. Por el axioma I1, existe una única línea que pasa por $A$
 	y $B$, por lo que $l$ y $m$ deben ser iguales.
 \end{proof}
 
-Esta demostración puede interpretarse como una demostración por absurdo sobre la
-condición de que las dos líneas sean iguales, o como una demostración por
-contraposición: si asumimos que no se cumple la conclusión (que las dos lineas
-no tengan más de un punto en común), entonces tampoco se cumple la premisa (que
-las dos líneas sean iguales).
+Esta demostración, que sigue la presentación del libro
+de~\textit{Hartshorne}~\cite{hartshorneGeometryEuclid2000}, puede interpretarse
+como una demostración por reducción al absurdo sobre la condición de que las dos
+líneas sean iguales, o como una demostración por contraposición: si asumimos que
+no se cumple la conclusión (que las dos lineas no tengan más de un punto en
+común), entonces tampoco se cumple la premisa (que las dos líneas sean iguales).
 
-\todo{Explicar qué es una demostración en Lean. Que es el estado táctico y la
-	meta, qué hacen las tácticas.}
-
-Al intentar implementar esta idea en Lean nos damos cuenta de que hay bastantes
+Al implementar estas ideas en Lean nos damos cuenta de que hay bastantes
 detalles que necesitamos tener en cuenta.
 
-Esta es la formalización completa del resultado en Lean, incluyendo el enunciado
-y su demostración:
-
-\lstinputlisting[style=leanFull, caption={\lstinline{disctinct_lines_one_common_point}}]{listing1.lean}
+\lstleanfull{incidence_geometry/propositions.lean}{21}{37}
 
 Analicemos la demostración línea por línea:
 \begin{enumerate}[label=L.\arabic*, topsep=0mm]
-	\setcounter{enumi}{4}
+	\setcounter{enumi}{25}
 
 	\item El estado táctico inicial incluye los parámetros del lema. En este caso
 	      los tipos \lstinline{Point} y \lstinline{Line} e \lstinline{ig}, la
@@ -167,13 +174,10 @@ l ≠ m → (∃! (A : Point), is_common_point A l m) ∨ ¬have_common_point Po
 	      En la primera parte de la implicación se aplica una ley de De Morgan para
 	      introducir la negación dentro de una disjunción, convirtiéndola en una
 	      conjunción de negaciones. En la segunda, negar una desigualdad equivale a
-	      una igualdad.
-
-	      \todo{fix latex problem}
-	      % Por tanto la meta resultante es
-	      % \begin{lstlisting}
-	      % ⊢ (¬∃! (A : Point), is_common_point A l m) ∧ have_common_point Point l m → l = m
-	      % \end{lstlisting}
+	      una igualdad. Por tanto la meta resultante es
+	      \begin{lstlisting}
+	      ⊢ (¬∃! (A : Point), is_common_point A l m) ∧ have_common_point Point l m → l = m
+	      \end{lstlisting}
 
 	      Es interesante notar que \lstinline{push_neg} no consigue 'empujar' la negación todo lo que podríamos desear.
 
@@ -314,24 +318,39 @@ hAB: B ≠ A
 	      Análogamente para el segundo argumento.
 \end{enumerate}
 
+\todo{Mencionar que el código del modo táctico no se parece tanto a la forma
+	usual de escribir matemáticas, pero la experiencia dada por el entorno sí que se
+	acerca más.}
+
+De las siguientes proposiciones incluiremos sólo los enunciados. El desarrollo
+de las demostraciones se encuentra en el repositorio.
 
 
+\begin{prop}
+	Tres puntos no colineares determinan tres líneas distintas.
+\end{prop}
+
+\lstleanfull{incidence_geometry/propositions.lean}{40}{51}
 
 
+\begin{prop}
+	Existen tres líneas distintas que no pasan por un punto común, es decir
+	tales que no existe un punto que está en todas ellas.
+\end{prop}
 
+\lstleanfull{incidence_geometry/propositions.lean}{76}{84}
 
+\begin{prop}
+	Para cada línea existe un punto que no está ella.
+\end{prop}
 
+\lstleanfull{incidence_geometry/propositions.lean}{107}{110}
 
+\begin{prop}
+	Para cada punto existe una línea que no pasa por él.
+\end{prop}
 
-
-
-
-
-
-
-
-
-
+\lstleanfull{incidence_geometry/propositions.lean}{124}{127}
 
 
 

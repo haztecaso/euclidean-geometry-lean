@@ -41,7 +41,6 @@
 
 % \RequirePackage{sectsty} % Comentado porque generaba warning https://tex.stackexchange.com/a/310968
 
-\RequirePackage{titlesec}
 
 \newcommand{\emptypage}{\newpage\null\thispagestyle{empty}\newpage}
 \RequirePackage[margin=3.5cm]{geometry}
@@ -102,6 +101,7 @@
 }
 
 \newtheorem{prop}{Proposición}
+\newtheorem*{defin*}{Definición}
 
 \def\theaxsection{}
 \newcommand{\setaxsection}[1]{\def\theaxsection{#1}\setcounter{ax}{0}}
@@ -150,13 +150,43 @@
 }{\vspace*{1cm}}
 
 
+\RequirePackage{titlesec}
+\titleformat{\section} {\Large\bfseries}{\thesection.}{0.5em}{}
+\titleformat{\subsection}{\large\bfseries}{\thesubsection.}{0.5em}{}
+\titleformat{\subsubsection}{\normalfont\bfseries}{\thesubsubsection.}{0.5em}{}
 % \sectionfont{\centering\Large\underline}
 % \titlespacing*{\section}{0pt}{1.2em plus 0.1em minus 0.1em}{0.4em plus 0.1em minus 0.1em}
 % \titlespacing*{\subsection}{0pt}{.4em plus 0.1em minus 0.1em}{.2em plus 0.1em minus 0.1em}
-% \titlespacing*{\subsubsection}{0pt}{.2em plus 0.1em minus 0.1em}{0em plus 0.1em minus 0.1em}
+\titlespacing*{\subsubsection}{0pt}{.3em plus 0.1em minus 0.1em}{.05em plus 0.1em minus 0.1em}
 
 
 \RequirePackage[citestyle=alphabetic,bibstyle=alphabetic]{biblatex}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -170,39 +170,25 @@ necesario incluir la segunda anotación de tipo. Dada la expresión
 inferencia de tipos deduce que la suma de dos números naturales también es un
 número natural, por lo que se infiere el tipo \lstinline{ℕ}.
 
-\subsection{Proposiciones en Lean}
+\subsection{Introducción de términos}
 
-En Lean se tiene el tipo \lstinline{Prop} para expresar las proposiciones
-mediante la analogía de \textit{proposiciones como tipos} dada por la
-correspondencia de Curry-Howard.
-
-La correspondencia de Curry-Howard afirma que estas funciones de la
-teoría de tipos se comportan de la misma forma que la implicación en lógica. Por
-tanto en Lean utilizaremos el símbolo \lstinline{→} para referirnos tanto a
-funciones como a implicaciones dentro de una proposición. Dadas dos
-proposiciones \lstinline{p q : Prop} podemos construir la proposición
-\lstinline{p → q : Prop}, que se interpreta como \lstinline{p} \textit{implica}
-\lstinline{q}.
-
-\subsection{Introducción de símbolos}
-
-En lean existen distintas formas de introducir nuevos símbolos en el entorno
+En lean existen distintas formas de introducir nuevos términos en el entorno
 actual.
 
-\subsubsection{Constantes}%
+\subsubsection*{Constantes}%
 
 Mediante los comandos \lstinline{constant} y \lstinline{constants} se
-pueden introducir símbolos en el entorno, postulando su existencia. Este comando
+pueden introducir términos en el entorno, postulando su existencia. Este comando
 equivale por tanto a considerar nuevos axiomas sobre la existencia de los
-símbolos que introduce.
+términos que introduce.
 \begin{lstlisting}
 constant a : ℕ
 constants (b : ℤ) (c : ℂ)
 \end{lstlisting}
 
 
-\subsubsection{Definiciones}%
-Si no queremos introducir nuevos axiomas podemos definir nuevos símbolos
+\subsubsection*{Definiciones}%
+Si no queremos introducir nuevos axiomas podemos definir nuevos términos
 mediante el comando \lstinline{def}. Como estamos definiendo un símbolo, es
 necesario proporcionar el tipo y término que queremos asignar al símbolo:
 \begin{lstlisting}
@@ -241,4 +227,35 @@ def id2 {α : Type*} (e : α) := e
 Así los parámetros indicados entre llaves, llamados \textit{parámetros implícitos}, serán deducidos automaticamente.
 
 \newpage
+
+\subsection{Proposiciones}
+
+En Lean se tiene el tipo \lstinline{Prop} para expresar las proposiciones
+mediante la analogía de \textit{proposiciones como tipos} dada por la
+correspondencia de Curry-Howard.
+
+La correspondencia de Curry-Howard afirma que estas funciones de la
+teoría de tipos se comportan de la misma forma que la implicación en lógica. Por
+tanto en Lean utilizaremos el símbolo \lstinline{→} para referirnos tanto a
+funciones como a implicaciones dentro de una proposición. Dadas dos
+proposiciones \lstinline{p q : Prop} podemos construir la proposición
+\lstinline{p → q : Prop}, que se interpreta como \lstinline{p} \textit{implica}
+\lstinline{q}.
+
+\todo{Explicar cómo se expresan las proposiciones. or, and, neg, forall, exists,
+	neq, etc}
+
+\subsection{Demostraciones}
+
+\todo{Explicar qué es una demostración en teoría de tipos (term mode). Explicar
+	qué son las tácticas y cómo funciona el modo táctico.}
+
+\todo{Incluir anexo hablando sobre el entorno de desarrollo y el modo táctico,
+	con captura de pantalla.}
+
+
+\subsection{Mathlib}
+
+\todo{Contar alguna cosa básica. Explicar cómo utilizar la web para encontrar cosas.}
+
 

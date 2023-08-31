@@ -1,0 +1,60 @@
+\section{Formalizando la geometría de Hilbert en Lean}
+% \begin{itemize}
+% 	\item Otros trabajos
+% 	      \begin{itemize}
+% 		      \item Descubrimiento de saltos de intuicion en Hilbert
+% 		      \item Paper en el que se analizan las decisiones de diseño de
+% 		            software a la hora de formalizar.
+% 		      \item Formalización de la independencia del quinto postulado
+% 		            utilizando los axiomas de Tarski.
+% 	      \end{itemize}
+% 	\item Mi trabajo. Formalizando la geometría de Hilbert.
+% 	      \begin{itemize}
+
+% 		      \item Geometría de incidencia. Comparación entre los
+% 		            axiomas originales de Hilbert, su redacción moderna y
+% 		            mi formalización en Lean. Introducción a conceptos
+% 		            y funciones de Lean mediante ejemplos (clases,
+% 		            tipos de parámetros, etc)
+% 		      \item Otros grupos de axiomas y tratamientos.
+% 		      \item Idea demostración de independencia del axioma de
+% 		            las paralelas.
+% 	      \end{itemize}
+% \end{itemize}
+
+En esta sección se presentan algunos axiomas y resultados elementales de la
+axiomática de Hilbert, comparando los enunciados y demostraciones expresados de
+forma natural con sus correspondientes formalizaciones en Lean.
+
+En 1899 Hilbert empezó a desarrollar su propuesta de nueva fundamentación de la
+geometría euclídea, mediante una serie de apuntes de conferencias que más tarde
+se convertirían en el tratado \textit{Grundlagen der Geometrie} (Fundamentos de
+Geometría). Este trabajo hace énfasis en los problemas de clasificación de
+nociones primitivas, grupos de axiomas, interdependencias entre las distintas
+partes de la teoría y minimalidad de los axiomas considerados.
+
+Esta nueva teoría geométrica parte de postular ciertas nociones primitivas y una
+serie de axiomas que establecen cómo se relacionan estas nociones. En este
+trabajo se ha seguido una versión modernizada de los axiomas y los resultadas,
+basada en las presentaciones de los libros de
+\textit{Hartshorne}~\cite{hartshorneGeometryEuclid2000} y
+\textit{Greenberg}~\cite{greenbergEuclideanNonEuclideanGeometries1993}, en las
+que se considera el caso restringido de la geometría plana.
+
+Consideraremos por tanto cinco nociones primitivas: dos términos primitivos
+(\textit{puntos} y \textit{líneas}) y cuatro relaciones primitivas
+(\textit{incidencia}, \textit{orden}, \textit{congruencia de segmentos} y
+\textit{congruencia de ángulos}).
+
+% \begin{itemize}
+% 	\item Denotaremos los \textit{puntos} con letras mayúsculas $A,B,C,\dots$
+% 	\item Denotaremos las \textit{líneas} con letras minúsculas $a,b,c,\dots$
+% \end{itemize}
+
+Se tratarán los axiomas y definiciones correspondientes a estas nociones
+primitivas, siguiendo la estructura del tratado, mencionando alguna cuestión
+sobre el axioma de las paralelas, pero sin entrar en cuestiones de continuidad.
+Además se incluirá alguna formalización de resultados demostrables con las
+nociones presentadas.
+
+

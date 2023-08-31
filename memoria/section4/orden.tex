@@ -1,0 +1,128 @@
+\subsection{Geometría del orden}
+\setaxsection{B}
+
+El segundo grupo de axiomas establece propiedades de la relación de
+\textit{orden}, una relación ternaria entre puntos. Dados tres puntos $A, B, C$
+escribiremos $A * B * C$ para indicar que están relacionados mediante la
+relación de orden.
+Los cuatro \textit{axiomas de orden} son los siguientes:
+
+\begin{ax}\label{ax:B1}
+	Si un punto $B$ está entre $A$ y $C$ ($A * B * C$) entonces $A, B, C$ son
+	distintos, están en una misma línea y $C * B * A$.
+\end{ax}
+
+\begin{ax}\label{ax:B2}
+	Para cada dos puntos distintos $A,B$ existe un punto $C$ tal que $A * B * C$.
+\end{ax}
+
+\begin{ax}\label{ax:3}
+	Dados tres puntos distintos en una línea, uno y sólo uno de ellos está entre
+	los otros dos.
+\end{ax}
+
+\begin{ax}[Pasch]\label{ax:4}
+	Sean $A, B, C$ tres puntos no colineares y $l$ una línea que no contenga a
+	ninguno de estos puntos. Si $l$ contiene un punto $D$ que está entre $A$ y $B$
+	($A * D * B$) entonces también debe contener un punto entre $A$ y $C$ o un
+	punto entre $B$ y $C$.
+\end{ax}
+
+\lstleanfull{order_geometry/basic.lean}{21}{33}
+
+\todo{explicar extension de clases.}
+
+\subsubsection*{Definiciones}
+
+\begin{defin*}[Segmentos]
+  Dados dos puntos distintos $A, B$ definimos el \textbf{segmento}
+  $\overline{AB}$ como el conjunto de puntos que contiene a $A, B$ y a todos los
+  puntos que están entre ellos. Diremos que $A$ y $B$ son los extremos del
+  segmento $\overline{AB}$.
+\end{defin*}
+
+\lstleanfull{order_geometry/basic.lean}{52}{52}
+
+\begin{defin*}[Pertenencia de puntos a segmentos]
+	\todo{redactar}
+\end{defin*}
+
+\lstleanfull{order_geometry/basic.lean}{56}{59}
+\lstleanfull{order_geometry/basic.lean}{63}{64}
+
+\todo{Explicar cómo se puede usar la notación}
+
+\begin{defin*}[Intersección entre segmentos y líneas]
+	\todo{redactar}
+\end{defin*}
+
+\lstleanfull{order_geometry/basic.lean}{106}{108}
+
+\begin{defin*}[Triángulos]
+	\todo{redactar}
+\end{defin*}
+
+\lstleanfull{order_geometry/basic.lean}{111}{113}
+
+\begin{defin*}[Rayos]
+  Dados dos puntos distintos $A, B$, definimos el \textbf{rayo}
+  $\overrightarrow{AB}$ como el conjunto que contiene a $A$ y a todos los puntos
+  de la línea $AB$ tales que están del mismo lado de $A$ que $B$. Dado un rayo
+  $\overrightarrow{AB}$ llamaremos \textbf{vértice} del rayo al punto $A$.
+\end{defin*}
+
+\lstleanfull{order_geometry/basic.lean}{143}{143}
+
+\begin{defin*}[Ángulos]
+  Un \textbf{ángulo} es la unión de dos rayos $\overrightarrow{AB}$ y
+  $\overrightarrow{AC}$ con el mismo vértice y no contenidos en una misma recta.
+  Denotaremos dicho ángulo por $\angle ABC$.
+\end{defin*}
+
+\lstleanfull{order_geometry/basic.lean}{155}{158}
+\lstleanfull{order_geometry/basic.lean}{179}{187}
+
+\begin{defin*}
+  Diremos que dos puntos \textbf{están del mismo lado del plano} respecto de una
+  recta si el segmento que los une no contiene ningún punto de la recta.
+
+  Diremos que dos puntos están del mismo \textbf{lado de una recta} respecto de
+  un punto si el segmento que los une no contiene a dicho punto.
+\end{defin*}
+
+\lstleanfull{order_geometry/basic.lean}{193}{194}
+
+\begin{defin*}[Lados de una línea]
+	\todo{redactar}
+\end{defin*}
+
+\lstleanfull{order_geometry/basic.lean}{221}{223}
+
+\subsubsection*{Resultados}%
+
+\todo{Escribir sobre el paper de Meikle y los descubrimientos sobre las
+	demostraciones originales de Hilbert}
+
+\lstleanfull{order_geometry/propositions.lean}{17}{20}
+
+
+\begin{prop}
+	La relación de estar del mismo lado del plano respecto de una recta es una
+	relación de equivalencia.
+\end{prop}
+
+\todo{¿Incluir código? Anexo?}
+
+
+% \lstleanfull{order_geometry/propositions.lean}{25}{31}
+% \lstleanfull{order_geometry/propositions.lean}{34}{50}
+% \lstleanfull{order_geometry/propositions.lean}{59}{197}
+
+
+
+
+
+
+
+
+
