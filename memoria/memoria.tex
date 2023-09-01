@@ -2,10 +2,16 @@
 \usepackage{lipsum}
 \addbibresource{referencias.bib}
 
-\title{Formalización de las matemáticas con Lean.\\ Un caso de estudio: Geometría euclídea plana.}
+\title{
+  Formalización de las matemáticas con Lean.\\ 
+  Un caso de estudio: Geometría euclídea plana.
+}
 \date{Septiembre de 2023}
 \author{Adrián Lattes Grassi}
-\newcommand{\subtitle}{Facultad de Ciencias Matemáticas.\\Trabajo dirigido por Jorge Carmona Ruber.}
+\newcommand{\subtitle}{
+  Facultad de Ciencias Matemáticas.\\ 
+  Trabajo dirigido por Jorge Carmona Ruber.
+}
 
 \begin{document}
 
@@ -14,21 +20,23 @@
 \emptypage
 
 % RESUMEN - ABSTRACT
-\input{abstract.tex}
+\input{0-abstract.tex}
 
 % ÍNDICE
-% \tableofcontents
-% \newpage
+\tableofcontents
+\newpage
 
-\input{introduccion.tex}
-\input{section1.tex}
-\input{section2.tex}
-\input{section3.tex}
-\input{section4/introduccion.tex}
-\input{section4/incidencia.tex}
-\input{section4/orden.tex}
-\input{section4/congruencia.tex}
-\input{section4/paralelas.tex}
+
+\input{1-metodologia-y-plan.tex}
+\input{2-matematicas-y-geometria-formales.tex}
+\input{3-formalizacion-asistida.tex}
+\input{4-introduccion-a-lean.tex}
+\input{5.1-geometria-introduccion.tex}
+% \input{5.2-geometria-incidencia.tex}
+% \input{5.3-geometria-orden.tex}
+% \input{5.4-geometria-congruencia.tex}
+% \input{5.5-geometria-paralelas.tex}
+\input{6-conclusiones.tex}
 
 \newpage
 
@@ -37,5 +45,17 @@
 \printbibliography[heading=bibintoc, title={Referencias}]{referencias}
 
 \end{document}
+
+
+
+
+
+
+
+
+
+
+
+
 
 

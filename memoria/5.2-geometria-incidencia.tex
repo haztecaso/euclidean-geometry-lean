@@ -163,7 +163,8 @@ l ≠ m → (∃! (A : Point), is_common_point A l m) ∨ ¬have_common_point Po
 	      de la forma \lstinline{A → B}, la reemplaza por \lstinline{¬B → ¬A}. En
 	      este caso la meta resultante es
 	      \begin{lstlisting}
-⊢ ¬((∃! (A : Point), is_common_point A l m) ∨ ¬have_common_point Point l m) → ¬l ≠ m
+⊢ ¬((∃! (A : Point), is_common_point A l m) ∨ ¬have_common_point Point l m) 
+  → ¬l ≠ m
 \end{lstlisting}
 
 	\item \lstinline{push_neg, } La táctica \lstinline{push_neg} utiliza
@@ -176,8 +177,9 @@ l ≠ m → (∃! (A : Point), is_common_point A l m) ∨ ¬have_common_point Po
 	      conjunción de negaciones. En la segunda, negar una desigualdad equivale a
 	      una igualdad. Por tanto la meta resultante es
 	      \begin{lstlisting}
-	      ⊢ (¬∃! (A : Point), is_common_point A l m) ∧ have_common_point Point l m → l = m
-	      \end{lstlisting}
+⊢ (¬∃! (A : Point), is_common_point A l m) 
+  ∧ have_common_point Point l m → l = m
+\end{lstlisting}
 
 	      Es interesante notar que \lstinline{push_neg} no consigue 'empujar' la negación todo lo que podríamos desear.
 
@@ -213,6 +215,7 @@ is_common_point x l m ∧ ∀ (y : Point), is_common_point y l m → y = x
 \end{lstlisting}
 
 	\item \lstinline{push_neg at not_unique,}
+	      \todo{revisar}
 	      %   /- Como comentábamos antes, ahora que hemos reescrito la definición de ∃! podemos seguir "empujando" la negación en la hipótesis not_unique,
 	      %      obteniendo ∀ (x : Point), is_common_point x l m → (∃ (y : Point), is_common_point y l m ∧ y ≠ x)
 	      %   -/
@@ -323,7 +326,7 @@ hAB: B ≠ A
 	acerca más.}
 
 De las siguientes proposiciones incluiremos sólo los enunciados. El desarrollo
-de las demostraciones se encuentra en el repositorio.
+de las demostraciones se encuentra en el repositorio de código.
 
 
 \begin{prop}
@@ -351,6 +354,8 @@ de las demostraciones se encuentra en el repositorio.
 \end{prop}
 
 \lstleanfull{incidence_geometry/propositions.lean}{124}{127}
+
+
 
 
 

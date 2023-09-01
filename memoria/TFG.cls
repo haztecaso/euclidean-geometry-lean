@@ -4,9 +4,6 @@
 % Inspiración:
 % - https://github.com/guillegran/TFGMates
 
-% \DeclareOption*{\PassOptionsToClass{\CurrentOption}{scrartcl}}
-% \LoadClass[a4paper, 12pt]{scrartcl}
-
 \ProcessOptions\relax
 \LoadClass[a4paper, 12pt, spanish]{article}
 
@@ -16,7 +13,6 @@
 \RequirePackage{csquotes}
 \RequirePackage[spanish]{babel}
 \RequirePackage{enumitem}
-\RequirePackage{array}
 \RequirePackage{graphicx}
 \RequirePackage{microtype}
 
@@ -24,7 +20,8 @@
 \catcode`\_=12
 
 \RequirePackage[colorlinks=true, linktocpage=true, citecolor=red, linkcolor=blue]{hyperref}
-\setcounter{tocdepth}{1}
+
+\setcounter{tocdepth}{2}
 
 \RequirePackage{enumitem}
 \setlist[enumerate]{topsep=0mm}
@@ -161,6 +158,15 @@
 
 
 \RequirePackage[citestyle=alphabetic,bibstyle=alphabetic]{biblatex}
+
+
+
+
+
+
+
+
+
 
 
 

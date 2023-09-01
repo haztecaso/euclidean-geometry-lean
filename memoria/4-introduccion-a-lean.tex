@@ -58,10 +58,11 @@
 
 Lo primero que se necesita en matemáticas para poder formalizar afirmaciones es
 un lenguaje formal con el cual expresarlas. Normalmente se utiliza la lógica de
-primer orden, en el contexto de la teoría de conjuntos. Lean, sin embargo,
+primer orden con los axiomas de la teoría de conjuntos. Lean, sin embargo,
 utiliza un sistema deductivo diferente, el de la teoría de tipos.
+\todo{especificar siempre qué teoría a que teoría de tipos me refiero}
 
-En lógica de primer se tiene una aserción fundamental, \textit{que una
+En lógica de primer orden se tiene una aserción fundamental, \textit{que una
 	proposición dada tenga una prueba}. Es decir, cada proposición $P$ da lugar a la
 aserción correspondiente \textit{P tiene una prueba}. Mediante ciertas reglas de
 transformación, y a veces una serie de axiomas, se pueden construir nuevas
@@ -85,6 +86,8 @@ tipo. En teoría de tipos además existen otras aserciones, como la de igualdad
 entre términos de un mismo tipo. Dados $a:A$ y $b:A$, se tiene la aserción
 \textit{$a$ y $b$ son dos términos de tipo A iguales por definición}, y
 escribimos $a\equiv b : A$.
+
+\todo{Mencionar que la igualdad es un tema delicado.}
 
 La teoría de tipos también puede utilizarse para expresar afirmaciones y
 demostraciones matemáticas. Las afirmaciones se codifican mediante los tipos y
@@ -224,9 +227,10 @@ cuya identificación queremos delegar al sistema de inferencia de tipos.
 def id2 {α : Type*} (e : α) := e
 \end{lstlisting}
 
-Así los parámetros indicados entre llaves, llamados \textit{parámetros implícitos}, serán deducidos automaticamente.
+Así los parámetros indicados entre llaves, llamados \textit{parámetros
+	implícitos}, serán deducidos automaticamente.
 
-\newpage
+\todo{Explicar comando \lstinline{variable}}
 
 \subsection{Proposiciones}
 
@@ -257,5 +261,9 @@ proposiciones \lstinline{p q : Prop} podemos construir la proposición
 \subsection{Mathlib}
 
 \todo{Contar alguna cosa básica. Explicar cómo utilizar la web para encontrar cosas.}
+
+
+
+
 
 
