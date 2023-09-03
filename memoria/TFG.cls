@@ -17,8 +17,12 @@
 \RequirePackage{graphicx}
 \RequirePackage{microtype}
 
+\RequirePackage{lmodern}
+
 % _ escaping
 \catcode`\_=12
+
+\addtolength{\skip\footins}{.5em}
 
 \RequirePackage[colorlinks=true, linktocpage=true, citecolor=red, linkcolor=blue]{hyperref}
 
@@ -41,7 +45,7 @@
 
 
 \newcommand{\emptypage}{\newpage\null\thispagestyle{empty}\newpage}
-\RequirePackage[margin=3.5cm]{geometry}
+\RequirePackage[margin=3cm]{geometry}
 
 % Lean3 formatting
 \RequirePackage{amssymb}
@@ -134,13 +138,13 @@
 		\end{minipage}
 		\vfill
 		\begin{center}
-			\LARGE\bfseries\sffamily \@title
+			\Large\bfseries\@title
 
-			\vspace*{.5cm} \LARGE\normalfont \@author
+			\vspace*{.5cm} \large\normalfont \@author
 
-			\vspace*{.3cm} \Large \@date
+			\vspace*{.3cm} \large \@date
 		\end{center}
-		\vfill \Large\noindent \subtitle
+		\vfill\Large\noindent\subtitle
 	\end{titlepage}
 }
 
@@ -161,3 +165,5 @@
 
 
 \RequirePackage[citestyle=numeric,bibstyle=numeric,sorting=none]{biblatex}
+
+

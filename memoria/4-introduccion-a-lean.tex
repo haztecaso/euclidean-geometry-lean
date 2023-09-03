@@ -1,66 +1,18 @@
 \section{Introducción a Lean}
 
-% \begin{description}
-% 	\item[Tipos y conjuntos] Analogías y diferencias
-% 	\item[hipótesis] Los resultados pueden depender de unas hipótesis,
-% 		enunciadas antes de los \lstinline{:}.
-% 	\item[El tipo Prop]
-% 	\item[Implicación y funciones]
-% 	\item[Doble implicación]
-% 	\item[and y or como tipos inductivos]
-% 	\item[Términos true y false]
-% 	\item[La negación]
-% \end{description}
-
-% \subsection{Tácticas básicas}
-
-% \begin{description}[font=\sffamily\bfseries, leftmargin=1.5cm, style=nextline]
-% 	\item[refl] Sirve para demostrar metas de la forma \lstinline{A = A}. Por
-% 		ejemplo, podemos demostrar que todo punto es igual a si mismo:
-
-% 		\begin{lstlisting}
-% lemma point_refl (A : Point) : A = A :=
-% begin
-%   refl
-% end
-%         \end{lstlisting}
-% 	\item[rw] Para reescribir
-% 	\item[exact] Si la meta es  \lstinline{⊢ X} y \lstinline{x} es un término de
-% 		tipo \lstinline{X} se puede usar la táctica \lstinline{exact x} para
-% 		cerrar la meta.
-% 	\item[apply] Demostrar hacia atrás
-% 	\item[intro] Introducir hipótesis
-% 		\begin{lstlisting}
-% lemma equal_comm (A B : Point) : A = B → B = A :=
-% begin
-%   intro h,
-%   sorry
-% end
-%         \end{lstlisting}
-
-
-% 	\item[split] Dividir la meta
-% 	\item[left, right] Modificar la meta
-% 	\item[exfalso] Cambia la meta a false
-% 	\item[by_cases] Para dividir la demostración en casos.
-% 	\item[have] Demostrar resultados intermedios
-% 	\item[cases] Varios usos. Descomponer and, or o exists.
-
-% \end{description}
-
-% \subsection{Tácticas de nivel alto}
-
-% \begin{description}
-% 	\item[simp] Para demostrar igualdades
-% \end{description}
-
 \subsection{Teoría de tipos informal}
 
 Lo primero que se necesita en matemáticas para poder formalizar afirmaciones es
 un lenguaje formal con el cual expresarlas. Normalmente se utiliza la lógica de
-primer orden con los axiomas de la teoría de conjuntos. Lean, sin embargo,
-utiliza un sistema deductivo diferente, el de la teoría de tipos.
-\todo{especificar siempre qué teoría a que teoría de tipos me refiero}
+primer orden con los axiomas de la teoría de conjuntos.
+\textit{Lean}\footnote{En este trabajo hemos utilizado a la versión 3 del
+	lenguaje \textit{Lean}. La versión más actual del lenguaje es la 4, que
+	incorpora muchos cambios. Gran parte de la comunidad sin embargo continúa
+	utilizando la versión 3, mientras que se terminan de migrar los resultados ya
+	formalizados a la nueva versión.}, sin embargo, utiliza un sistema deductivo
+diferente, el de la teoría de tipos \textit{Cálculo de construcciones
+	inductivas} (\textit{Calculus of Inductive Constructions} en inglés).
+
 
 En lógica de primer orden se tiene una aserción fundamental, \textit{que una
 	proposición dada tenga una prueba}. Es decir, cada proposición $P$ da lugar a la
@@ -70,36 +22,37 @@ pruebas. Por ejemplo, dada la regla de inferencia \textit{de $A$ se deduce $A$ o
 	$B$} y la aserción \textit{A tiene una prueba}, se obtiene la aserción \textit{A
 	o B tiene una prueba}.
 
-En teoría de tipos la aserción fundamental es \textit{que un término tenga un
-	tipo}. Dados un término $a$ y un tipo $A$, si \textit{$a$ tiene tipo $A$}
-escribimos $a:A$. Esta es misma notación es la utilizada por Lean, en el que por
-ejemplo podemos expresar la aserción \textit{3 es un número natural} con el
-código \lstinline{3 : ℕ}.
+En una teoría de tipos la aserción fundamental es \textit{que un término tenga
+	un tipo}\footnote{La referencia que hemos seguido en esta introducción a la
+	teoría de tipos es el primer capítulo del libro \textit{Homotopy Type
+		Theory}~\cite{HomotopyTypeTheory}.}. Dados un término $a$ y un tipo $A$, si
+\textit{$a$ tiene tipo $A$} escribRmos $a:A$. Esta es misma notación es la
+utilizada en \textit{Lean}, en el que por ejemplo podemos expresar la aserción
+\textit{3 es un número natural} con el código \lstinline{3 : ℕ}.
 
-Es importante no confundir esta notación con la de una
-relación interna a nuestro lenguaje. Mientras que en teoría de conjuntos
-utilizamos la relación de pertenencia $\in$ para expresar que un elemento
-primitivo (un conjunto) está contenido en otro, en teoría de tipos no podemos
-considerar los términos o los tipos por separado. La noción fundamental es la
-pertenencia de tipos y cada término tiene que estar siempre acompañado por su
-tipo. En teoría de tipos además existen otras aserciones, como la de igualdad
-entre términos de un mismo tipo. Dados $a:A$ y $b:A$, se tiene la aserción
-\textit{$a$ y $b$ son dos términos de tipo A iguales por definición}, y
-escribimos $a\equiv b : A$.
+Es importante no confundir esta notación con la de una relación interna a
+nuestro lenguaje. Mientras que en teoría de conjuntos utilizamos la relación de
+pertenencia $\in$ para expresar que un elemento primitivo (un conjunto) está
+contenido en otro, en las teorías de tipos no podemos considerar los términos o
+los tipos por separado. La noción fundamental es la pertenencia de tipos y cada
+término tiene que estar siempre acompañado por su tipo. En las teorías de tipos
+además existen otras aserciones, como la de igualdad entre términos de un mismo
+tipo. Dados $a:A$ y $b:A$, se tiene la aserción \textit{$a$ y $b$ son dos
+	términos de tipo A iguales por definición}, y escribimos $a\equiv b : A$
+\footnote{En \textit{Lean} existe más de un tipo de igualdad entre términos. La
+	mencionada aquí es la llamada igualdad \textit{sintáctica}, que se representa
+	con el símbolo \lstinline{=}. Tamibién existen las igualdades
+	\textit{definicionales} y \textit{proposicionales}.}.
 
-\todo{Mencionar que la igualdad es un tema delicado.}
-
-La teoría de tipos también puede utilizarse para expresar afirmaciones y
+Las teorías de tipos también pueden utilizarse para expresar afirmaciones y
 demostraciones matemáticas. Las afirmaciones se codifican mediante los tipos y
 las demostraciones mediante construcciones de términos de un tipo dado. Es
 decir, se puede interpretar la aserción $a : A$ como \textit{$a$ es una
 	demostración de $A$}. Esta interpretación da lugar a una analogía entre la
-lógica proposicional y la teoría de tipos, llamada correspondencia de
+lógica proposicional y una teoría de tipos, llamada correspondencia de
 Curry-Howard. Sin entrar en detalles, a cada proposición lógica se le puede
 asignar un tipo, y a cada demostración de un enunciado un término del tipo
 correspondiente al enunciado.
-
-\todoref{HTT}
 
 Existen distintas elecciones de reglas de transformación que considerar en
 teoría de tipos, que dan lugares a distintas versiones de la teoría de tipos.
@@ -112,7 +65,7 @@ cálculo es un modelo universal de computación introducido por \textit{Alonzo
 cálculo se consideran dos operaciones fundamentales para tratar con funciones,
 la abstracción y la evaluación.
 
-\begin{itemize}
+\begin{itemize}[topsep=0pt]
 
 	\item \textbf{Abstracción}. Es el mecanismo de definición de funciones mediante
 	      la introducción de parámetros. Dado un término \lstinline{x + 1 : ℕ},
@@ -129,7 +82,9 @@ la abstracción y la evaluación.
 
 	      Lean además incluye notación para definir funciones que devuelven otras
 	      funciones, lo cual es muy útil para tratar funciones que reciben más de un
-	      parámetro (\todoref{Ver currificacion}). Las siguientes líneas de código
+	      parámetro\footnote{La transformación de funciones de varios
+		      parámetros en funciones de orden superior se denomina
+		      \textit{currificación}.}. Las siguientes líneas de código
 	      definen expresiones equivalentes
 	      \begin{lstlisting}
 λ a : α, λ b : β, a
@@ -147,14 +102,21 @@ la abstracción y la evaluación.
 
 \end{itemize}
 
-\todo{Mencionar que el sistema de tipos CIC añade más construcciones, como los
-	tipos inductivos o los tipos dependientes.}
+La teoría de tipos que implementa \textit{Lean}, el \textit{Cálculo de las
+	construcciones inductivas}, introduce una serie de reglas y formas de construir
+tipos adicionales, como los \textit{tipos inductivos} o los \textit{tipos
+	dependientes}, útiles para formalizar definiciones inductivas y cuantificadores
+lógicos.
 
 \todoref{Theorem proving in Lean}
 \cite{avigadLeanTheoremProver}
 
 Como se ve en los ejemplos, el código fuente de Lean se pueden incluir
-caracteres unicode, como \lstinline{λ}, \lstinline{→} o \lstinline{ℕ}. Esta
+caracteres unicode, como \lstinline{λ}, \lstinline{→} o \lstinline{ℕ}.
+En el apéndice~\ref{sec:entorno} explicamos cómo introducir estos caracteres
+desde el entorno de desarrollo.
+
+Esta
 característica del lenguaje es muy útil a la hora de escribir código lo más
 cercano posible a las notaciones a las que estamos acostumbrados a usar en
 matemáticas. La inclusión de estos caracteres está facilitada en el entorno de
@@ -265,9 +227,6 @@ proposiciones \lstinline{p q : Prop} podemos construir la proposición
 \subsection{Mathlib}
 
 \todo{Contar alguna cosa básica. Explicar cómo utilizar la web para encontrar cosas.}
-
-
-
 
 
 
