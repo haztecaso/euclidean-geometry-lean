@@ -1,5 +1,5 @@
 \subsection{Geometría del orden}
-% \setaxsection{B}
+\setaxsection{B}
 
 El segundo grupo de axiomas establece propiedades de la relación de
 \textit{orden}, una relación ternaria entre puntos. Dados tres puntos $A, B, C$
@@ -32,46 +32,94 @@ Los cuatro \textit{axiomas de orden} son los siguientes:
 
 \todo{explicar extension de clases.}
 
-\subsubsection*{Definiciones}
+\subsubsection{Definiciones}
+
+La definición usual de segmentos es la siguiente:
 
 \begin{defin*}[Segmentos]
 	Dados dos puntos distintos $A, B$ definimos el \textbf{segmento}
 	$\overline{AB}$ como el conjunto de puntos que contiene a $A, B$ y a todos los
-	puntos que están entre ellos. Diremos que $A$ y $B$ son los extremos del
-	segmento $\overline{AB}$.
+	puntos que están entre ellos.
 \end{defin*}
+
+Pero en nuestro caso no queremos utilizar teoría de conjuntos y por tanto
+queremos evitar nociones como \guillemotleft conjunto de puntos \guillemotright.
+Por tanto decimos simplemente que
+
+\begin{defin*}[Segmentos]
+	Dos puntos distintos $A, B$ determinan el \textbf{segmento} $\overline{AB}$.
+	Diremos que $A$ y $B$ son los \textbf{extremos} del segmento $\overline{AB}$.
+\end{defin*}
+
+Esta definición es suficiente para determinar un segmento, pero para establecer
+la relación de pertenencia de puntos a segmentos tendremos que complementarla
+con otra definición. Para formalizar esta noción utilizamos una estructura:
 
 \lstleanfull{order_geometry/basic.lean}{52}{52}
 
+Cuando se define una estructura en \textit{Lean} se genera de forma automática
+un constructor, una función útil para crear términos con tipo la estructura
+definida. Dicha función se llamará como la estrucura más la notación
+\lstinline{.mk} adjuntada: en este caso se tiene la función
+\lstinline{Seg.mk : (neq : A ≠ B) → Seg Point} (observemos cómo los términos
+\lstinline{A B : Point} son implícitos en la definición de la estructura).
+
 \begin{defin*}[Pertenencia de puntos a segmentos]
-	\todo{redactar}
+	Decimos que un punto $A$ pertenece a un segmento $\overline{BC}$ si $A$ es
+	igual a uno de los extremos del segmento ($B$ o $C$) o está entre ellos
+	($B * A * C$).
 \end{defin*}
 
 \lstleanfull{order_geometry/basic.lean}{56}{59}
-\lstleanfull{order_geometry/basic.lean}{63}{64}
 
-\todo{Explicar cómo se puede usar la notación}
+Esta función \lstinline{Seg.in} está dentro del espacio de nombres definido en
+la estructura \lstinline{Seg}. Gracias a esto, si tenemos un término de la
+estructura \lstinline{seg : Seg Point}, podremos llamar a la función utilizando
+la notación de punto \lstinline{seg.in Line P}, en la que el segmento
+\lstinline{seg} es pasado como primer argumento a la función \lstinline{seg}.
+Por tanto con esta definición y la notación del punto estamos escribiendo la
+pertenencia de puntos a segmentos en el orden contrario al usual:
+\lstinline{seg.in Line P} significa que el punto \lstinline{P} pertenece al
+segmento \lstinline{seg}. Esta notación del punto también permite acceder a los
+elementos de una estructura (si consideramos la estructura como un producto
+cartesiano de los tipos que la forman, este acceso se puede ver como una
+proyección): En la definición de \lstinline{Seg.in} se puede ver como accedemos
+a los extremos mediante la notación \lstinline{seg.A}, \lstinline{seg.B}.
 
-\begin{defin*}[Intersección entre segmentos y líneas]
-	\todo{redactar}
-\end{defin*}
+Como en el caso de los segmentos, las siguientes definiciones hacen referencia
+a nociones propios de la teoría de conjuntos, como uniones de segmentos.
 
-\lstleanfull{order_geometry/basic.lean}{106}{108}
+En nuestra formalización hemos evitado dichas nociones, por lo que daremos las
+definiciones adaptadas, que utilizan sólamente los tipos definidos
+anteriormente.
 
 \begin{defin*}[Triángulos]
-	\todo{redactar}
+	Tres puntos no colineares (por tanto distintos) $A$, $B$ y $C$, determinan
+	el \textbf{triángulo} $\triangle ABC$. Los puntos $A$, $B$ y $C$ se llaman
+	\textbf{vértices} del triángulo.
 \end{defin*}
 
 \lstleanfull{order_geometry/basic.lean}{111}{113}
 
-\begin{defin*}[Rayos]
-	Dados dos puntos distintos $A, B$, definimos el \textbf{rayo}
-	$\overrightarrow{AB}$ como el conjunto que contiene a $A$ y a todos los puntos
-	de la línea $AB$ tales que están del mismo lado de $A$ que $B$. Dado un rayo
-	$\overrightarrow{AB}$ llamaremos \textbf{vértice} del rayo al punto $A$.
+En este caso también podemos definir funciones mediante la notación de punto que
+nos permitan recuperar propiedades sobre una estructura, como por ejemplo la
+propiedad de que los vértices del triángulo son distintos:
+
+\lstleanfull{order_geometry/basic.lean}{136}{139}
+
+\begin{defin*}[Rayos y pertenencia de puntos a rayos]
+
+	Decimos que dos puntos distintos $A, B$ definen el \textbf{rayo}
+	$\overrightarrow{AB}$. Dado un rayo $\overrightarrow{AB}$ llamaremos
+	\textbf{vértice} del rayo al punto $A$.
+
+	Decimos que un punto $P$ \textbf{pertenece} a un rayo $\overrightarrow{AB}$
+	si
+
 \end{defin*}
 
 \lstleanfull{order_geometry/basic.lean}{143}{143}
+\lstleanfull{order_geometry/basic.lean}{146}{151}
 
 \begin{defin*}[Ángulos]
 	Un \textbf{ángulo} es la unión de dos rayos $\overrightarrow{AB}$ y
@@ -83,22 +131,21 @@ Los cuatro \textit{axiomas de orden} son los siguientes:
 \lstleanfull{order_geometry/basic.lean}{179}{187}
 
 \begin{defin*}
-	Diremos que dos puntos \textbf{están del mismo lado del plano} respecto de una
+	Decimos que dos puntos \textbf{están del mismo lado del plano} respecto de una
 	recta si el segmento que los une no contiene ningún punto de la recta.
-
-	Diremos que dos puntos están del mismo \textbf{lado de una recta} respecto de
-	un punto si el segmento que los une no contiene a dicho punto.
 \end{defin*}
 
 \lstleanfull{order_geometry/basic.lean}{193}{194}
 
 \begin{defin*}[Lados de una línea]
-	\todo{redactar}
+	Decimos que dos puntos están del mismo \textbf{lado de una línea} respecto de
+	un punto si el segmento que los une no contiene a dicho punto.
 \end{defin*}
 
 \lstleanfull{order_geometry/basic.lean}{221}{223}
 
-\subsubsection*{Resultados}%
+
+\subsubsection{Resultados}%
 
 \todo{Escribir sobre el paper de Meikle y los descubrimientos sobre las
 	demostraciones originales de Hilbert}
@@ -117,6 +164,16 @@ Los cuatro \textit{axiomas de orden} son los siguientes:
 % \lstleanfull{order_geometry/propositions.lean}{25}{31}
 % \lstleanfull{order_geometry/propositions.lean}{34}{50}
 % \lstleanfull{order_geometry/propositions.lean}{59}{197}
+
+
+
+
+
+
+
+
+
+
 
 
 

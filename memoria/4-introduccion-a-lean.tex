@@ -106,10 +106,11 @@ teoría de tipos, que dan lugares a distintas versiones de la teoría de tipos.
 Lean implementa una una versión de la teoría de tipos dependiente conocida como
 el \textit{Calculus of Constructions}.
 
-La base de muchas teorías de tipos es el lambda cálculo, un modelo universal de
-computación introducido por \textit{Alonzo Church} en los años treinta. Sin
-entrar en su formalización, en el lambda cálculo se consideran dos operaciones
-fundamentales para tratar con funciones, la abstracción y la evaluación.
+La base de muchas teorías de tipos es el lambda cálculo tipado. El lambda
+cálculo es un modelo universal de computación introducido por \textit{Alonzo
+	Church} en los años treinta. Sin entrar en su formalización, en el lambda
+cálculo se consideran dos operaciones fundamentales para tratar con funciones,
+la abstracción y la evaluación.
 
 \begin{itemize}
 
@@ -145,6 +146,9 @@ fundamentales para tratar con funciones, la abstracción y la evaluación.
 	      reducción se obtiene el término \lstinline{2 : ℕ}.
 
 \end{itemize}
+
+\todo{Mencionar que el sistema de tipos CIC añade más construcciones, como los
+	tipos inductivos o los tipos dependientes.}
 
 \todoref{Theorem proving in Lean}
 \cite{avigadLeanTheoremProver}
@@ -261,6 +265,7 @@ proposiciones \lstinline{p q : Prop} podemos construir la proposición
 \subsection{Mathlib}
 
 \todo{Contar alguna cosa básica. Explicar cómo utilizar la web para encontrar cosas.}
+
 
 
 
