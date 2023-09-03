@@ -5,6 +5,16 @@ El segundo grupo de axiomas establece propiedades de la relación de
 \textit{orden}, una relación ternaria entre puntos. Dados tres puntos $A, B, C$
 escribiremos $A * B * C$ para indicar que están relacionados mediante la
 relación de orden.
+
+Así empieza por tanto la definición de la clase que engloba los axiomas de
+orden:
+
+\lstleanfull{order_geometry/basic.lean}{21}{24}
+
+Se puede ver en la línea 22 que esta definición de clase \textit{extiende} la de
+la clase \lstinline{incidence_geometry} definida anteriormente. Es decir,
+seguimos considerando la relación de incidencia y los axiomas relativos a ella.
+
 Los cuatro \textit{axiomas de orden} son los siguientes:
 
 \begin{ax}\label{ax:B1}
@@ -12,14 +22,20 @@ Los cuatro \textit{axiomas de orden} son los siguientes:
 	distintos, están en una misma línea y $C * B * A$.
 \end{ax}
 
+\lstleanfull{order_geometry/basic.lean}{25}{27}
+
 \begin{ax}\label{ax:B2}
 	Para cada dos puntos distintos $A,B$ existe un punto $C$ tal que $A * B * C$.
 \end{ax}
+
+\lstleanfull{order_geometry/basic.lean}{28}{28}
 
 \begin{ax}\label{ax:3}
 	Dados tres puntos distintos en una línea, uno y sólo uno de ellos está entre
 	los otros dos.
 \end{ax}
+
+\lstleanfull{order_geometry/basic.lean}{29}{30}
 
 \begin{ax}[Pasch]\label{ax:4}
 	Sean $A, B, C$ tres puntos no colineares y $l$ una línea que no contenga a
@@ -28,9 +44,7 @@ Los cuatro \textit{axiomas de orden} son los siguientes:
 	punto entre $B$ y $C$.
 \end{ax}
 
-\lstleanfull{order_geometry/basic.lean}{21}{33}
-
-\todo{explicar extension de clases.}
+\lstleanfull{order_geometry/basic.lean}{31}{33}
 
 \subsubsection{Definiciones}
 
@@ -246,4 +260,6 @@ Con esto, en \textit{mathlib}, las relaciones de equivalencia se definen como
 estructuras que contienen las demostraciones de estas tres propiedades:
 
 \lstleanfull{order_geometry/propositions.lean}{201}{205}
+
+
 
