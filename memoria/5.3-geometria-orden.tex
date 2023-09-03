@@ -86,12 +86,18 @@ cartesiano de los tipos que la forman, este acceso se puede ver como una
 proyección): En la definición de \lstinline{Seg.in} se puede ver como accedemos
 a los extremos mediante la notación \lstinline{seg.A}, \lstinline{seg.B}.
 
-Como en el caso de los segmentos, las siguientes definiciones hacen referencia
-a nociones propios de la teoría de conjuntos, como uniones de segmentos.
+Además es importante observar que $A$ pertenece a $\overline{BC}$ si y sólo si
+pertenece a $\overline{CB}$, lo que si consideráramos la definición basada en
+conjuntos de puntos equivaldría a decir que los segmentos $\overline{BC}$ y
+$\overline{BC}$ son iguales. Dicho de otra forma, el orden de los extremos de un
+segmento no determina la relación de pertenencia de puntos a dichos segmentos.
 
-En nuestra formalización hemos evitado dichas nociones, por lo que daremos las
-definiciones adaptadas, que utilizan sólamente los tipos definidos
-anteriormente.
+\lstleanfull{order_geometry/basic.lean}{73}{77}
+
+Como en el caso de los segmentos, las siguientes definiciones hacen referencia a
+nociones propias de la teoría de conjuntos. En nuestra formalización hemos
+evitado dichas nociones, por lo que daremos las definiciones adaptadas,
+utilizando sólamente los tipos definidos anteriormente.
 
 \begin{defin*}[Triángulos]
 	Tres puntos no colineares (por tanto distintos) $A$, $B$ y $C$, determinan
@@ -111,83 +117,133 @@ propiedad de que los vértices del triángulo son distintos:
 	Decimos que un punto $P$ pertenece al triángulo $\triangle ABC$ si pertenece
 	a alguno de los segmentos determinados por sus vértices.
 \end{defin*}
-\lstleanfull{order_geometry/basic.lean}{142}{144}
 
-\begin{defin*}[Rayos y pertenencia de puntos a rayos]
+\lstleanfull{order_geometry/basic.lean}{142}{146}
 
+Como esta definición se basa en la pertenencia de puntos a segmentos, el orden
+en el que consideremos los puntos del triángulo tampoco será determinante para
+establecer esta relación de pertenencia.
+
+\begin{defin*}[Rayos]
 	Decimos que dos puntos distintos $A, B$ definen el \textbf{rayo}
 	$\overrightarrow{AB}$. Dado un rayo $\overrightarrow{AB}$ llamaremos
 	\textbf{vértice} del rayo al punto $A$.
-
-	Decimos que un punto $P$ \textbf{pertenece} a un rayo $\overrightarrow{AB}$
-	si
-
 \end{defin*}
 
-\lstleanfull{order_geometry/basic.lean}{143}{143}
-\lstleanfull{order_geometry/basic.lean}{146}{151}
+\lstleanfull{order_geometry/basic.lean}{150}{150}
+
+\begin{defin}
+	Decimos que un punto $P$ \textbf{pertenece} a un rayo $\overrightarrow{AB}$
+	si coincide con su vértice $A$ o si $A * B * P$.
+\end{defin}
+
+\lstleanfull{order_geometry/basic.lean}{154}{156}
+
+En este caso el orden de los puntos que determinan un rayo sí que es imporante.
+No se tiene como antes que $P$ pertenece a $\overrightarrow{AB}$ si y sólo si
+pertenece a $\overrightarrow{BA}$. En términos conjuntistas tendríamos que los
+rayos $\overrightarrow{AB}$ y $\overrightarrow{BA}$ son distintos.
 
 \begin{defin*}[Ángulos]
-	Un \textbf{ángulo} es la unión de dos rayos $\overrightarrow{AB}$ y
-	$\overrightarrow{AC}$ con el mismo vértice y no contenidos en una misma recta.
-	Denotaremos dicho ángulo por $\angle ABC$.
+	Dos rayos $\overrightarrow{AB}$ y $\overrightarrow{AC}$ con el mismo vértice
+	y tales que $A$, $B$ y $C$ no están alineados determinan un ángulo.
+	El vértice de los rayos que determinan el ángulo se llama \textbf{vértice}
+	del ángulo. Denotaremos dicho ángulo por $\angle ABC$.
 \end{defin*}
 
-\lstleanfull{order_geometry/basic.lean}{155}{158}
-\lstleanfull{order_geometry/basic.lean}{179}{187}
+\lstleanfull{order_geometry/basic.lean}{160}{163}
+
+Como en la definición de ángulo estamos considerando dos rayos con un punto en
+común, se puede observar que tres puntos no alineados determinan un ángulo.
+Podemos definir de esta manera un otro constructor para ángulos:
+
+\lstleanfull{order_geometry/basic.lean}{184}{192}
+
+Observemos que en esta definición hemos utilizado el modo táctico en una
+definición, lo cual es un recurso útil para construir términos complejos.
 
 \begin{defin*}
 	Decimos que dos puntos \textbf{están del mismo lado del plano} respecto de una
 	recta si el segmento que los une no contiene ningún punto de la recta.
 \end{defin*}
 
-\lstleanfull{order_geometry/basic.lean}{193}{194}
+\lstleanfull{order_geometry/basic.lean}{198}{199}
 
 \begin{defin*}[Lados de una línea]
 	Decimos que dos puntos están del mismo \textbf{lado de una línea} respecto de
 	un punto si el segmento que los une no contiene a dicho punto.
 \end{defin*}
 
-\lstleanfull{order_geometry/basic.lean}{221}{223}
-
+\lstleanfull{order_geometry/basic.lean}{226}{228}
 
 \subsubsection{Resultados}%
 
-\todo{Escribir sobre el paper de Meikle y los descubrimientos sobre las
-	demostraciones originales de Hilbert}
+Los teoremas que se pueden deducir de este segundo grupo de axiomas son
+considerablemente más complicados de demostrar que los del primer grupo. En
+particular son demostraciones que tienen detalles técnicos difíciles de
+formalizar. \textit{Meikle} y \textit{Fleuriot} han
+formalizado~\cite{meikleFormalizingHilbertGrundlagen2003} resultados de esta
+sección utilizando el asistente de demostración \textit{Isabelle/Isar}. En el
+artículo exponen que la demostración del \textit{Teorema 3} del libro de
+Hilbert~\cite{hilbertFoundationsGeometry} incluye pasos que se apoyan en
+intuiciones proporcionadas por un dibujo y no están completamente justificados
+desde el punto de vista lógico formal.
 
-\lstleanfull{order_geometry/propositions.lean}{17}{20}
+El teorema tiene el siguiente enunciado:
 
+\setcounter{tma}{2}
+\begin{tma}
+	Dados dos puntos distintos $A$ y $C$ existe un tercer punto $B$ que se
+	encuentra entre ellos: $A * B * C$.
+\end{tma}
+
+Y esta es su formalización en \textit{Lean}.
+
+\lstleanfull{order_geometry/propositions.lean}{17}{17}
+
+Debido a la complejidad de la demostración, explicada en detalle en el
+artículo~\cite{meikleFormalizingHilbertGrundlagen2003}, y a la falta de tiempo,
+no hemos formalizado la demostración de este resultado. Pero nos ha resultado
+particularmente interesante la lectura de este trabajo, que nos ha descubierto
+una aplicación más de la formalización asistida por computadores: estos métodos
+formales permiten estudiar resultados publicados en todo su detalle,
+no sólo verificando su corrección sino además aportando información sobre la
+forma de trabajar y pensar de grandes matemáticos como Hilbert. Citando al
+artículo:
+
+\begin{displayquote}
+	Es interesante señalar que la suposición predominante en matemáticas es que
+	las demostraciones de Hilbert parecen menos intuitivas, pero tienen un rigor
+	aumentado. La prueba Isar muestra que el trabajo de Hilbert puede hacerse
+	aún más riguroso con la ayuda de máquinas. Hilbert claramente utilizó un
+	diagrama para ayudar a la intuición geométrica y hacer muchas suposiciones.
+	Esto parece estar en desacuerdo con su afirmación de que no se necesitaba
+	intuición geométrica para derivar los teoremas presentados en el Grundlagen.
+\end{displayquote}
+
+El resultado de esta sección que sí hemos formalizado se refiere a la relación
+de \textit{estar del mismo lado del plano respecto de una línea}.
 
 \begin{prop}
-	La relación de estar del mismo lado del plano respecto de una recta es una
+	La relación de estar del mismo lado del plano respecto de una línea es una
 	relación de equivalencia.
 \end{prop}
 
-\todo{¿Incluir código? Anexo?}
+La librería \textit{mathlib} contiene definiciones sobre relaciones de
+equivalencia que podemos utilizar: las definiciónes de reflexividad, simetría y
+transitividad. Por tanto se tienen tres resultados referentes a estas tres
+propiedades. Hemos incluido las demostraciones de las dos primeras propiedades,
+pero debido a su extensión no la de la transitividad, que se puede consultar en
+el repositorio.
+\todo{citar repositorio o anexo}
+\todo{¿Está terminada la demo de la transitividad?}
 
+\lstleanfull{order_geometry/propositions.lean}{25}{31}
+\lstleanfull{order_geometry/propositions.lean}{34}{50}
+\lstleanfull{order_geometry/propositions.lean}{59}{61}
 
-% \lstleanfull{order_geometry/propositions.lean}{25}{31}
-% \lstleanfull{order_geometry/propositions.lean}{34}{50}
-% \lstleanfull{order_geometry/propositions.lean}{59}{197}
+Con esto, en \textit{mathlib}, las relaciones de equivalencia se definen como
+estructuras que contienen las demostraciones de estas tres propiedades:
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+\lstleanfull{order_geometry/propositions.lean}{201}{205}
 
