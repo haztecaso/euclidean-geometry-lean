@@ -13,6 +13,7 @@
 \RequirePackage{csquotes}
 \RequirePackage[spanish]{babel}
 \RequirePackage{enumitem}
+\RequirePackage{caption}
 \RequirePackage{graphicx}
 \RequirePackage{microtype}
 
@@ -161,7 +162,9 @@
 \titlespacing*{\subsubsection}{0pt}{.3em plus 0.1em minus 0.1em}{.05em plus 0.1em minus 0.1em}
 
 
-\RequirePackage[citestyle=alphabetic,bibstyle=alphabetic]{biblatex}
+\RequirePackage[citestyle=numeric,bibstyle=numeric,sorting=none]{biblatex}
+
+
 
 
 

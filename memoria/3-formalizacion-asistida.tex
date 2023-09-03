@@ -1,21 +1,74 @@
 \section{Formalización asistida por computadores}
 
 Los asistentes de demostración nos permiten formalizar definiciones, enunciados
-de proposiciones y teoremas, demostraciones, y verficar estas definiciones.
+de teoremas, sus demostraciones, y verficar la corrección de estas demostraciones.
+
 Formalizar matemáticas consiste en digitalizar enunciados y resultados
 escribiéndolos en un lenguaje de programación que garantiza, mediante una
 correspondencia entre una teoríá de tipos y la lógica, la validez de cada paso.
 
-Algunos beneficios de formalizar enunciados y resultados matemáticos mediante un
-asistente de demostración son:
+Estos sistemas, como \textit{Coq},  \textit{Isabelle/HOL},  \textit{Agda},
+\textit{Metamath}, \textit{Mizar} o \textit{Lean}, normalmente están basados en
+un lenguaje de programación que implementa cierta teoría de tipos útil para
+codificar enunciados y resultados matemáticos. Además suelen venir acompañados
+de un entorno de desarrollo que aporta información contextual útil en el proceso
+de demostración. \textit{Lean} es especialmente popular debido a la existencia
+de \textit{mathlib}, una amplia librería de matemáticas formalizadas.
 
-Introducción a la formalización en Lean. Demostración asistida por computadores. ¿Pa que?
-\begin{itemize}
-	\item Comprobación mecanizada de demostraciones.
-	\item Digitalizar resultados y crear base de datos.
-	      FormalAbstracts
-	\item Investigación en técnicas de demostración automática
-\end{itemize}
+En lo que sigue de esta sección expondremos algunos beneficios y aplicaciones
+de los asistentes de demostración.
+
+\paragraph{Comprobación mecanizada de demostraciones.}
+
+Estos sistemas pueden verificar la corrección de demostraciones largas y
+técnicas, reduciéndolas a las aplicaciones fundamentales de las reglas del
+sistema formal utilizado, como una teoría de tipos.
+
+Un ejemplo en el que se ha conseguido formalizar un resultado muy avanzado es el
+del \textit{Liquid Tensor Experiment}. En el año 2020 el medallista Fields
+\textit{Peter Scholze} lanzó a la comunidad de formalización matemática el reto
+de verificar un importante teorema publicado por él y \textit{Dustin
+	Clausen}~\cite{scholzeLiquidTensorExperiment2022}. Peter explica que, antes de
+que se formalizara el resultado, no estaba totalmente seguro de la corrección de
+una parte técnica de la demostración, que contenía muchos detalles técnicos que
+la comunidad no estaba estudiando.
+
+La guía de esta demostración, que se terminó de formalizar en el año 2022, se
+encuentra en formato web~\cite{scholzeBlueprintLiquidTensor} y es un buen
+ejemplo de un documento que presenta resultados paralelamente en un formato
+textual, legible por matemáticos, y su formalización en el lenguaje
+\textit{Lean}.
+
+Una de las visiones a futuro de los impulsores de \textit{Lean}, como
+\textit{Kevin Buzzard}, es la idea de a cada artículo matemático se le asocie su
+formalización y por tanto el papel de los revisores pase a enfocarse en el
+interés de los resultados, puesto que su corrección estaría garantizada por el
+asistente de demostración. Actualmente este objetivo está muy lejos de ser
+alcanzado.
+
+\paragraph{Digitalización de definiciones y enunciados.}
+
+La creación de una base de datos digital puede mejorar la capacidad de búsqueda
+de resultados matemáticos previos, convirtiéndose en un gran apoyo en el proceso
+de investigación. El proyecto \textit{Formal Abstracts}~\cite{halesFormalAbstracts}
+se propone realizar una enciclopedia matemática digital utilizando el lenguaje
+\textit{Lean}, con el objetivo de formalizar la mayor cantidad posible de
+teoremas publicados en un formato entendible a la vez por humanos y máquinas.
+Además se quieren enlazar los términos utilizados en dichos enunciados con sus
+definiciones precisas.
+
+El proyecto todavía se encuentra en fase de diseño y queda bastante trabajo para
+que alcance sus objetivos, pero muestra una dirección de trabajo muy
+interesante.
+
+\paragraph{Uso en docencia.}
+
+\paragraph{Demostración automatizada.} Se espera que en un
+futuro se puedan incorporar a estos sistemas téncicas de inteligencia artificial
+que proporcionen indicaciones y ayuda a los matemáticos en el proceso de
+demostración. Actualmente uno de los mayores avances en este campo ha sido
+realizado por la empresa \textit{OpenAI}, que ha conseguido automatizar algunas
+demostraciones de olimpíadas de matemáticas~\cite{poluSolvingFormalMath}.
 
 
 
