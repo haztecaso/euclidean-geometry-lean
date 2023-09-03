@@ -99,13 +99,19 @@ anteriormente.
 	\textbf{vértices} del triángulo.
 \end{defin*}
 
-\lstleanfull{order_geometry/basic.lean}{111}{113}
+\lstleanfull{order_geometry/basic.lean}{110}{112}
 
 En este caso también podemos definir funciones mediante la notación de punto que
 nos permitan recuperar propiedades sobre una estructura, como por ejemplo la
 propiedad de que los vértices del triángulo son distintos:
 
-\lstleanfull{order_geometry/basic.lean}{136}{139}
+\lstleanfull{order_geometry/basic.lean}{135}{138}
+
+\begin{defin*}[Pertenencia de puntos a triángulos]
+	Decimos que un punto $P$ pertenece al triángulo $\triangle ABC$ si pertenece
+	a alguno de los segmentos determinados por sus vértices.
+\end{defin*}
+\lstleanfull{order_geometry/basic.lean}{142}{144}
 
 \begin{defin*}[Rayos y pertenencia de puntos a rayos]
 
@@ -164,6 +170,7 @@ propiedad de que los vértices del triángulo son distintos:
 % \lstleanfull{order_geometry/propositions.lean}{25}{31}
 % \lstleanfull{order_geometry/propositions.lean}{34}{50}
 % \lstleanfull{order_geometry/propositions.lean}{59}{197}
+
 
 
 
