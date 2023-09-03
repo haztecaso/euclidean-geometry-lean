@@ -38,10 +38,6 @@ siguiendo la estructura de la geometría de Hilbert:
     - Ángulos 
   - El fichero [`propositions.lean`](./src/order_geometry/propositions.lean) 
   contiene proposiciones de la geometría del orden.
-  - El fichero [`sideness.lean`](./src/order_geometry/sideness.lean) contiene 
-  definiciones y resultados sobre dos relaciones de equivalencia que definen los 
-  conceptos de *lados de una línea respecto de un punto* y *lados del plano 
-  respecto de una línea*.
 - La carpeta [`congruence_geometry`](./src/congruence_geometry/) contiene un
   solo fichero, [`basic.lean`](./src/congruence_geometry/basic.lean), en el que
   se definen los axiomas de las relaciones de congruencia entre segmentos y

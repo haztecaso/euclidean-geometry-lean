@@ -16,6 +16,7 @@
 \RequirePackage{caption}
 \RequirePackage{graphicx}
 \RequirePackage{microtype}
+\RequirePackage{dirtree}
 
 \RequirePackage{lmodern}
 
@@ -165,5 +166,6 @@
 
 
 \RequirePackage[citestyle=numeric,bibstyle=numeric,sorting=none]{biblatex}
+
 
 
