@@ -141,12 +141,13 @@ by exact non_collinear_neq Line T.non_collinear
 determinados por sus vértices. -/
 def Tri.in {Point Line: Type*} [order_geometry Point Line]
   (T: Tri Point Line) (P : Point) : Prop :=
-  P ∈ (Seg.mk T.neq.1) ∨ P ∈ (Seg.mk T.neq.2.1) ∨ P ∈ (Seg.mk T.neq.2.2)
+  (Seg.mk T.neq.1).in Line P
+  ∨ (Seg.mk T.neq.2.1).in Line P
+  ∨ (Seg.mk T.neq.2.2).in Line P
 
 /-- Un rayo está determinado por dos puntos. El primero de estos se llama 
 extremo del rayo. -/
 structure Ray (Point : Type*) := {A B: Point} (neq : A ≠ B)
-
 
 /-- Un punto P pertenece a un rayo AB si coincide con su vértice A o si 
 A * B * P. -/
