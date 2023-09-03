@@ -137,7 +137,7 @@ lemma Tri.neq
   neq3 T.A T.B T.C :=
 by exact non_collinear_neq Line T.non_collinear
 
-/-- Un punto pertenece a un triángulo si pertenece a alguno de los segmentos que
+/-- Un punto pertenece a un triángulo si pertenece a alguno de los segmentos
 determinados por sus vértices. -/
 def Tri.in {Point Line: Type*} [order_geometry Point Line]
   (T: Tri Point Line) (P : Point) : Prop :=
