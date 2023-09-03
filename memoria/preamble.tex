@@ -1,35 +1,28 @@
-\NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{TFG}[2023/08/22 Clase para Trabajo de Fin de Grado]
+\documentclass[a4paper, 12pt, spanish]{article}
 
-% Inspiración:
-% - https://github.com/guillegran/TFGMates
+\usepackage[none]{hyphenat}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{csquotes}
+\usepackage[spanish]{babel}
+\usepackage{enumitem}
+\usepackage{caption}
+\usepackage{graphicx}
+\usepackage{microtype}
+\usepackage{dirtree}
 
-\ProcessOptions\relax
-\LoadClass[a4paper, 12pt, spanish]{article}
-
-\RequirePackage[none]{hyphenat}
-\RequirePackage[utf8]{inputenc}
-\RequirePackage[T1]{fontenc}
-\RequirePackage{csquotes}
-\RequirePackage[spanish]{babel}
-\RequirePackage{enumitem}
-\RequirePackage{caption}
-\RequirePackage{graphicx}
-\RequirePackage{microtype}
-\RequirePackage{dirtree}
-
-\RequirePackage{lmodern}
+\usepackage{lmodern}
 
 % _ escaping
 \catcode`\_=12
 
 \addtolength{\skip\footins}{.5em}
 
-\RequirePackage[colorlinks=true, linktocpage=true, citecolor=red, linkcolor=blue]{hyperref}
+\usepackage[colorlinks=true, linktocpage=true, citecolor=red, linkcolor=blue]{hyperref}
 
 \setcounter{tocdepth}{2}
 
-\RequirePackage{enumitem}
+\usepackage{enumitem}
 \setlist[enumerate]{topsep=0mm}
 \setlist[enumerate]{leftmargin=*}
 \setlist[itemize]{topsep=0mm}
@@ -42,18 +35,18 @@
 \setlength\parindent{0pt}
 \setlength\parskip{1em plus 0.1em minus 0.2em}
 
-% \RequirePackage{sectsty} % Comentado porque generaba warning https://tex.stackexchange.com/a/310968
+% \usepackage{sectsty} % Comentado porque generaba warning https://tex.stackexchange.com/a/310968
 
 
 \newcommand{\emptypage}{\newpage\null\thispagestyle{empty}\newpage}
-\RequirePackage[margin=3cm]{geometry}
+\usepackage[margin=3cm]{geometry}
 
 % Lean3 formatting
-\RequirePackage{amssymb}
-\RequirePackage{amsthm}
-\RequirePackage{upgreek}
-\RequirePackage[final]{listings}
-\RequirePackage{xcolor}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{upgreek}
+\usepackage[final]{listings}
+\usepackage{xcolor}
 \definecolor{backcolor}{rgb}{0.9, 0.9, 0.9}   % grey
 \definecolor{keywordcolor}{rgb}{0.7, 0.1, 0.1}   % red
 \definecolor{commentcolor}{rgb}{0.4, 0.4, 0.4}   % grey
@@ -63,7 +56,7 @@
 \definecolor{stringcolor}{rgb}{0.5, 0.3, 0.2}    % brown
 \definecolor{tacticcolor}{rgb}{0.0, 0.1, 0.6}
 
-\RequirePackage{lstautogobble}
+\usepackage{lstautogobble}
 
 \renewcommand{\lstlistingname}{Listado}
 \def\lstlanguagefiles{lstlean.tex}
@@ -123,31 +116,11 @@
 \newtheorem{axb}{Axioma}
 
 
-\RequirePackage{xcolor}
+\usepackage{xcolor}
 \newcommand{\todo}[1]{\noindent\textcolor{red}{\textbf{Pendiente: }#1}}
 \newcommand{\todoref}[1]{\noindent\textcolor{cyan}{\textbf{Referencia: }#1}}
 \newcommand{\redactar}[1]{\noindent\textcolor{blue}{\bfseries #1}}
 
-\renewcommand{\maketitle}{%
-	\begin{titlepage}
-		\begin{minipage}{.5\textwidth}
-			\Large Trabajo de Fin de Grado
-		\end{minipage}
-		\begin{minipage}{0.5\textwidth}
-			\hfill
-			\includegraphics[height=1.5cm]{imgs/UCM}
-		\end{minipage}
-		\vfill
-		\begin{center}
-			\Large\bfseries\@title
-
-			\vspace*{.5cm} \large\normalfont \@author
-
-			\vspace*{.3cm} \large \@date
-		\end{center}
-		\vfill\Large\noindent\subtitle
-	\end{titlepage}
-}
 
 \renewenvironment{abstract}[1][Resumen]{
 	\thispagestyle{empty}
@@ -157,7 +130,7 @@
 }{\vspace*{1cm}}
 
 
-\RequirePackage{titlesec}
+\usepackage{titlesec}
 \titleformat{\section} {\Large\bfseries}{\thesection.}{0.5em}{}
 \titleformat{\subsection}{\large\bfseries}{\thesubsection.}{0.5em}{}
 \titleformat{\subsubsection}{\normalfont\bfseries}{\thesubsubsection.}{0.5em}{}
@@ -165,7 +138,9 @@
 \titlespacing{\paragraph}{0pt}{0.5\baselineskip}{1em}
 
 
-\RequirePackage[citestyle=numeric,bibstyle=numeric,sorting=none]{biblatex}
+\usepackage[citestyle=numeric,bibstyle=numeric,sorting=none]{biblatex}
+
+
 
 
 

@@ -1,25 +1,38 @@
-\documentclass{TFG}
-\usepackage{lipsum}
+\input{preamble.tex}
 \addbibresource{referencias.bib}
-
-\title{Formalización de las matemáticas con Lean.\\ 
-  Un caso de estudio: Geometría euclídea plana.
-}
-\date{Septiembre de 2023}
-\author{Adrián Lattes Grassi}
-\newcommand{\subtitle}{Facultad de Ciencias Matemáticas.\\ 
-  Trabajo dirigido por Jorge Carmona Ruber.
-}
 
 \begin{document}
 
-\maketitle
+% Estilo de portada inspirado en https://github.com/guillegran/TFGMates
+\begin{titlepage}
+	\begin{minipage}{.5\textwidth}
+		\Large Trabajo de Fin de Grado
+	\end{minipage}
+	\begin{minipage}{0.5\textwidth}
+		\hfill
+		\includegraphics[height=1.5cm]{imgs/UCM}
+	\end{minipage}
+	\vfill
+	\begin{center}
+
+		{\LARGE Formalización de las matemáticas con Lean.\\[.6em]
+			Un caso de estudio: Geometría euclídea plana.}
+
+		\vspace*{.5cm}
+
+		{\large\normalfont Adrián Lattes Grassi}
+
+		\vspace*{.3cm} {\large Septiembre de 2023}
+	\end{center}
+	\vfill{\Large\noindent Facultad de Ciencias Matemáticas.\\[.6em]
+		Trabajo dirigido por Jorge Carmona Ruber.}
+\end{titlepage}
 \emptypage
 
 \input{0-abstract.tex}
 
-\tableofcontents
-\newpage
+% \tableofcontents
+% \newpage
 
 \input{1-metodologia-y-plan.tex}
 \input{2-matematicas-y-geometria-formales.tex}
@@ -28,7 +41,7 @@
 \input{5.1-geometria-introduccion.tex}
 \input{5.2-geometria-incidencia.tex}
 \input{5.3-geometria-orden.tex}
-% \input{5.4-geometria-congruencia.tex}
+\input{5.4-geometria-congruencia.tex}
 \input{5.5-geometria-paralelas.tex}
 \input{6-conclusiones.tex}
 
@@ -40,4 +53,23 @@
 \printbibliography[heading=bibintoc, title={Referencias}]
 
 \end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
