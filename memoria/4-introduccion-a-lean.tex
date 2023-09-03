@@ -114,19 +114,7 @@ lógicos.
 Como se ve en los ejemplos, el código fuente de Lean se pueden incluir
 caracteres unicode, como \lstinline{λ}, \lstinline{→} o \lstinline{ℕ}.
 En el apéndice~\ref{sec:entorno} explicamos cómo introducir estos caracteres
-desde el entorno de desarrollo.
-
-Esta
-característica del lenguaje es muy útil a la hora de escribir código lo más
-cercano posible a las notaciones a las que estamos acostumbrados a usar en
-matemáticas. La inclusión de estos caracteres está facilitada en el entorno de
-desarrollo, escribiendo comandos que empiecen por \texttt{\textbackslash} estos
-se reemplazarán por el caracter correspondiente. Por ejemplo al escribir
-\texttt{\textbackslash to} este comando se reemplazará automáticamente por el
-caracter \lstinline{→}, \texttt{\textbackslash lambda} por \lstinline{λ} y
-\texttt{\textbackslash N} por \lstinline{ℕ}.
-
-\todo{Incluir en algún lugar explicación sobre entorno de desarrollo (plugin vscode) y sus características (¿Apéndice?).}
+en el entorno de desarrollo.
 
 Que cada término sea siempre considerado junto a su tipo no significa que sea
 siempre necesario explicitar dicho tipo. Lean tiene un mecanismo llamado
@@ -139,7 +127,7 @@ necesario incluir la segunda anotación de tipo. Dada la expresión
 inferencia de tipos deduce que la suma de dos números naturales también es un
 número natural, por lo que se infiere el tipo \lstinline{ℕ}.
 
-\subsection{Introducción de términos}
+\subsection{Introducci\'{o}n de t\'{e}rminos}
 
 En lean existen distintas formas de introducir nuevos términos en el entorno
 actual.
@@ -227,6 +215,10 @@ proposiciones \lstinline{p q : Prop} podemos construir la proposición
 \subsection{Mathlib}
 
 \todo{Contar alguna cosa básica. Explicar cómo utilizar la web para encontrar cosas.}
+
+
+
+
 
 
 
