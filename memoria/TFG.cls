@@ -156,62 +156,8 @@
 \titleformat{\section} {\Large\bfseries}{\thesection.}{0.5em}{}
 \titleformat{\subsection}{\large\bfseries}{\thesubsection.}{0.5em}{}
 \titleformat{\subsubsection}{\normalfont\bfseries}{\thesubsubsection.}{0.5em}{}
-% \sectionfont{\centering\Large\underline}
-% \titlespacing*{\section}{0pt}{1.2em plus 0.1em minus 0.1em}{0.4em plus 0.1em minus 0.1em}
-% \titlespacing*{\subsection}{0pt}{.4em plus 0.1em minus 0.1em}{.2em plus 0.1em minus 0.1em}
 \titlespacing*{\subsubsection}{0pt}{.3em plus 0.1em minus 0.1em}{.05em plus 0.1em minus 0.1em}
+\titlespacing{\paragraph}{0pt}{0.5\baselineskip}{1em}
 
 
 \RequirePackage[citestyle=numeric,bibstyle=numeric,sorting=none]{biblatex}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
