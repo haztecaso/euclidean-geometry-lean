@@ -53,8 +53,7 @@ structure Seg (Point : Type*) := {A B : Point} (neq : A ≠ B)
 
 /-- Un punto pertenece a un segmento si coincide con uno de los extremos o está 
 entre ellos. -/
-def Seg.in 
-  {Point : Type*} (seg : Seg Point) (Line : Type*) 
+def Seg.in (seg : Seg Point) (Line : Type*) 
   [og : order_geometry Point Line]  (P : Point) : Prop := 
   P = seg.A ∨ P = seg.B ∨ (og.between seg.A P seg.B)
 
@@ -138,17 +137,22 @@ lemma Tri.neq
   neq3 T.A T.B T.C :=
 by exact non_collinear_neq Line T.non_collinear
 
+/-- Un punto pertenece a un triángulo si pertenece a alguno de los segmentos que
+determinados por sus vértices. -/
+def Tri.in {Point Line: Type*} [order_geometry Point Line]
+  (T: Tri Point Line) (P : Point) : Prop :=
+  P ∈ (Seg.mk T.neq.1) ∨ P ∈ (Seg.mk T.neq.2.1) ∨ P ∈ (Seg.mk T.neq.2.2)
+
 /-- Un rayo está determinado por dos puntos. El primero de estos se llama 
 extremo del rayo. -/
 structure Ray (Point : Type*) := {A B: Point} (neq : A ≠ B)
 
-/-- Relación de pertenencia entre puntos y rayos. -/
-instance [order_geometry Point Line] : has_mem Point (Ray Point) :=
-  ⟨λ P ray, begin
-    by_cases P ≠ ray.B,
-    { exact P = ray.A ∨ ¬ ray.A ∈ Seg.mk h },
-    { exact true, },
-  end ⟩
+
+/-- Un punto P pertenece a un rayo AB si coincide con su vértice A o si 
+A * B * P. -/
+def Ray.in (ray : Ray Point) (Line : Type*)
+  [og : order_geometry Point Line] (P : Point) : Prop := 
+  P = ray.A ∨ (ray.A * ray.B * P)
 
 /-- Un ángulo está determinado por dos rayos con el mismo extremo. 
 Además los rayos no pueden pertenecer a una misma línea. -/
