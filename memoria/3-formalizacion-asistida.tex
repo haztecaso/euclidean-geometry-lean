@@ -1,19 +1,30 @@
 \section{Formalización asistida por computadores}
 
-Los asistentes de demostración nos permiten formalizar definiciones, enunciados
-de teoremas, sus demostraciones, y verficar la corrección de estas demostraciones.
+En la docencia e investigación en matemáticas es usual escribir las
+demostraciones utilizando el lenguaje natural. Se asume que cada paso podría
+escribirse mediante fórmulas lógicas, en cuyo caso podría comprobarse que cada
+paso deriva de los anteriores y la aplicación de las reglas lógicas. Este
+trabajo es demasiado tedioso para los matemáticos, y el exceso
+de detalles puede restar protagonismo a las ideas que se quieren exponer.
+
+Sin embargo esta es una tarea perfecta para ser realizada de forma automática
+por las máquinas. Los asistentes de demostración nos permiten formalizar
+definiciones, enunciados de teoremas, sus demostraciones, y verficar la
+corrección de estas demostraciones.
 
 Formalizar matemáticas consiste en digitalizar enunciados y resultados
 escribiéndolos en un lenguaje de programación que garantiza, mediante una
-correspondencia entre una teoríá de tipos y la lógica, la validez de cada paso.
+correspondencia entre una teoría de tipos y la lógica con el lenguaje de la
+teoría de conjuntos, la validez de cada paso.
 
-Estos sistemas, como \textit{Coq},  \textit{Isabelle/HOL},  \textit{Agda},
-\textit{Metamath}, \textit{Mizar} o \textit{Lean}, normalmente están basados en
-un lenguaje de programación que implementa cierta teoría de tipos útil para
-codificar enunciados y resultados matemáticos. Además suelen venir acompañados
-de un entorno de desarrollo que aporta información contextual útil en el proceso
-de demostración. \textit{Lean} es especialmente popular debido a la existencia
-de \textit{mathlib}, una amplia librería de matemáticas formalizadas.
+Algunos de estos sistemas son \textit{Coq},  \textit{Isabelle/HOL},  \textit{Agda},
+\textit{Metamath}, \textit{Mizar} y \textit{Lean}.
+
+Además de un lenguaje, estos sistemas suelen constar de un entorno de desarrollo
+que aporta información contextual útil en el proceso de demostración.
+\textit{Lean} es especialmente popular debido a la calidad y facilidad de uso de
+este entorno y a la existencia de \textit{mathlib}, una amplia librería de
+matemáticas formalizadas.
 
 En lo que sigue de esta sección expondremos algunos beneficios y aplicaciones
 de los asistentes de demostración.
@@ -63,13 +74,23 @@ interesante.
 
 \paragraph{Uso en docencia.}
 
+En ciertos centros universitarios ya se imparten cursos apoyándose en el uso del
+asistente \textit{Lean}. El principal impulsor del uso de estas herramientas en
+la docencia es \textit{Kevin Buzzard}, que desde el año 2021 imparte el curso
+\textit{Formalising mathematics} en el \textit{Imperial
+	College}~\cite{buzzardFormalisingMathematicsFormalising}.
+
+El uso de asistentes de demostración en la docencia fija una referencia objetiva
+sobre qué es una demostración correcta de un resultado, obligando a los
+estudiantes a ser precisos en sus razonamientos. Además los estudiantes pueden
+aprovechar el entorno interactivo para comprobar autónomamente si sus
+razonamientos son correctos, sin necesidad de esperar la corrección del
+profesor.
+
 \paragraph{Demostración automatizada.} Se espera que en un
 futuro se puedan incorporar a estos sistemas téncicas de inteligencia artificial
 que proporcionen indicaciones y ayuda a los matemáticos en el proceso de
 demostración. Actualmente uno de los mayores avances en este campo ha sido
 realizado por la empresa \textit{OpenAI}, que ha conseguido automatizar algunas
 demostraciones de olimpíadas de matemáticas~\cite{poluSolvingFormalMath}.
-
-
-
 
