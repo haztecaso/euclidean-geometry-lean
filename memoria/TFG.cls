@@ -98,6 +98,7 @@
 }
 
 \newtheorem{prop}{Proposición}
+\newtheorem{tma}{Teorema}
 
 \newtheoremstyle{defin}{14.0pt plus 2.0pt minus 4.0pt}{0mm}{}{}{\bfseries}{.}{.5em}{}
 \theoremstyle{defin}
@@ -161,6 +162,7 @@
 
 
 \RequirePackage[citestyle=alphabetic,bibstyle=alphabetic]{biblatex}
+
 
 
 
