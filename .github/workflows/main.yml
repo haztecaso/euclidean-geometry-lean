@@ -1,18 +1,18 @@
-name: "Memoria"
-on:
-  pull_request:
-  push:
-jobs:
-  tests:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v3
-    - uses: cachix/install-nix-action@v22
-      with:
-        github_access_token: ${{ secrets.GITHUB_TOKEN }}
-    - run: nix build .\#memoria
-    - name: Upload PDF
-      uses: actions/upload-artifact@v3
-      with:
-        name: Memoria
-        path: result/main.pdf
+# name: "Memoria"
+# on:
+#   pull_request:
+#   push:
+# jobs:
+#   tests:
+#     runs-on: ubuntu-latest
+#     steps:
+#     - uses: actions/checkout@v3
+#     - uses: cachix/install-nix-action@v22
+#       with:
+#         github_access_token: ${{ secrets.GITHUB_TOKEN }}
+#     - run: nix build .\#memoria
+#     - name: Upload PDF
+#       uses: actions/upload-artifact@v3
+#       with:
+#         name: Memoria
+#         path: result/main.pdf
