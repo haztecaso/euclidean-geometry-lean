@@ -188,38 +188,79 @@ Así los parámetros indicados entre llaves, llamados \textit{parámetros
 
 \subsection{Proposiciones}
 
-En Lean se tiene el tipo \lstinline{Prop} para expresar las proposiciones
-mediante la analogía de \textit{proposiciones como tipos} dada por la
-correspondencia de Curry-Howard.
+En \textit{Lean} se tiene el tipo \lstinline{Prop} para expresar las
+proposiciones mediante la analogía de \textit{proposiciones como tipos} dada por
+la correspondencia de Curry-Howard, que relaciona \textit{tipos} con
+\textit{proposiciones}. Esta relación recibe el nombre de \textit{proposiciones
+	como tipos}. Los términos de tipo \lstinline{P : Prop}, que
+representan las proposiciones, son a su vez tipos y por tanto pueden tener términos.
 
-La correspondencia de Curry-Howard afirma que estas funciones de la
-teoría de tipos se comportan de la misma forma que la implicación en lógica. Por
-tanto en Lean utilizaremos el símbolo \lstinline{→} para referirnos tanto a
-funciones como a implicaciones dentro de una proposición. Dadas dos
+La correspondencia de Curry-Howard afirma que estas las $\lambda$-funciones de
+se comportan de la misma forma que la implicación en lógica.
+Por tanto en \textit{Lean} usamos el símbolo \lstinline{→} para referirnos tanto a
+funciones como a implicaciones lógicas. Dadas dos
 proposiciones \lstinline{p q : Prop} podemos construir la proposición
 \lstinline{p → q : Prop}, que se interpreta como \lstinline{p} \textit{implica}
 \lstinline{q}.
 
-\todo{Explicar cómo se expresan las proposiciones. or, and, neg, forall, exists,
-	neq, etc}
+
+También tenemos a nuestra disposición los demás conectores lógicos usuales,
+definidos en la librería estándar de \textit{Lean}. Los símbolos que
+utilizaremos para estos conectores son \lstinline{∧}, \lstinline{∨},
+\lstinline{¬}, \lstinline{≠} y \lstinline{↔}. Además, los tipos dependientes del
+\textit{Cálculo de construcciones inductivas} permiten definir los
+cuantificadores existencial y universal, expresados en \textit{Lean} mediante
+los símbolos \lstinline{∃} y \lstinline{∀}.
 
 \subsection{Demostraciones}
 
-\todo{Explicar qué es una demostración en teoría de tipos (term mode). Explicar
-	qué son las tácticas y cómo funciona el modo táctico.}
+Mientras que en la correspondencia de \textit{Curry-Howard} las proposiciones se
+corresponden con los tipos, la demostración de una proposición se corresponde
+con el hecho de que el tipo de la proposición tenga un término. Es decir, dada
+una proposición \lstinline{P : Prop}, un término \lstinline{p : P} es una
+demostración de dicha proposición.
 
-\todo{Incluir anexo hablando sobre el entorno de desarrollo y el modo táctico,
-	con captura de pantalla.}
+Si un tipo tiene un término se dice que está \textit{habitado}. Por tanto decir
+que un término de tipo \lstinline{Prop} está habitado equivale a decir que la
+proposición correspondiente tiene una demostración. Esta equivalencia entre
+términos y demostraciones es llamada \textit{demostraciones como términos}.
 
+Sin embargo desarrollar demostraciones construyendo directamente estos términos
+suele resultar muy complicado y alejado del trabajo deductivo matemático usual.
+Como muchos otros asistentes de demostración \textit{Lean} tiene definidos una
+serie de comandos, llamados \textit{tácticas}, que permiten describir en un
+nivel de abstracción más alto cómo se construyen estas demostraciones.
+
+En matemáticas solemos recurrir a frases informales como \guillemotleft
+podemos demostrar la siguiente aplicación aplicando el lema anterior,
+deshaciendo las definiciones y simplificando la expresión resultante
+\guillemotright, que proporcionan una \textit{receta} de construcción de
+demostración. De forma análoga las tácticas son instrucciones que indican al
+sistema de tipos de \textit{Lean} cómo construir el término de una demostración.
+
+En \textit{Lean} se pueden desarrollar demostraciones utilizando los denominados
+\textit{modo de términos} y \textit{modo táctico}, que además pueden ser
+entremezclados. En este trabajo nos hemos limitado a utilizar el  \textit{modo
+	táctico}, ya resulta más intuitivo, fácil de usar y cercano a la forma de
+demostrar usual en matemáticas.
+
+\todo{Mencionar cómo se entra en el modo táctico y en que consiste el estado
+	táctico}.
 
 \subsection{Mathlib}
 
-\todo{Contar alguna cosa básica. Explicar cómo utilizar la web para encontrar cosas.}
+Uno de los mayores puntos fuertes del ecosistema de \textit{Lean} es la librería
+\textit{mathlib}, donde se encuentra una amplia colección de resultados
+matemáticos formalizados. Además la librería incluye definiciones de tácticas
+que implementan esquemas de demostración particulares de distintas ramas de las
+matemáticas.
 
+Debido a la naturaleza del lenguaje y a las particularidades de la teoría de
+tipos que se utiliza, muchas teorías matemáticas están implementadas de forma
+distinta a la que se enseña por ejemplo en cursos introductorios en el grado de
+matemáticas. Por ejemplo las construcciones en  topología se basan en los
+\textit{filtros}, en lugar de en los \textit{entornos} y \textit{bases de
+	entornos}.
 
-
-
-
-
-
+\todo{Explicar cómo utilizar la web para encontrar cosas.}
 
