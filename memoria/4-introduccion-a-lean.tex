@@ -1,4 +1,4 @@
-\section{Introducción a Lean}
+\section{Introducci\'{o}n a Lean}
 
 \subsection{Teoría de tipos informal}
 
@@ -13,20 +13,21 @@ primer orden con los axiomas de la teoría de conjuntos.
 diferente, el de la teoría de tipos \textit{Cálculo de construcciones
 	inductivas} (\textit{Calculus of Inductive Constructions} en inglés).
 
+En lógica se tiene la aserción fundamental \textit{que de una serie de fórmulas
+	se pueda derivar una demostración de una proposición}. Es decir, cada
+proposición $P$ da lugar a la aserción correspondiente \textit{P tiene una
+	prueba} (a veces dejamos implícito el contexto de fórmulas desde las que se
+deriva la demostración). Mediante ciertas reglas de transformación, y a veces
+una serie de axiomas, se pueden construir nuevas pruebas. Por ejemplo, dada la
+regla de inferencia \textit{de $A$ se deduce $A$ o $B$} y la aserción \textit{A
+	tiene una prueba}, se obtiene la aserción \textit{A o B tiene una prueba}.
 
-En lógica de primer orden se tiene una aserción fundamental, \textit{que una
-	proposición dada tenga una prueba}. Es decir, cada proposición $P$ da lugar a la
-aserción correspondiente \textit{P tiene una prueba}. Mediante ciertas reglas de
-transformación, y a veces una serie de axiomas, se pueden construir nuevas
-pruebas. Por ejemplo, dada la regla de inferencia \textit{de $A$ se deduce $A$ o
-	$B$} y la aserción \textit{A tiene una prueba}, se obtiene la aserción \textit{A
-	o B tiene una prueba}.
-
-En una teoría de tipos la aserción fundamental es \textit{que un término tenga
-	un tipo}\footnote{La referencia que hemos seguido en esta introducción a la
-	teoría de tipos es el primer capítulo del libro \textit{Homotopy Type
+En una teoría de tipos la aserción fundamental es \textit{que de una serie de
+	términos con sus tipos se pueda derivar que un término tiene un
+	tipo}\footnote{La referencia que hemos seguido en esta introducción a la teoría
+	de tipos es el primer capítulo del libro \textit{Homotopy Type
 		Theory}~\cite{HomotopyTypeTheory}.}. Dados un término $a$ y un tipo $A$, si
-\textit{$a$ tiene tipo $A$} escribRmos $a:A$. Esta es misma notación es la
+\textit{$a$ tiene tipo $A$} escribimos $a:A$. Esta es misma notación es la
 utilizada en \textit{Lean}, en el que por ejemplo podemos expresar la aserción
 \textit{3 es un número natural} con el código \lstinline{3 : ℕ}.
 
@@ -59,6 +60,11 @@ teoría de tipos, que dan lugares a distintas versiones de la teoría de tipos.
 Lean implementa una una versión de la teoría de tipos dependiente conocida como
 el \textit{Calculus of Constructions}.
 
+En las explicaciones que siguen la principal referencia a la que hemos recurrido
+es el manual oficial \textit{Theorem proving in Lean}~\cite{avigadLeanTheoremProver}.
+
+\subsection{Funciones en el $\lambda$-c\'{a}lculo}
+
 La base de muchas teorías de tipos es el lambda cálculo tipado. El lambda
 cálculo es un modelo universal de computación introducido por \textit{Alonzo
 	Church} en los años treinta. Sin entrar en su formalización, en el lambda
@@ -66,7 +72,6 @@ cálculo se consideran dos operaciones fundamentales para tratar con funciones,
 la abstracción y la evaluación.
 
 \begin{itemize}[topsep=0pt]
-
 	\item \textbf{Abstracción}. Es el mecanismo de definición de funciones mediante
 	      la introducción de parámetros. Dado un término \lstinline{x + 1 : ℕ},
 	      mediante la sintaxis \lstinline{λ x : ℕ, (x + 1 : ℕ)} se convierte la
@@ -108,9 +113,6 @@ tipos adicionales, como los \textit{tipos inductivos} o los \textit{tipos
 	dependientes}, útiles para formalizar definiciones inductivas y cuantificadores
 lógicos.
 
-\todoref{Theorem proving in Lean}
-\cite{avigadLeanTheoremProver}
-
 Como se ve en los ejemplos, el código fuente de Lean se pueden incluir
 caracteres unicode, como \lstinline{λ}, \lstinline{→} o \lstinline{ℕ}.
 En el apéndice~\ref{sec:entorno} explicamos cómo introducir estos caracteres
@@ -145,9 +147,12 @@ constants (b : ℤ) (c : ℂ)
 
 
 \subsubsection*{Definiciones}%
-Si no queremos introducir nuevos axiomas podemos definir nuevos términos
-mediante el comando \lstinline{def}. Como estamos definiendo un símbolo, es
-necesario proporcionar el tipo y término que queremos asignar al símbolo:
+
+También se pueden definir nuevos términos introduciendo nombres, en este caso
+sin introducir nuevos axiomas, mediante el comando \lstinline{def}. Como estamos
+definiendo un símbolo, es necesario proporcionar el tipo y término que queremos
+asignar al símbolo:
+
 \begin{lstlisting}
 def succ : ℕ → ℕ := λ n, n + 1
 def succ' (n : ℕ) : ℕ := n + 1 -- Otra forma de definir succ
@@ -184,7 +189,19 @@ def id2 {α : Type*} (e : α) := e
 Así los parámetros indicados entre llaves, llamados \textit{parámetros
 	implícitos}, serán deducidos automaticamente.
 
-\todo{Explicar comando \lstinline{variable}}
+\subsubsection*{Variables}%
+
+Otra forma de indicar parámetros en una definición es mediante el uso del
+comando \lstinline{variable} (o su variante \lstinline{variables}) que introduce
+en el entorno el símbolo indicado, pero en lugar de fijar su existencia como
+\lstinline{constant} el símbolo introducido está \guillemotleft cuantificado
+univeralmente\guillemotright. Las siguientes líneas son equivalentes a las del
+ejemplo anterior:
+
+\begin{lstlisting}
+variable {α : Type*}
+def id3 (e : α) := e
+\end{lstlisting}
 
 \subsection{Proposiciones}
 
@@ -192,8 +209,8 @@ En \textit{Lean} se tiene el tipo \lstinline{Prop} para expresar las
 proposiciones mediante la analogía de \textit{proposiciones como tipos} dada por
 la correspondencia de Curry-Howard, que relaciona \textit{tipos} con
 \textit{proposiciones}. Esta relación recibe el nombre de \textit{proposiciones
-	como tipos}. Los términos de tipo \lstinline{P : Prop}, que
-representan las proposiciones, son a su vez tipos y por tanto pueden tener términos.
+	como tipos}. Los términos de tipo \lstinline{P : Prop}, que representan las
+proposiciones, son a su vez tipos y por tanto pueden tener términos.
 
 La correspondencia de Curry-Howard afirma que estas las $\lambda$-funciones de
 se comportan de la misma forma que la implicación en lógica.
@@ -214,7 +231,7 @@ los símbolos \lstinline{∃} y \lstinline{∀}.
 
 \subsection{Demostraciones}
 
-Mientras que en la correspondencia de \textit{Curry-Howard} las proposiciones se
+Mintras que en la correspondencia de \textit{Curry-Howard} las proposiciones se
 corresponden con los tipos, la demostración de una proposición se corresponde
 con el hecho de que el tipo de la proposición tenga un término. Es decir, dada
 una proposición \lstinline{P : Prop}, un término \lstinline{p : P} es una
@@ -244,8 +261,47 @@ entremezclados. En este trabajo nos hemos limitado a utilizar el  \textit{modo
 	táctico}, ya resulta más intuitivo, fácil de usar y cercano a la forma de
 demostrar usual en matemáticas.
 
-\todo{Mencionar cómo se entra en el modo táctico y en que consiste el estado
-	táctico}.
+Para enunciar un resultado y demostrarlo se utiliza el comando \lstinline{lemma}
+o \lstinline{theorem}, con la misma sintaxis de \lstinline{def}:
+
+\begin{lstlisting}
+lemma ej (P Q : Prop) (h1 : P ∨ Q) (h2 : P → Q) : Q :=
+  or.elim h1 h2 (λ hQ : Q, hQ)
+\end{lstlisting}
+
+En este ejemplo se ha utilizado el modo de términos para desarrollar la
+demostración. La misma demostración se puede realizar en el modo táctico, al que
+podemos entrar usando las instrucciones \lstinline{begin} y \lstinline{end}:
+
+\begin{lstlisting}
+lemma ej (P Q : Prop) (h1 : P ∨ Q) (h2 : P → Q) : Q :=
+begin
+  cases h1,
+  sorry
+end
+\end{lstlisting}
+
+Una demostración en modo táctico consiste en la aplicación sucesiva de tácticas,
+que van modificando el \textit{estado táctico}, que está formado por una serie
+de \textit{hipótesis} y una \textit{meta}. Antes de la aplicación de la primera
+táctica el estado táctico está formado por las hipótesis del lema o teorema y la
+meta se corresponde con el resultado a demostrar. Modificando las hipótesis y la
+meta sucesivamente podremos \textit{cerrar la meta}, es decir completar la
+demostración.
+
+En el ejemplo anterior se ha usado la táctica \lstinline{sorry}, que cierra
+cualquier meta y se usa para indicar que todavía no hemos terminado la
+demostración. Un ejemplo de demostración completa de este ejemplo en modo
+táctico es:
+
+\begin{lstlisting}
+lemma ej (P Q : Prop) (h1 : P ∨ Q) (h2 : P → Q) : Q :=
+begin
+  cases h1,
+  { apply h2, exact h1 },
+  { exact h1 },
+end
+\end{lstlisting}
 
 \subsection{Mathlib}
 
@@ -257,10 +313,28 @@ matemáticas.
 
 Debido a la naturaleza del lenguaje y a las particularidades de la teoría de
 tipos que se utiliza, muchas teorías matemáticas están implementadas de forma
-distinta a la que se enseña por ejemplo en cursos introductorios en el grado de
-matemáticas. Por ejemplo las construcciones en  topología se basan en los
-\textit{filtros}, en lugar de en los \textit{entornos} y \textit{bases de
-	entornos}.
+distinta a la de muchos libros de texto o que se enseña en cursos introductorios
+en el grado de matemáticas. Por ejemplo las construcciones en topología se
+basan en los \textit{filtros}, en lugar de en los \textit{entornos} y
+\textit{bases de entornos}.
 
 \todo{Explicar cómo utilizar la web para encontrar cosas.}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

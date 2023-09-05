@@ -36,10 +36,20 @@ para las líneas), una relación entre estos tipos (la incidencia) y los axiomas
 
 Para hacer esto \textit{Lean} consta de dos construcciones muy similares, las
 \textit{estructuras} y las \textit{clases}, mediante las cuales se pueden
-agrupar tipos y proposiciones sobre estos tipos.
+agrupar tipos y proposiciones sobre estos tipos. Las \textit{estructuras},
+implementadas mediante \textit{tipos inductivos}, permiten agrupar varios
+términos con sus tipos en una misma definición. Como las definiciones, las
+estructuras pueden estar parametrizadas\footnote{En la
+	sección~\ref{ssec:definiciones_orden} se encuentran varias definiciones que
+	hacen uso de estructuras}.
 \todo{Explicar brevemente diferencia entre estructuras y clases.}
-Esta es la definición de clase mediante la que
-hemos digitalizado las nociones y conceptos de la \textit{geometría de incidencia}:
+
+Las clases son estructuras con una funcionalidad añadida, el soporte de
+inferencia de clases. Mediante este mecanismo podemos declarar
+\textit{instancias} de clases, que son formas de asignar estructura a objetos.
+
+Veamos un ejemplo. Esta es la definición de clase mediante la que hemos
+digitalizado las nociones y conceptos de la \textit{geometría de incidencia}:
 
 \lstleanfull{incidence_geometry/basic.lean}{17}{22}
 
@@ -61,7 +71,24 @@ en la que escribiríamos los axiomas utilizando los símbolos usuales de la
 lógica. No es necesario tener conocimientos de \textit{Lean} para entender la
 mayoría de los enunciados (no se da el mismo caso con las demostraciones).
 
-\todo{Explicar cómo se usan las clases. Parámetros con corchetes e instancias.}
+Declarar una \textit{instancia} de esta clase consiste en dotar de la estructura
+que proporciona la clase a algún tipo concreto. De esta forma cuando utilicemos
+el tipo sobre el que hemos definido esta estructura el sistema de inferencia de
+tipos de \textit{Lean} podrá inferir que nuestro tipo tiene la estructura
+definida en la clase. Por ejemplo si tenemos dos tipos que representan los
+puntos y líneas de $\mathbb{R}^2$ podemos dotarles de la estructura definida en la clase
+\lstinline{incidence_geometry} mediante el comando
+\lstinline{instance}\footnote{No hemos entrado en detalles sobre el uso de este
+comando debido a la extensión necesaria para definir los tipos mencionados para los puntos y
+líneas. En el fichero \texttt{src/examples.lean} del repositorio se puede
+consultar el código de este ejemplo.}. Para ello tendremos que definir la
+relación de incidencia \lstinline{lies_on} entre estos dos tipos y demostrar que
+se cumplen los tres axiomas.
+
+Podemos pensar en las clases como en descrippciones de familias de tipos (para
+los que existe una instancia de la clase). Para especificar en los
+parámetros de una definición que uno o más tipos pertenecen a una clase dada se
+utilizan los corchetes: \lstinline{[incidence_geometry Point Line]}.
 
 \subsubsection{Definiciones}
 
@@ -354,6 +381,13 @@ de las demostraciones se encuentra en el repositorio de código.
 \end{prop}
 
 \lstleanfull{incidence_geometry/propositions.lean}{124}{127}
+
+
+
+
+
+
+
 
 
 
