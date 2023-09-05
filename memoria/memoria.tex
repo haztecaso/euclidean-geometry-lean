@@ -1,4 +1,41 @@
-\input{preamble.tex}
+\documentclass[a4paper, 12pt, spanish]{article}
+\input{00_common_preamble.tex}
+% \usepackage{lstautogobble}
+
+\setlength\parindent{0pt}
+\setlength\parskip{1em plus 0.1em minus 0.2em}
+\addtolength{\skip\footins}{.5em}
+
+\usepackage{dirtree}
+
+\usepackage[colorlinks=true, linktocpage=true, citecolor=red, linkcolor=blue]{hyperref}
+
+\setcounter{tocdepth}{2}
+
+
+% \usepackage{sectsty} % Comentado porque generaba warning https://tex.stackexchange.com/a/310968
+
+\newcommand{\emptypage}{\newpage\null\thispagestyle{empty}\newpage}
+\usepackage[margin=3cm]{geometry}
+
+
+\renewenvironment{abstract}[1][Resumen]{
+	\thispagestyle{empty}
+	\begin{center}
+		\textbf{#1}
+	\end{center}
+}{\vspace*{1cm}}
+
+\usepackage{titlesec}
+\titleformat{\section} {\Large\bfseries}{\thesection.}{0.5em}{}
+\titleformat{\subsection}{\large\bfseries}{\thesubsection.}{0.5em}{}
+\titleformat{\subsubsection}{\normalfont\bfseries}{\thesubsubsection.}{0.5em}{}
+\titlespacing*{\subsubsection}{0pt}{.3em plus 0.1em minus 0.1em}{.05em plus 0.1em minus 0.1em}
+\titlespacing{\paragraph}{0pt}{0.5\baselineskip}{1em}
+
+
+\usepackage[citestyle=numeric,bibstyle=numeric,sorting=none]{biblatex}
+
 \addbibresource{referencias.bib}
 
 \begin{document}
@@ -27,14 +64,14 @@
 	\vfill{\Large\noindent Facultad de Ciencias Matemáticas.\\[.6em]
 		Trabajo dirigido por Jorge Carmona Ruber.}
 \end{titlepage}
-\emptypage
+% \emptypage
 
 \input{0-abstract.tex}
 
 \tableofcontents
 \newpage
 
-\input{1-metodologia-y-plan.tex}
+\input{1-objetivos-y-metodologia.tex}
 \input{2-matematicas-y-geometria-formales.tex}
 \input{3-formalizacion-asistida.tex}
 \input{4-introduccion-a-lean.tex}
@@ -53,39 +90,6 @@
 \printbibliography[heading=bibintoc, title={Referencias}]
 
 \end{document}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

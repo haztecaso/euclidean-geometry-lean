@@ -1,0 +1,108 @@
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+
+\usepackage{enumitem}
+\setlist[enumerate]{topsep=0mm}
+\setlist[enumerate]{leftmargin=*}
+\setlist[itemize]{topsep=0mm}
+\setlist[itemize]{leftmargin=*}
+
+\renewcommand{\labelitemi}{$\bullet$}
+\renewcommand{\labelitemii}{$\bullet$}
+\renewcommand{\labelitemiii}{$\bullet$}
+
+\usepackage{caption}
+\usepackage{csquotes}
+\usepackage{graphicx}
+
+\usepackage[none]{hyphenat}
+\usepackage{lmodern}
+\usepackage{microtype}
+
+\newcommand{\todo}[1]{\noindent\textcolor{red}{\textbf{Pendiente: }#1}}
+\newcommand{\todoref}[1]{\noindent\textcolor{cyan}{\textbf{Referencia: }#1}}
+\newcommand{\redactar}[1]{\noindent\textcolor{blue}{\bfseries #1}}
+
+% _ escaping
+\catcode`\_=12
+
+% Lean3 formatting
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{upgreek}
+\usepackage{listings}
+\usepackage{xcolor}
+\definecolor{backcolor}{rgb}{0.9, 0.9, 0.9}   % grey
+\definecolor{keywordcolor}{rgb}{0.7, 0.1, 0.1}   % red
+\definecolor{commentcolor}{rgb}{0.4, 0.4, 0.4}   % grey
+\definecolor{symbolcolor}{rgb}{0.0, 0.1, 0.6}    % blue
+\definecolor{sortcolor}{rgb}{0.1, 0.5, 0.1}      % green
+\definecolor{errorcolor}{rgb}{1, 0, 0}           % bright red
+\definecolor{stringcolor}{rgb}{0.5, 0.3, 0.2}    % brown
+\definecolor{tacticcolor}{rgb}{0.0, 0.1, 0.6}
+
+\renewcommand{\lstlistingname}{Listado}
+
+\def\lstlanguagefiles{lstlean.tex}
+
+\lstdefinestyle{leanBase}{
+	language=lean,
+	aboveskip=1em,
+	belowskip=.5em,
+}
+
+\lstdefinestyle{leanSimple}{
+	style=leanBase,
+	frame=trlb,
+	framesep=10pt,
+	rulecolor=\color{gray},
+	basicstyle=\fontsize{10}{11}\selectfont\ttfamily,
+	xleftmargin=-.75cm,
+	xrightmargin=-.75cm,
+	aboveskip=1em,
+	belowskip=.5em,
+	% framexleftmargin=1em,
+	% framexrightmargin=1em,
+}
+\lstdefinestyle{leanFull}{
+	style=leanSimple,
+	numbers=left,
+	% numbersep=5pt,
+	xleftmargin=0cm,
+	framexleftmargin=.75cm,
+	numberstyle=\scriptsize\ttfamily\color{gray},
+	% belowskip=-.5em,
+	% backgroundcolor=\color{backcolor}, % background color
+}
+
+\lstset{style=leanSimple}
+
+\newcommand{\lstleanfull}[3]{
+	\lstinputlisting[
+		style=leanFull,
+		firstnumber=#2,
+		firstline=#2,
+		lastline=#3,
+		title={\ttfamily \footnotesize src/#1}
+	]{../src/#1}
+}
+
+\newtheorem{prop}{Proposición}
+\newtheorem{tma}{Teorema}
+\newtheoremstyle{defin}{14.0pt plus 2.0pt minus 4.0pt}{0mm}{}{}{\bfseries}{.}{.5em}{}
+\theoremstyle{defin}
+\newtheorem*{defin*}{Definición}
+
+\def\theaxsection{}
+\newcommand{\setaxsection}[1]{\def\theaxsection{#1}\setcounter{ax}{0}}
+
+\newtheoremstyle{axstyle}{\topsep}{\topsep}{\itshape}{0pt}{\bfseries}{.}{ }
+{\thmname{#1} \theaxsection\thmnumber{#2}\textnormal{\thmnote{ (#3)}}}
+\theoremstyle{axstyle}
+\newtheorem{ax}{Axioma}
+\newtheoremstyle{axbstyle}{\topsep}{\topsep}{\itshape}{0pt}{\bfseries}{.}{ }
+{\thmname{#1}\thmnote{ #3}}
+\theoremstyle{axbstyle}
+\newtheorem{axb}{Axioma}
+
