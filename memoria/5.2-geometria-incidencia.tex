@@ -175,7 +175,8 @@ Analicemos la demostración línea por línea:
 	      demostrar.
 
 
-	\item \lstinline{intros l m,} La aplicación de la táctica \lstinline{intros}
+	\item \lstinline{intros l m,}\\[.5em]
+	      La aplicación de la táctica \lstinline{intros}
 	      introduce las hipótesis \lstinline{l} y \lstinline{m}. Es decir, saca el
 	      cuantificador universal de la meta e introduce las variables cuantificadas
 	      en el estado táctico, pasando a tener ahora dos nuevos términos
@@ -194,7 +195,7 @@ l ≠ m → (∃! (A : Point), is_common_point A l m) ∨ ¬have_common_point Po
   → ¬l ≠ m
 \end{lstlisting}
 
-	\item \lstinline{push_neg, } La táctica \lstinline{push_neg} utiliza
+	\item \lstinline{push_neg, }\\[.5em] La táctica \lstinline{push_neg} utiliza
 	      equivalencias lógicas para \guillemotleft empujar\guillemotright las negaciones dentro de la fórmula.
 	      En este caso, al no haber especificado una hipótesis concreta, se aplica
 	      sobre la meta.
@@ -204,8 +205,7 @@ l ≠ m → (∃! (A : Point), is_common_point A l m) ∨ ¬have_common_point Po
 	      conjunción de negaciones. En la segunda, negar una desigualdad equivale a
 	      una igualdad. Por tanto la meta resultante es
 	      \begin{lstlisting}
-⊢ (¬∃! (A : Point), is_common_point A l m) 
-  ∧ have_common_point Point l m → l = m
+⊢ (¬∃! (A : Point), is_common_point A l m) ∧ have_common_point Point l m → l = m
 \end{lstlisting}
 
 	      Es interesante notar que \lstinline{push_neg} no consigue 'empujar' la negación todo lo que podríamos desear.
@@ -214,13 +214,13 @@ l ≠ m → (∃! (A : Point), is_common_point A l m) ∨ ¬have_common_point Po
 	      \lstinline{∃!}. Esto lo tendremos que hacer manualmente, como se verá
 	      enseguida.
 
-	\item \lstinline{rintro ⟨not_unique, hlm⟩,} La táctica \lstinline{rintro}
+	\item \lstinline{rintro ⟨not_unique, hlm⟩,}\\[.5em] La táctica \lstinline{rintro}
 	      funciona como \lstinline{intro}, en este caso aplicada para asumir la
 	      hipótesis de la implicación que queremos demostrar. La variante
-	      \lstinline{rintro} nos permite entrar en definiciones recursivas, en este
-	      caso en la del operador \lstinline{∧}, y mediante el uso de los paréntesis
-	      \lstinline{⟨⟩} introducir los dos lados de la conjunción como hipótesis
-	      separadas. Por tanto después de aplicar esta táctica obtendremos dos
+	      \lstinline{rintro} nos permite profundizar en definiciones recursivas, en este
+	      caso la del operador \lstinline{∧}, e introducir entre las hipótesis
+	      los dos lados de la conjunción, mediante el uso de los paréntesis
+	      \lstinline{⟨⟩}. Por tanto después de aplicar esta táctica obtendremos dos
 	      hipótesis adicionales:
 	      \begin{lstlisting}
 not_unique: ¬∃! (A : Point), is_common_point A l m
@@ -229,7 +229,7 @@ hlm: have_common_point Point l m
 	      y la meta resultante es el segundo lado de la implicación, es decir
 	      \lstinline{⊢ l = m}.
 
-	\item \lstinline{rw exists_unique at not_unique,}  La táctica \lstinline{rw}
+	\item \lstinline{rw exists_unique at not_unique,}\\[.5em] La táctica \lstinline{rw}
 	      (abreviación de \lstinline{rewrite}) nos permite reescribir ocurrencias de
 	      fórmulas utilizando definiciones o lemas de la forma \lstinline{A ↔ B}. Al
 	      escribir \lstinline{at} indicamos dónde queremos realizar dicha
@@ -238,16 +238,19 @@ hlm: have_common_point Point l m
 	      En este caso utilizamos la definición de \lstinline{∃!}, con lo que se modifica la hipótesis
 	      \begin{lstlisting}
 not_unique : ¬∃ (x : Point), 
-is_common_point x l m ∧ ∀ (y : Point), is_common_point y l m → y = x
+  is_common_point x l m ∧ ∀ (y : Point), is_common_point y l m → y = x
 \end{lstlisting}
 
-	\item \lstinline{push_neg at not_unique,}
-	      \todo{revisar}
-	      %   /- Como comentábamos antes, ahora que hemos reescrito la definición de ∃! podemos seguir "empujando" la negación en la hipótesis not_unique,
-	      %      obteniendo ∀ (x : Point), is_common_point x l m → (∃ (y : Point), is_common_point y l m ∧ y ≠ x)
-	      %   -/
+	\item \lstinline{push_neg at not_unique,}\\[.5em] Una vez reescrita la
+	      definición de \lstinline{∃!} volvemos a empujar la negación hacia
+	      dentro de la fórmula.
+	      La hipótesis \lstinline{not_unique} cambia a
+	      \begin{lstlisting}
+not_unique : ∀ (x : Point), 
+  is_common_point x l m → (∃ (y : Point), is_common_point y l m ∧ y ≠ x)
+\end{lstlisting}
 
-	\item \lstinline{cases hlm with A hA,} La táctica \lstinline{cases} nos
+	\item \lstinline{cases hlm with A hA,}\\[.5em] La táctica \lstinline{cases} nos
 	      permite, entre otras cosas, dada una hipótesis de existencia, obtener un
 	      término del tipo cuantificado por el existe y la correspondiente hipótesis
 	      particularizada para el nuevo término.
@@ -262,7 +265,7 @@ A : Point
 hA: is_common_point A l m
 \end{lstlisting}
 
-	\item \lstinline{rcases not_unique A hA with ⟨B, ⟨hB, hAB⟩⟩,} En esta línea
+	\item \lstinline{rcases not_unique A hA with ⟨B, ⟨hB, hAB⟩⟩,}\\[.5em] En esta línea
 	      están ocurriendo distintas cosas:
 	      \begin{itemize}
 		      \item Recordemos que en el estado táctico actual tenemos la hipótesis
@@ -305,14 +308,13 @@ hAB: B ≠ A
 \end{lstlisting}
 	      \end{itemize}
 
-	\item \lstinline{rw ne_comm at hAB,} Para tener la hipótesis
+	\item \lstinline{rw ne_comm at hAB,}\\[.5em] Para tener la hipótesis
 	      \lstinline{hAB: B ≠ A} en el mismo orden que el utilizado en los axiomas y
 	      poder utilizarlos correctamente, reescribimos la hipótesis \lstinline{hAB}
 	      utilizando la propiedad conmutativa de la desigualdad, obteniendo así la
 	      hipóteis \lstinline{hAB: A ≠ B}.
 
-	\item \lstinline{exact unique_of_exists_unique (ig.I1 hAB) ⟨hA.left,hB.left⟩ ⟨hA.right,hB.right⟩,}
-
+	\item \lstinline{exact unique_of_exists_unique (ig.I1 hAB) ⟨hA.left,hB.left⟩ ⟨hA.right,hB.right⟩,}\\[.5em]
 	      La táctica \lstinline{exact} se utiliza para concluir la demostración
 	      proporcionando un término igual a la meta. Recordemos que la meta actual
 	      es \lstinline{⊢ l = m}.
@@ -328,7 +330,7 @@ hAB: B ≠ A
 
 	      Como primer argumento le estamos pasando el primer axioma de incidencia,
 	      particularizado con la hipóteis \lstinline{hAB : A ≠ B}. Es decir
-	      \lstinline{ig.I1 hAB} es igual a \lstinline{∃! l : Line, A ~ l ∧ B ~ l}.
+	      \lstinline{ig.I1 hAB} es igual a\\ \lstinline{∃! l : Line, A ~ l ∧ B ~ l}.
 
 	      Ahora queremos pasar en los otros dos argumentos términos
 	      \lstinline{A ~ l ∧ B ~ l} y \lstinline{A ~ m ∧ B ~ m}, para obtener la
@@ -348,16 +350,18 @@ hAB: B ≠ A
 	      Análogamente para el segundo argumento.
 \end{enumerate}
 
-\todo{Mencionar que el código del modo táctico no se parece tanto a la forma
-	usual de escribir matemáticas, pero la experiencia dada por el entorno sí que se
-	acerca más.}
+Como se puede ver el código que escribimos para realizar una demostración dentro
+del modo táctico no siempre es fácil de seguir y para entenderlo hay que tener
+en cuenta cómo va cambiando el estado táctico.
+
+En el entorno de desarrollo se puede consultar de forma interactiva el estado
+táctico de cada punto de una demostración, lo que facilita enormemente el
+entendimiento de los pasos de la demostración.
 
 De las siguientes proposiciones incluiremos sólo los enunciados. El desarrollo
 de las demostraciones se encuentra en el repositorio de código.
 
-
-\begin{prop}
-	Tres puntos no colineares determinan tres líneas distintas.
+\begin{prop} Tres puntos no colineares determinan tres líneas distintas.
 \end{prop}
 
 \lstleanfull{incidence_geometry/propositions.lean}{40}{51}
@@ -381,13 +385,4 @@ de las demostraciones se encuentra en el repositorio de código.
 \end{prop}
 
 \lstleanfull{incidence_geometry/propositions.lean}{124}{127}
-
-
-
-
-
-
-
-
-
 
