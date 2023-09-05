@@ -18,18 +18,59 @@ resto de axiomas de la geometría. Aún no teniendo el tiempo suficiente para
 abordar esta tarea, hemos propuesto una formalización del enunciado de la
 independencia y propuesto un plan de trabajo para formalizar su demostración.
 
-% Antes de poder emprender la formalización de la geometría estudiamos los
+Antes de poder emprender el trabajo de formalización de resultados geométricos
+ha sido necesario obtener unos conocimientos de base de \textit{Lean}. Al
+abordar esta tarea, en la que aprendimos a expresar y demostrar resultados
+elementales de lógica proposicional, a trabajar con estructuras algebraicas y
+exploramos ciertas características del lenguaje, las principales referencias han
+sido los materiales del curso de \textit{Kevin Buzzard}, \textit{Formalising
+	mathematics}~\cite{buzzardFormalisingMathematicsFormalising}, y el manual
+oficial, \textit{Theorem proving in Lean}~\cite{avigadLeanTheoremProver}.
 
-\todo{
-	\begin{itemize}[topsep=0pt]
-		\item Cursos y aprendiendo Lean. Formalising maths y curso María Inés
-		\item Aprendizaje básico sobre teoría de tipos. HOTT
-		\item Aprendiendo geometria, libros
-		\item Lectura de trabajos similares
-		\item Implementación de los resultados, evitando el uso de la teoría de conjuntos.
-		\item Referenciar apéndice \ref{sec:repositorio} en el que se explica cómo está
-		      organizado el repositorio de código
-	\end{itemize}
-}
+Los materiales del curso, que incluyen ejercicios prácticos, explicaciones
+teóricas y soluciones a los ejercicios en formato vídeo han sido especialmente
+útiles en este proceso de aprendizaje.
 
+Además durante el mes de febrero de 2023 tuvimos la oportunidad de participar en
+el curso de doctorado sobre \textit{Formalización de matemáticas en Lean},
+impartido por \textit{María Inés de
+	Frutos}~\cite{defrutosFormalizacionMatematicasLean}. Asistir a este curso nos
+permitió afianzar los conocimientos que estábamos adquiriendo y contrastar dudas
+o distintas formas de resolver los problemas con la profesora y los demás
+participantes del curso.
+
+Para tener un entendimiento a nivel intuitivo de los conceptos necesarios de
+teoría de tipos se ha estudiado el primer capítulo del libro \textit{Homotopy
+	Type Theory}~\cite{HomotopyTypeTheory} en el que se introducen conceptos de
+teoría de tipos y se mencionan sus relaciones con la lógica.
+
+En paralelo a este aprendizaje del lenguaje y herramientas de Lean iniciamos el
+estudio de la geometría de Hilbert, apoyándonos principalmente en los libros de
+texto de \textit{Hartshorne}~\cite{hartshorneGeometryEuclid2000} y
+\textit{Greenberg}~\cite{greenbergEuclideanNonEuclideanGeometries1993}, y
+realizando alguna consulta al texto original de
+\textit{Hilbert}~\cite{hilbertFoundationsGeometry}, para conocer cómo fueron
+formulados originalmente los axiomas, definiciones y teoremas de la teoría.
+
+Una vez abordados los conceptos básicos necesarios de \textit{Lean} y de la
+geometría euclídea, emprendimos la tarea de la formalización. Para ello el
+proceso ha consistido fundamentalmente en seguir linealmente la teoría como está
+presentada en los libros de referencia e intentar formalizar axiomas,
+definiciones, proposiciones y demostraciones. A medida que hemos ido avanzando
+y la dificultad de los resultados por formalizar ha ido creciendo, hemos tenido
+que volver a las referencias de \textit{Lean}, consultando documentación y
+aprendiendo nuevas características del lenguaje.
+
+El código completo que hemos desarrollado puede encontrarse en un repositorio
+github. En el apéndice \ref{sec:repositorio} se encuentra el enlace y un esquema
+de la estructura de los ficheros. En este documento cada vez que incluimos
+extractos de estos ficheros hemos referenciado las líneas incluidas y nombre del
+fichero.
+
+Durante el proceso de formalización también consultamos trabajos similares de
+formalización de la geometría de \textit{Hilbert}, uno realizado en el lenguaje
+\textit{Isabelle/Isar}~\cite{meikleFormalizingHilbertGrundlagen2003a}, en el que
+se analizan en detalle las demostraciones originales de \textit{Hilbert}, y otro
+que utiliza el lenguaje \textit{Coq/Gallina}~\cite{dehlinger2001higher}, en el
+que se exploran formalizaciones mediante una lógica intuicionista.
 
