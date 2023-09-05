@@ -1,4 +1,6 @@
-\documentclass{beamer}
+\documentclass[t]{beamer}
+\input{00_common_preamble.tex}
+
 \setbeamertemplate{navigation symbols}{}
 \setbeamertemplate{frametitle}[default][center]
 \addtobeamertemplate{frametitle}{\let\insertframetitle\insertsectionhead}{}
@@ -17,46 +19,196 @@
 
 \usepackage{multicol}
 
-\usepackage[final]{listings}
-% \def\lstlanguagefiles{lstlean.tex}
-% \lstset{language=lean}
-
-\usepackage{xcolor}
-\definecolor{backcolor}{rgb}{0.9, 0.9, 0.9}   % grey
-\definecolor{keywordcolor}{rgb}{0.7, 0.1, 0.1}   % red
-\definecolor{commentcolor}{rgb}{0.4, 0.4, 0.4}   % grey
-\definecolor{symbolcolor}{rgb}{0.0, 0.1, 0.6}    % blue
-\definecolor{sortcolor}{rgb}{0.1, 0.5, 0.1}      % green
-\definecolor{errorcolor}{rgb}{1, 0, 0}           % bright red
-\definecolor{stringcolor}{rgb}{0.5, 0.3, 0.2}    % brown
-\definecolor{tacticcolor}{rgb}{0.0, 0.1, 0.6}
-
 \title{Formalización de las matemáticas con Lean.\\ Un caso de estudio: Geometría euclídea plana.}
 \author{Adrián Lattes Grassi}
 \date{Septiembre de 2023}
 \subtitle{Facultad de Ciencias Matemáticas.\\Trabajo dirigido por Jorge Carmona Ruber.}
 
+\lstdefinestyle{leanBeamer}{
+  style=leanBase,
+  frame=,
+  basicstyle=\fontsize{9}{10}\selectfont\ttfamily,
+  escapeinside=||
+}
+\lstset{style=leanBeamer}
+
 \begin{document}
 \frame{\titlepage}
 
-\section{sec1}
-\subsection{subsec1.1}
-\begin{frame}
-	Prueba
-	\pause
-	\vspace{.1em}
-	\begin{center}
-		\begin{multicols}{2}
-			\begin{enumerate}
-				\item asdasd
-				\item skdjahaksd
-			\end{enumerate}
-		\end{multicols}
-	\end{center}
+% \begin{multicols}{2} \columnbreak \end{multicols}
+
+\subsection{Proposición 1}
+
+\begin{frame}[fragile]
+\begin{lstlisting}
+lemma line_has_external_point 
+  {Point Line : Type*} [ig : incidence_geometry Point Line] :
+  ∀ l : Line, ∃ A : Point, ¬ A ~ l :=
+\end{lstlisting}
 \end{frame}
 
+\begin{frame}[fragile]
+\begin{lstlisting}
+lemma line_has_external_point 
+  {Point Line : Type*} [ig : incidence_geometry Point Line] :
+  ∀ l : Line, ∃ A : Point, ¬ A ~ l :=
+begin
+
+
+
+
+
+
+
+
+
+
+end
+\end{lstlisting}
+\lstinline{Point Line : Type*} \lstinline{ig : incidence_geometry Point Line}\\
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{lstlisting}
+lemma line_has_external_point 
+  {Point Line : Type*} [ig : incidence_geometry Point Line] :
+  ∀ l : Line, ∃ A : Point, ¬ A ~ l :=
+begin
+  rcases ig.I3 with ⟨A, B, C, ⟨_, h1⟩⟩,
+
+
+
+
+
+
+
+
+
+end
+\end{lstlisting}
+\lstinline{Point Line : Type*} \lstinline{ig : incidence_geometry Point Line}\\
+\lstinline{l : Line}\\
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{lstlisting}
+lemma line_has_external_point 
+  {Point Line : Type*} [ig : incidence_geometry Point Line] :
+  ∀ l : Line, ∃ A : Point, ¬ A ~ l :=
+begin
+  rcases ig.I3 with ⟨A, B, C, ⟨_, h1⟩⟩,
+  by_contra h2,
+
+
+
+
+
+
+
+
+end
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{lstlisting}
+lemma line_has_external_point 
+  {Point Line : Type*} [ig : incidence_geometry Point Line] :
+  ∀ l : Line, ∃ A : Point, ¬ A ~ l :=
+begin
+  rcases ig.I3 with ⟨A, B, C, ⟨_, h1⟩⟩,
+  by_contra h2,
+  push_neg at h1,
+  push_neg at h2,
+
+
+
+
+
+
+end
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{lstlisting}
+lemma line_has_external_point 
+  {Point Line : Type*} [ig : incidence_geometry Point Line] :
+  ∀ l : Line, ∃ A : Point, ¬ A ~ l :=
+begin
+  rcases ig.I3 with ⟨A, B, C, ⟨_, h1⟩⟩,
+  by_contra h2,
+  push_neg at h1,
+  push_neg at h2,
+  cases h2 with l hl,
+
+
+
+
+
+end
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{lstlisting}
+lemma line_has_external_point 
+  {Point Line : Type*} [ig : incidence_geometry Point Line] :
+  ∀ l : Line, ∃ A : Point, ¬ A ~ l :=
+begin
+  rcases ig.I3 with ⟨A, B, C, ⟨_, h1⟩⟩,
+  by_contra h2,
+  push_neg at h1,
+  push_neg at h2,
+  cases h2 with l hl,
+  have hAl : A ~ l, { tauto },
+  have hBl : B ~ l, { tauto },
+  have hCl : C ~ l, { tauto },
+
+
+end
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{lstlisting}
+lemma line_has_external_point 
+  {Point Line : Type*} [ig : incidence_geometry Point Line] :
+  ∀ l : Line, ∃ A : Point, ¬ A ~ l :=
+begin
+  rcases ig.I3 with ⟨A, B, C, ⟨_, h1⟩⟩,
+  by_contra h2,
+  push_neg at h1,
+  push_neg at h2,
+  cases h2 with l hl,
+  have hAl : A ~ l, { tauto },
+  have hBl : B ~ l, { tauto },
+  have hCl : C ~ l, { tauto },
+  specialize h1 l hAl hBl,
+
+end
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{lstlisting}
+lemma line_has_external_point 
+  {Point Line : Type*} [ig : incidence_geometry Point Line] :
+  ∀ l : Line, ∃ A : Point, ¬ A ~ l :=
+begin
+  rcases ig.I3 with ⟨A, B, C, ⟨_, h1⟩⟩,
+  by_contra h2,
+  push_neg at h1,
+  push_neg at h2,
+  cases h2 with l hl,
+  have hAl : A ~ l, { tauto },
+  have hBl : B ~ l, { tauto },
+  have hCl : C ~ l, { tauto },
+  specialize h1 l hAl hBl,
+  exact h1 hCl
+end
+\end{lstlisting}
+\end{frame}
+
+
 \end{document}
-
-
-
-
