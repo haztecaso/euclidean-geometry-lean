@@ -1,33 +1,77 @@
 \section{Conclusiones}
 
-- No todo el trabajo está en Lean. A veces no es inmediato cómo formalizar una
-proposición en Lean. Hay que tener claros los conceptos y conocer muy bien qué es lo que se
-está formalizando.
+La lectura del artículo de \textit{Meikle} y
+\textit{Fleuriot}~\cite{meikleFormalizingHilbertGrundlagen2003} nos ha resultado
+sumamente interesante. Lo consideramos una prueba más de que sistemas de
+verificación formal como \textit{Lean} tienen mucho que aportar a las matemáticas
+y nos ayudan a conocer como razonaban grandes matemáticos.
 
-- Enunciados aparente muy simples pueden ser difíciles y largos de demostrar.
+Encontrando detalles no totalmente justificados en demostraciones escritas hace
+más de un siglo por \textit{Hilbert} descubrimos que el objetico de
+\textit{Hilbert} de separar el trabajo deductivo formal de la intuición
+geométrica no es realizable por completo. Hilbert utilizó razonamientos
+en los que aparantemente cada paso estaba fundado exclusivamente en el uso de
+una lógica precisa y los pasos anteriores. Pero en realidad ciertos pasos
+resultan que pueden resultar evidentes si pensamos en el dibujo correspondiente,
+necesitan ser desarrollados. No se pueden separar totalmente la intuición
+matemática y su formalizacion.
 
-- No se ha pretendido alcanzar una síntesis y claridad en las demostraciones,
-sino conseguir que el sistema las acepte. Probablemente muchos de los resultados
-pueden ser
+Las herramientas de formalización en cierto sentido cumplen el proyecto de
+formalización empezado por \textit{Hilbert}, mostrando que se puede llevar la
+formalización hasta su extremo, comprobando automáticamente cada detalle. Pero a
+su vez muestran sus propias limitaciones. De nada sirve la formalización si no
+tenemos un contenido matemático que formalizar y una intuición con la que
+interpretar y aprender de la nueva información que aportan sistemas como
+\textit{Lean}.
 
-- Lean es muy avanzado y en diversas ocasiones nos hemos encontrado con errores
-o comportamientos que no hemos sabido interpretar, debido a
+Hemos aprendido también que no todo el trabajo está en desarrollar código en
+\textit{Lean}. A veces no es inmediato cómo formalizar una definición o
+proposición en Lean. La forma más intuitiva y práctica en matemáticas no tiene
+por qué tener una correspondencia directa con la formalización que tenga más
+sentido realizar en \textit{Lean}. Es necesario conocer muy bien las teorías,
+conceptos y definiciones, que se están formalizando, a un nivel de abstracción
+suficientemente amplio como para ser capaces de desarrollar formulaciones
+equivalentes más convenientes para sus formalizaciones.
 
-- Las mayores dificultades han surgido a la hora de intentar formalizar ejemplos
-concretos, como modelos de los distintos grupos de axiomas que se consideran.
-Por ejemplo no he conseguido terminar de formalizar el modelo más simple que he
-encontrado de una geometría de incidencia en el que no se cumple el axioma de
-las paralelas.
+Más de una vez, a la hora de formalizar una demostración de una proposición de
+la geometría euclídea en \textit{Lean} hemos descubierto que no habíamos
+entendido por completo la demostración. \textit{Lean} ayuda enormemente a aislar
+e identificar las partes de una demostración que no comprendemos. Si no
+entendemos por completo un paso o una parte de una demostración no sabremos
+formalizarla, e incluimos un \lstinline{sorry} en el código. A partir de aquí
+entramos en un proceso iterativo en el que volvemos al texto de la prueba para
+enfocarnos en los detalles restantes, y poco a poco vamos elimiando los
+\lstinline{sorry}s.
 
-En parte atribuyo estas dificultades a la falta de una documentación más
-accesible de la librería \textit{mathlib} y cómo están implementados ciertos
-objetos matemáticos en ella.
+En las formalizaciones realizadas en este trabajo no se hemos pretendido
+alcanzar una síntesis y claridad óptima en las demostraciones, sino conseguir
+que el sistema las acepte. Muchas de las pruebas pueden ser acortadas,
+por ejemplo extrayendo partes a lemas adicionales para ser reutilizadas.
+Seguramente no hayamos utilizado siempre las tácticas más adecuadas, habiendo
+otras posibilidades más elegantes y claras de leer.
 
-Para usar Lean a un nivel un poco más avanzado que el de este trabajo es
-inevitable entrar en ciertos detalles de la teoría de tipos \textit{Calculus of
-	Inductive Constructions} y cómo está implementada en \textit{Lean}.
+Hemos digitalizado solo una pequeña parte de la geometría de Hilbert. Invitamos
+a los lectores interesados en este trabajo a participar en él, añadiendo los
+axiomas y definiciones que faltan, demostrando resultados o proponiendo cambios.
+Para ello se pueden crear \textit{tíquets} o \textit{merge requests} en el
+repositorio de \textit{github}, enlazado en el anexo~\ref{sec:repositorio}.
 
+Las principales dificultades han surgido a la hora de intentar formalizar
+ejemplos concretos, como modelos de los distintos grupos de axiomas que se
+consideran. Por ejemplo no he conseguido terminar de formalizar el modelo más
+simple que he encontrado de una geometría de incidencia en el que no se cumple
+el axioma de las paralelas.
 
-\todo{Redactar}
+En parte atribuimos estas dificultades a la falta de una documentación más
+completa y accesible de la librería \textit{mathlib}, en la que se explique cómo
+están implementados ciertos objetos matemáticos en ella y qué utilidades se
+proporcionan para trabajar con ellos.
+
+Al no haber estudiado en detalle el funcionamiento del lenguaje \textit{Lean} y
+la estructura de la librería mathlib, nos hemos encontrado más de una vez con
+errores o comportamientos que no hemos sabido interpretar. De nuevo los
+problemas más recurrentes han surgido de las dificultades encontradas al
+intentar entender el código disponible en la librería \textit{mathlib}.
+
 
 
