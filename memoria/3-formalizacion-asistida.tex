@@ -2,23 +2,22 @@
 
 En la docencia e investigación en matemáticas es usual escribir las
 demostraciones utilizando el lenguaje natural. Se asume que cada paso podría
-escribirse mediante fórmulas lógicas\todo{reescribir esta frase}, en cuyo caso podría comprobarse que cada
-paso deriva de los anteriores y la aplicación de las reglas lógicas. Este
-trabajo es demasiado tedioso para los matemáticos, y el exceso
-de detalles puede restar protagonismo a las ideas que se quieren exponer.
+escribirse en un lenguaje formal, en cuyo caso podría comprobarse que cada paso
+deriva de los anteriores y la aplicación de las reglas lógicas. Este trabajo es
+demasiado tedioso para los matemáticos, y el exceso de detalles puede restar
+protagonismo a las ideas que se quieren exponer.
 
-Sin embargo esta es una tarea perfecta para ser realizada de forma automática
+Sin embargo es una tarea perfecta para ser realizada de forma automática
 por máquinas. Los asistentes de demostración nos permiten formalizar
 definiciones, enunciados de teoremas, sus demostraciones, y verficar la
-corrección de estas demostraciones. Algunos de estos sistemas son \textit{Coq},
-\textit{Isabelle/HOL},  \textit{Agda}, \textit{Metamath}, \textit{Mizar} y
-\textit{Lean}.
+corrección de estas pruebas. Algunos de estos sistemas son Coq,
+Isabelle/HOL, Agda, Metamath, Mizar y Lean.
 
 Además de un lenguaje, estos sistemas suelen constar de un entorno de desarrollo
-que aporta información contextual útil en el proceso de demostración.
-\textit{Lean} es especialmente popular debido a la calidad y facilidad de uso de
-este entorno y a la existencia de \textit{mathlib}, una amplia librería de
-matemáticas formalizadas.
+que aporta información contextual útil en el proceso de demostración. Lean es
+especialmente popular debido a la calidad y facilidad de uso de este entorno
+(ver apéndice \ref{sec:entorno}) y a la existencia de \textit{mathlib}, una
+amplia librería de matemáticas formalizadas.
 
 Formalizar matemáticas con la ayuda de un asistente de demostraciones consiste
 en digitalizar enunciados y resultados escribiéndolos en un lenguaje de
@@ -28,7 +27,7 @@ paso.
 
 En lo que sigue de esta sección expondremos algunos beneficios y aplicaciones
 de los asistentes de demostración. La conferencia \textit{¿Por qué formalizar
-	matemáticas?} impartida por \textit{María Inés de Frutos} en la facultad de
+	matemáticas?} impartida por María Inés de Frutos en la facultad de
 Ciencias Matemáticas de la UCM ha sido la principal referencia a la hora de
 elaborar esta lista~\cite{defrutosPorQueFormalizar2023a}.
 
@@ -40,9 +39,9 @@ sistema formal utilizado, como una teoría de tipos.
 
 Un ejemplo en el que se ha conseguido formalizar un resultado muy avanzado es el
 del \textit{Liquid Tensor Experiment}. En el año 2020 el medallista Fields
-\textit{Peter Scholze} lanzó a la comunidad de formalización matemática el reto
-de verificar un importante teorema publicado por él y \textit{Dustin
-	Clausen}~\cite{scholzeLiquidTensorExperiment2022}. Peter explica que, antes de
+Peter Scholze lanzó a la comunidad de formalización matemática el reto
+de verificar un importante teorema publicado por él y Dustin
+Clausen~\cite{scholzeLiquidTensorExperiment2022}. Scholze explica que, antes de
 que se formalizara el resultado, no estaba totalmente seguro de la corrección de
 una parte técnica de la demostración, que contenía muchos detalles técnicos que
 la comunidad no estaba estudiando.
@@ -51,37 +50,35 @@ La guía de esta demostración, que se terminó de formalizar en el año 2022, s
 encuentra en formato web~\cite{scholzeBlueprintLiquidTensor} y es un buen
 ejemplo de un documento que presenta resultados paralelamente en un formato
 textual, legible por matemáticos, y su formalización en el lenguaje
-\textit{Lean}.
+Lean.
 
-Una de las visiones a futuro de los impulsores de \textit{Lean}, como
-\textit{Kevin Buzzard}, es la idea de a cada artículo matemático se le asocie su
-formalización y por tanto el papel de los revisores pase a enfocarse en el
-interés de los resultados, puesto que su corrección estaría garantizada por el
-asistente de demostración. Actualmente este objetivo está muy lejos de ser
-alcanzado.
+Una de las visiones a futuro de los impulsores de Lean, como Kevin Buzzard, es
+la idea de a cada artículo matemático se le asocie su formalización y por tanto
+el papel de los revisores pase a enfocarse en el interés de los resultados,
+puesto que su corrección estaría garantizada por el asistente de demostración.
+Actualmente este objetivo está aún lejos de ser alcanzado.
 
 \paragraph{Digitalización de definiciones y enunciados.}
 
 La creación de una base de datos digital puede mejorar la capacidad de búsqueda
 de resultados matemáticos previos, convirtiéndose en un gran apoyo en el proceso
-de investigación. El proyecto \textit{Formal Abstracts}~\cite{halesFormalAbstracts}
-se propone realizar una enciclopedia matemática digital utilizando el lenguaje
-\textit{Lean}, con el objetivo de formalizar la mayor cantidad posible de
-teoremas publicados en un formato entendible a la vez por humanos y máquinas.
-Además se quieren enlazar los términos utilizados en dichos enunciados con sus
-definiciones precisas.
+de investigación. El proyecto \textit{Formal
+	Abstracts}~\cite{halesFormalAbstracts} se propone realizar una enciclopedia
+matemática digital utilizando el lenguaje Lean, con el objetivo de formalizar la
+mayor cantidad posible de teoremas publicados en un formato entendible a la vez
+por humanos y máquinas. Además se quieren enlazar los términos utilizados en
+dichos enunciados con sus definiciones precisas.
 
-El proyecto todavía se encuentra en fase de diseño y queda bastante trabajo para
-que alcance sus objetivos, pero muestra una dirección de trabajo muy
-interesante.
+El proyecto se encuentra en fase de diseño y queda bastante trabajo para que
+alcance sus objetivos, pero muestra una dirección de trabajo muy interesante.
 
 \paragraph{Uso en docencia.}
 
 En ciertos centros universitarios ya se imparten cursos apoyándose en el uso del
-asistente \textit{Lean}. El principal impulsor del uso de estas herramientas en
-la docencia es \textit{Kevin Buzzard}, que desde el año 2021 imparte el curso
-\textit{Formalising mathematics} en el \textit{Imperial
-	College}~\cite{buzzardFormalisingMathematicsFormalising}.
+asistente Lean. El principal impulsor del uso de estas herramientas en la
+docencia es Kevin Buzzard, que desde el año 2021 imparte el curso
+\textit{Formalising mathematics}~\cite{buzzardFormalisingMathematicsFormalising}
+en el Imperial College.
 
 El uso de asistentes de demostración en la docencia fija una referencia objetiva
 sobre qué es una demostración correcta de un resultado, obligando a los
@@ -95,14 +92,11 @@ de estos asistentes es alta, puesto que la instalación de las herramientas y
 librerías no es simple y es necesaria cierta familiaridad con el lenguaje para
 escribir código.
 
-
-
-\paragraph{Demostración automatizada.} Se espera que en un
-futuro se puedan incorporar a estos sistemas téncicas de inteligencia artificial
-que proporcionen indicaciones y ayuda a los matemáticos en el proceso de
-demostración. Actualmente uno de los mayores avances en este campo ha sido
-realizado por la empresa \textit{OpenAI}, que ha conseguido automatizar algunas
-demostraciones de olimpíadas de matemáticas~\cite{poluSolvingFormalMath}.
-
+\paragraph{Demostración automatizada.} Se espera que en un futuro se puedan
+incorporar a estos sistemas téncicas de inteligencia artificial que proporcionen
+indicaciones y ayuda a los matemáticos en el proceso de demostración. Un ejemplo
+de avance en este campo es el artículo~\cite{poluSolvingFormalMath} publicado recientemente por por la
+empresa OpenAI, en el que se han conseguido automatizar algunas demostraciones de
+olimpíadas de matemáticas.
 
 

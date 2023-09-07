@@ -2,35 +2,37 @@
 
 \subsection{Teoría de tipos informal}
 
-Lo primero que se necesita en matemáticas para poder formalizar afirmaciones es
+Lo primero que se necesita en matemáticas para formalizar afirmaciones es
 un lenguaje formal con el cual expresarlas. Normalmente se utiliza la lógica de
 primer orden con los axiomas de la teoría de conjuntos.
-\textit{Lean}\footnote{En este trabajo hemos utilizado a la versión 3 del
-	lenguaje \textit{Lean}. La versión más actual del lenguaje es la 4, que
+Lean\footnote{En este trabajo hemos utilizado a la versión 3 del
+	lenguaje Lean. La versión más actual del lenguaje es la 4, que
 	incorpora muchos cambios. Gran parte de la comunidad sin embargo continúa
 	utilizando la versión 3, mientras que se terminan de migrar los resultados ya
 	formalizados a la nueva versión.}, sin embargo, utiliza un sistema deductivo
 diferente, el de la teoría de tipos \textit{Cálculo de construcciones
 	inductivas} (\textit{Calculus of Inductive Constructions} en inglés).
 
-En lógica se tiene la aserción fundamental \textit{que de una serie de fórmulas
-	se pueda derivar una demostración de una proposición}. Es decir, cada
-proposición $P$ da lugar a la aserción correspondiente \textit{P tiene una
-	prueba} (a veces dejamos implícito el contexto de fórmulas desde las que se
-deriva la demostración). Mediante ciertas reglas de transformación, y a veces
-una serie de axiomas, se pueden construir nuevas pruebas. Por ejemplo, dada la
-regla de inferencia \textit{de $A$ se deduce $A$ o $B$} y la aserción \textit{A
-	tiene una prueba}, se obtiene la aserción \textit{A o B tiene una prueba}.
+En lógica se tiene la aserción fundamental \guillemotleft que de una serie de
+fórmulas se pueda derivar una demostración de una proposición\guillemotright. Es
+decir, cada proposición $P$ da lugar a la aserción correspondiente
+\guillemotleft P tiene una prueba\guillemotright (a veces dejamos implícito el
+contexto de fórmulas desde las que se deriva la demostración). Mediante ciertas
+reglas de transformación, y a veces una serie de axiomas, se pueden construir
+nuevas pruebas. Por ejemplo, dada la regla de inferencia \guillemotleft de $A$
+se deduce $A$ o $B$\guillemotright y la aserción \guillemotleft A tiene una
+prueba\guillemotright, se obtiene la aserción \guillemotleft A o B tiene una
+prueba\guillemotright.
 
-En una teoría de tipos la aserción fundamental es \textit{que de una serie de
-	términos con sus tipos se pueda derivar que un término tiene un
-	tipo}\footnote{La referencia que hemos seguido en esta introducción a la teoría
+En una teoría de tipos la aserción fundamental es \guillemotleft que de una serie de
+términos con sus tipos se pueda derivar que un término tiene un
+tipo\guillemotright\footnote{La referencia que hemos seguido en esta introducción a la teoría
 	de tipos es el primer capítulo del libro \textit{Homotopy Type
 		Theory}~\cite{HomotopyTypeTheory}.}. Dados un término $a$ y un tipo $A$, si
 \textit{$a$ tiene tipo $A$} escribimos $a:A$. Esta es misma notación es la
-utilizada en \textit{Lean}, en el que por ejemplo podemos expresar la aserción
-\textit{3 es un número natural} con el código \lstinline{3 : ℕ}.
-
+utilizada en Lean, en el que por ejemplo podemos expresar la aserción
+\guillemotleft3 es un número natural\guillemotright\ con el código \lstinline{3 : ℕ}.
+\
 Es importante no confundir esta notación con la de una relación interna a
 nuestro lenguaje. Mientras que en teoría de conjuntos utilizamos la relación de
 pertenencia $\in$ para expresar que un elemento primitivo (un conjunto) está
@@ -38,18 +40,19 @@ contenido en otro, en las teorías de tipos no podemos considerar los términos 
 los tipos por separado, cada término tiene que estar siempre acompañado por su
 tipo. En las teorías de tipos además existen otras aserciones, como la de
 igualdad entre términos de un mismo tipo. Dados $a:A$ y $b:A$, se tiene la
-aserción \textit{$a$ y $b$ son dos términos de tipo A iguales por definición}, y
-escribimos $a\equiv b : A$ \footnote{En \textit{Lean} existe más de un tipo de
-	igualdad entre términos. La mencionada aquí es la llamada igualdad
-	\textit{sintáctica}, que se representa con el símbolo \lstinline{=}. Tamibién
-	existen las igualdades \textit{definicionales} y \textit{proposicionales}.}.
+aserción \guillemotleft $a$ y $b$ son dos términos de tipo A iguales por
+definición\guillemotright, y escribimos $a\equiv b : A$ \footnote{En
+	Lean existe más de un tipo de igualdad entre términos. La mencionada
+	aquí es la llamada igualdad \textit{sintáctica}, que se representa con el
+	símbolo \lstinline{=}. Tamibién existen las igualdades \textit{definicionales} y
+\textit{proposicionales}.}.
 
 Las teorías de tipos también pueden utilizarse para expresar afirmaciones y
 demostraciones matemáticas. Las afirmaciones se codifican mediante los tipos y
 las demostraciones mediante construcciones de términos de un tipo dado. Es
-decir, se puede interpretar la aserción $a : A$ como \textit{$a$ es una
-	demostración de $A$}. Esta interpretación da lugar a una analogía entre la
-lógica proposicional y una teoría de tipos, llamada correspondencia de
+decir, se puede interpretar la aserción $a : A$ como \guillemotleft$a$ es una
+demostración de $A$\guillemotright. Esta interpretación da lugar a una analogía
+entre la lógica proposicional y una teoría de tipos, llamada correspondencia de
 Curry-Howard. Sin entrar en detalles, a cada proposición lógica se le puede
 asignar un tipo, y a cada demostración de un enunciado un término del tipo
 correspondiente al enunciado.
@@ -65,10 +68,10 @@ es el manual oficial \textit{Theorem proving in Lean}~\cite{avigadLeanTheoremPro
 \subsection{Funciones en el $\lambda$-c\'{a}lculo}
 
 La base de muchas teorías de tipos es el lambda cálculo tipado. El lambda
-cálculo es un modelo universal de computación introducido por \textit{Alonzo
-	Church} en los años treinta. Sin entrar en su formalización, en el lambda
-cálculo se consideran dos operaciones fundamentales para tratar con funciones,
-la abstracción y la evaluación.
+cálculo es un modelo universal de computación introducido por Alonzo Church en
+los años treinta. Sin entrar en su formalización, en el lambda cálculo se
+consideran dos operaciones fundamentales para tratar con funciones, la
+abstracción y la evaluación.
 
 \begin{itemize}[topsep=0pt]
 	\item \textbf{Abstracción}. Es el mecanismo de definición de funciones mediante
@@ -84,35 +87,40 @@ la abstracción y la evaluación.
 	      devuelve otro número natural. Esto también puede escribirse como
 	      \lstinline{(λ x, x + 1) : ℕ → ℕ}.
 
-	      Lean además incluye notación para definir funciones que devuelven otras
-	      funciones, lo cual es muy útil para tratar funciones que reciben más de un
-	      parámetro\footnote{La transformación de funciones de varios
+	      Lean además incluye notación para definir funciones que devuelven
+	      otras funciones, lo cual es muy útil para tratar funciones que reciben
+	      más de un parámetro\footnote{La transformación de funciones de varios
 		      parámetros en funciones de orden superior se denomina
-		      \textit{currificación}.}. Las siguientes líneas de código
-	      definen expresiones equivalentes
+		      \textit{currificación}.}. Las siguientes líneas de código definen
+	      expresiones equivalentes que representan el mismo término, de tipo
+	      \lstinline{α → β → α}.
+
 	      \begin{lstlisting}
 λ a : α, λ b : β, a
 λ (a : α) (b : β), a
 \end{lstlisting}
-	      que representan el mismo término, de tipo \lstinline{α → β → α}.
 
 	\item \textbf{Evaluación}. Consiste en aplicar funciones, pasándoles los
 	      valores de los argumentos que evaluar. Por ejemplo la expresión
-	      \lstinline{(λ x : ℕ, (x + 1) : ℕ) (1 : ℕ)} indica que estamos evaluando la
-	      función \lstinline{(λ x, x + 1) : ℕ → ℕ} con el parámetro \lstinline{x}
-	      sustituido por el término \lstinline{1 : ℕ} (para que la sustitución pueda
-	      realizarse los tipos deben coincidir). Mediante un proceso de
-	      reducción se obtiene el término \lstinline{2 : ℕ}.
+
+	      \begin{lstlisting}
+(λ x : ℕ, (x + 1) : ℕ) (1 : ℕ)              
+\end{lstlisting}
+
+	      indica que estamos evaluando la función \lstinline{(λ x, x + 1) : ℕ → ℕ} con el parámetro \lstinline{x} sustituido por el término
+	      \lstinline{1 : ℕ} (para que la sustitución pueda realizarse los tipos
+	      deben coincidir). Mediante un proceso de reducción se obtiene el
+	      término \lstinline{2 : ℕ}.
 
 \end{itemize}
 
-La teoría de tipos que implementa \textit{Lean}, el \textit{Cálculo de las
+La teoría de tipos que implementa Lean, el \textit{Cálculo de las
 	construcciones inductivas}, introduce una serie de reglas y formas de construir
 tipos adicionales, como los \textit{tipos inductivos} o los \textit{tipos
 	dependientes}, útiles para formalizar definiciones inductivas y cuantificadores
 lógicos.
 
-Como se ve en los ejemplos, el código fuente de Lean se pueden incluir
+Como se ve en los ejemplos, en el código fuente de Lean se pueden incluir
 caracteres unicode, como \lstinline{λ}, \lstinline{→} o \lstinline{ℕ}.
 En el apéndice~\ref{sec:entorno} explicamos cómo introducir estos caracteres
 en el entorno de desarrollo.
@@ -130,7 +138,7 @@ número natural, por lo que se infiere el tipo \lstinline{ℕ}.
 
 \subsection{Introducci\'{o}n de t\'{e}rminos}
 
-En lean existen distintas formas de introducir nuevos términos en el entorno
+En Lean existen distintas formas de introducir nuevos términos en el entorno
 actual.
 
 \subsubsection*{Constantes}%
@@ -204,11 +212,10 @@ def id3 (e : α) := e
 
 \subsection{Proposiciones}
 
-En \textit{Lean} se tiene el tipo \lstinline{Prop} para expresar las
+En Lean se tiene el tipo \lstinline{Prop} para expresar las
 proposiciones mediante la analogía de \textit{proposiciones como tipos} dada por
 la correspondencia de Curry-Howard, que relaciona \textit{tipos} con
-\textit{proposiciones}. Esta relación recibe el nombre de \textit{proposiciones
-	como tipos}. Los términos de tipo \lstinline{P : Prop}, que representan las
+\textit{proposiciones}. Los términos de tipo \lstinline{P : Prop}, que representan las
 proposiciones, son a su vez tipos y por tanto pueden tener términos.
 
 La correspondencia de Curry-Howard afirma que estas las $\lambda$-funciones de
@@ -223,14 +230,14 @@ proposiciones \lstinline{p q : Prop} podemos construir la proposición
 También tenemos a nuestra disposición los demás conectores lógicos usuales,
 definidos en la librería estándar de \textit{Lean}. Los símbolos que
 utilizaremos para estos conectores son \lstinline{∧}, \lstinline{∨},
-\lstinline{¬}, \lstinline{≠} y \lstinline{↔}. Además, los tipos dependientes del
-\textit{Cálculo de construcciones inductivas} permiten definir los
-cuantificadores existencial y universal, expresados en \textit{Lean} mediante
-los símbolos \lstinline{∃} y \lstinline{∀}.
+\lstinline{¬}, \lstinline{≠} y \lstinline{↔}. Además, tipos del \textit{Cálculo
+de construcciones inductivas} como el \textit{tipo suma} y \textit{tipo
+	producto} permiten definir los cuantificadores existencial y universal,
+expresados en Lean mediante los símbolos \lstinline{∃} y \lstinline{∀}.
 
 \subsection{Demostraciones}
 
-Mintras que en la correspondencia de \textit{Curry-Howard} las proposiciones se
+Mientras que en la correspondencia de Curry-Howard las proposiciones se
 corresponden con los tipos, la demostración de una proposición se corresponde
 con el hecho de que el tipo de la proposición tenga un término. Es decir, dada
 una proposición \lstinline{P : Prop}, un término \lstinline{p : P} es una
@@ -247,17 +254,17 @@ Como muchos otros asistentes de demostración \textit{Lean} tiene definidos una
 serie de comandos, llamados \textit{tácticas}, que permiten describir en un
 nivel de abstracción más alto cómo se construyen estas demostraciones.
 
-En matemáticas solemos recurrir a frases informales como \guillemotleft
-podemos demostrar la siguiente aplicación aplicando el lema anterior,
-deshaciendo las definiciones y simplificando la expresión resultante
-\guillemotright, que proporcionan una \textit{receta} de construcción de
+En matemáticas solemos recurrir a frases informales como \guillemotleft podemos
+demostrar la siguiente afirmación aplicando el lema anterior, deshaciendo las
+definiciones y simplificando la expresión resultante\guillemotright, que
+proporcionan una \guillemotleft receta\guillemotright de construcción de
 demostración. De forma análoga las tácticas son instrucciones que indican al
-sistema de tipos de \textit{Lean} cómo construir el término de una demostración.
+sistema de tipos de Lean cómo construir el término de una demostración.
 
-En \textit{Lean} se pueden desarrollar demostraciones utilizando los denominados
+En Lean se pueden desarrollar demostraciones utilizando los denominados
 \textit{modo de términos} y \textit{modo táctico}, que además pueden ser
 entremezclados. En este trabajo nos hemos limitado a utilizar el  \textit{modo
-	táctico}, ya resulta más intuitivo, fácil de usar y cercano a la forma de
+	táctico}, ya que resulta más intuitivo, fácil de usar y cercano a la forma de
 demostrar usual en matemáticas.
 
 Para enunciar un resultado y demostrarlo se utiliza el comando \lstinline{lemma}
@@ -302,7 +309,7 @@ begin
 end
 \end{lstlisting}
 
-\subsection{Mathlib}
+\subsection{\textit{mathlib}}
 
 Uno de los mayores puntos fuertes del ecosistema de \textit{Lean} es la librería
 \textit{mathlib}, donde se encuentra una amplia colección de resultados
@@ -311,31 +318,11 @@ que implementan esquemas de demostración particulares de distintas ramas de las
 matemáticas.
 
 Debido a la naturaleza del lenguaje y a las particularidades de la teoría de
-tipos que se utiliza, muchas teorías matemáticas están implementadas de forma
-distinta a la de muchos libros de texto o que se enseña en cursos introductorios
-en el grado de matemáticas. Por ejemplo las construcciones en topología se
+tipos que se utiliza, diversas teorías matemáticas están implementadas de forma
+distinta a la de muchos libros de texto o a la que se enseña en cursos introductorios
+del grado de matemáticas. Por ejemplo las construcciones en topología se
 basan en los \textit{filtros}, en lugar de en los \textit{entornos} y
-\textit{bases de entornos}.
-
-\todo{Explicar cómo utilizar la web para encontrar cosas.}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+\textit{bases de entornos}. En cualquier caso en la librería es común que estén
+demostradas las equivalencias con axiomatizaciones y definiciones equivalentes.
 
 

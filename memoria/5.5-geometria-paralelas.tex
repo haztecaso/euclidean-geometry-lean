@@ -1,8 +1,8 @@
 \subsection{El axioma de las paralelas}
 
-El quinto postulado de la geometría de los \textit{Elementos} ha sido crucial en
-el estudio de la geometría. Empecemos definiendo el concepto de \textit{líneas
-	paralelas} y enunciando el axioma.
+El estudio del quinto postulado de la geometría de los \textit{Elementos} ha
+sido crucial en la historia de la geometría. Empecemos definiendo el
+concepto de \textit{líneas paralelas} y enunciando el axioma.
 
 \begin{defin*}[Líneas paralelas]
 	Se dice que dos líneas $l$ y $m$ son \textbf{paralelas} si no tienen ningún
@@ -40,7 +40,7 @@ modelo en el que se cumple la proposición y otro en el que se cumple su
 contradicción.
 
 Diversos libros modernos de geoemtría euclídea axiomática llaman al conjunto de
-axiomas que hemos presentado hasta ahora \textit{planos de Hilbert} (los modelos
+axiomas que hemos presentado hasta ahora planos de Hilbert (los modelos
 de esta teoría reciben el mismo nombre). En esta teoría se cumplen los axiomas
 de incidencia, orden y congruencia, pero no se establece el axioma de las
 paralelas. Con estos términos, decir que el axioma de las paralelas es
@@ -51,18 +51,14 @@ Con el siguiente teorema hemos formalizado esta idea:
 
 \lstleanfull{parallels_independence.lean}{128}{130}
 
-Usando la táctica \lstinline{push_neg} modificamos la meta inicial a
-\lstinline{
-	⊢ ∃ cg : congruence_geometry Point Line, ¬ @P Point Line cg.to_incidence_geometry
-}.
-
-
-Una forma de demostrar este resultado es por tanto construyendo un término de
+Usando la táctica \lstinline{push_neg} modificamos la meta inicial a\\
+\lstinline{⊢ ∃ cg : congruence_geometry Point Line, ¬ @P Point Line cg.to_incidence_geometry}.
+Una forma de demostrar este resultado es por tanto construir un término de
 tipo \lstinline{cg : congruence_geometry Point Line} para el cual no se cumpla
 el axioma \lstinline{P}.
 Para construir dicho término habría que definir una instancia de la clase
-\lstinline{congruence_geometry}. Se puede observar por tanto un paralelismo
-entre instancias de clases y modelos de teorías.
+\lstinline{congruence_geometry}. Observamos un paralelismo entre las nociones de
+instancias de clases y modelos de teorías.
 
 Algunos modelos simples de planos euclídeos donde no se cumple el axioma de las
 paralelas son el \textit{disco de Poincaré} y el \textit{disco de Beltrami}.
@@ -74,17 +70,10 @@ paralelas son el \textit{disco de Poincaré} y el \textit{disco de Beltrami}.
 	\label{figure:poincare}
 \end{figure}
 
-Podríamos considerar estos modelos y formalizar sus construcciones en \textit{Lean}.
+Podríamos considerar estos modelos y formalizar sus construcciones en Lean.
 Para ello habría que definir los tipos \textit{Line} y \textit{Point}, las
 distintas relaciones de incidencia, orden y congruencia para estos tipos,
 demostrar que se cumplen los axiomas de los planos de Hilbert pero no el de las
 paralelas. Esto se puede hacer precisamente mediante el mecanismo de las
 instancias de clases.
-
-
-
-
-
-
-
 

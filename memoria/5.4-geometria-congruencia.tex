@@ -18,9 +18,8 @@ axiomas anteriores, por lo que extenderemos la clase \textit{order_geometry}.
 \subsubsection{Congruencia de segmentos}
 
 \begin{ax}\label{C1}
-	\todo{redactar}
-	% C1 : Given a seg and two distinct points `A` `B`, we find uniquely find a point `A` on the
-	% same side with `B` to `A` such that seg `A` `C` is congruent to the seg.
+	Dados un segmento $\overline{AB}$ y un rayo $r$ con vértice $C$, existe un
+	único punto $D$ en el rayo $r$ tal que $\overline{AB}\cong\overline{CD}$.
 \end{ax}
 
 \lstleanfull{congruence_geometry/basic.lean}{22}{26}
@@ -45,7 +44,6 @@ axiomas anteriores, por lo que extenderemos la clase \textit{order_geometry}.
 \subsubsection{Congruencia de ángulos}
 
 \begin{ax}\label{C4}
-	\todo{redactar}
 	Dado un ángulo $\alpha$ y punto distintos $A$ y $B$ existe un punto
 	$C$ tal que $\angle CAB\cong \alpha$. Este punto $C$ está univocamente
 	determinado si fijamos un lado de la línea $\overline{AB}$.
@@ -83,4 +81,6 @@ análogos, por lo que incluimos solamente el caso de los segmentos.
 
 
 \lstleanfull{congruence_geometry/basic.lean}{61}{86}
+
+
 

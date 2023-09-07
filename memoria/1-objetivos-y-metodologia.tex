@@ -1,16 +1,16 @@
 \section{Objetivos y metodología}
 
 El objetivo principal de este trabajo es aprender los fundamentos del lenguaje
-de programación y asistente de demostración \textit{Lean}. Sin entrar en
-detalles sobre cómo funciona y está implementado el lenguaje, nos hemos
+de programación y asistente de demostración Lean. Sin entrar en
+detalles sobre cómo funciona y la implementación del lenguaje, nos hemos
 propuesto aprender a utilizarlo como podría usarlo un estudiante o investigador de
 matemáticas. Es decir, formalizando resultados matemáticos.
 
 Para esto hemos elegido la geometría euclídea plana, en particular la
-axiomatización de \textit{David Hilbert} realizada a inicios del siglo pasado.
+axiomatización de David Hilbert realizada a inicios del siglo pasado.
 La idea es que esta teoría sirva de guión para formalizar resultados y durante
 el proceso de formalización de axiomas y proposiciones aprender las
-características y nociones necesarias de Lean para poder formalizarlos.
+características y nociones necesarias de Lean.
 
 Otro objetivo más ambicioso, que trasciende las posibilidades de este trabajo,
 es el de formalizar la independencia del \textit{axioma de las paralelas} del
@@ -19,11 +19,11 @@ abordar esta tarea, hemos propuesto una formalización del enunciado de la
 independencia y propuesto un plan de trabajo para formalizar su demostración.
 
 Antes de poder emprender el trabajo de formalización de resultados geométricos
-ha sido necesario obtener unos conocimientos de base de \textit{Lean}. Al
-abordar esta tarea, en la que aprendimos a expresar y demostrar resultados
-elementales de lógica proposicional, a trabajar con estructuras algebraicas y
-exploramos ciertas características del lenguaje, las principales referencias han
-sido los materiales del curso de \textit{Kevin Buzzard}, \textit{Formalising
+ha sido necesario obtener unos conocimientos de base de Lean. Al abordar esta
+tarea, en la que aprendimos a expresar y demostrar resultados elementales de
+lógica proposicional, a trabajar con estructuras algebraicas y exploramos
+ciertas características del lenguaje, las principales referencias han sido los
+materiales del curso de Kevin Buzzard, \textit{Formalising
 	mathematics}~\cite{buzzardFormalisingMathematicsFormalising}, y el manual
 oficial, \textit{Theorem proving in Lean}~\cite{avigadLeanTheoremProver}.
 
@@ -31,13 +31,12 @@ Los materiales del curso, que incluyen ejercicios prácticos, explicaciones
 teóricas y soluciones a los ejercicios en formato vídeo han sido especialmente
 útiles en este proceso de aprendizaje.
 
-Además durante el mes de febrero de 2023 tuvimos la oportunidad de participar en
-el curso de doctorado sobre \textit{Formalización de matemáticas en Lean},
-impartido por \textit{María Inés de
-	Frutos}~\cite{defrutosFormalizacionMatematicasLean}. Asistir a este curso nos
-permitió afianzar los conocimientos que estábamos adquiriendo y contrastar dudas
-o distintas formas de resolver los problemas con la profesora y los demás
-participantes del curso.
+Durante el mes de febrero de 2023 tuvimos la oportunidad de participar en el
+curso de doctorado sobre \textit{Formalización de matemáticas en Lean},
+impartido por María Inés de Frutos~\cite{defrutosFormalizacionMatematicasLean}.
+Asistir a este curso nos permitió afianzar los conocimientos que estábamos
+adquiriendo y contrastar dudas o distintas formas de resolver los problemas con
+la profesora y los demás participantes del curso.
 
 Para tener un entendimiento a nivel intuitivo de los conceptos necesarios de
 teoría de tipos se ha estudiado el primer capítulo del libro \textit{Homotopy
@@ -46,32 +45,34 @@ teoría de tipos y se mencionan sus relaciones con la lógica.
 
 En paralelo a este aprendizaje del lenguaje y herramientas de Lean iniciamos el
 estudio de la geometría de Hilbert, apoyándonos principalmente en los libros de
-texto de \textit{Hartshorne}~\cite{hartshorneGeometryEuclid2000} y
-\textit{Greenberg}~\cite{greenbergEuclideanNonEuclideanGeometries1993}, y
-realizando alguna consulta al texto original de
-\textit{Hilbert}~\cite{hilbertFoundationsGeometry}, para conocer cómo fueron
-formulados originalmente los axiomas, definiciones y teoremas de la teoría.
+texto de Hartshorne~\cite{hartshorneGeometryEuclid2000} y
+Greenberg~\cite{greenbergEuclideanNonEuclideanGeometries1993}, y realizando
+alguna consulta al texto original de Hilbert~\cite{hilbertFoundationsGeometry1950},
+para conocer cómo fueron formulados originalmente los axiomas, definiciones y
+teoremas de la teoría.
 
-Una vez abordados los conceptos básicos necesarios de \textit{Lean} y de la
-geometría euclídea, emprendimos la tarea de la formalización. Para ello el
+Una vez abordados los conceptos básicos necesarios de Lean y de la
+geometría euclídea, emprendimos la tarea de la formalización. Para ello, el
 proceso ha consistido fundamentalmente en seguir linealmente la teoría como está
 presentada en los libros de referencia e intentar formalizar axiomas,
 definiciones, proposiciones y demostraciones. A medida que hemos ido avanzando
 y la dificultad de los resultados por formalizar ha ido creciendo, hemos tenido
-que volver a las referencias de \textit{Lean}, consultando documentación y
+que volver a las referencias de Lean, consultando documentación y
 aprendiendo nuevas características del lenguaje.
 
 El código completo que hemos desarrollado puede encontrarse en un repositorio
 github. En el apéndice \ref{sec:repositorio} se encuentra el enlace y un esquema
-de la estructura de los ficheros. En este documento cada vez que incluimos
+de la estructura de los ficheros. En este documento, cada vez que incluimos
 extractos de estos ficheros hemos referenciado las líneas incluidas y nombre del
 fichero.
 
-Durante el proceso de formalización también consultamos trabajos similares de
-formalización de la geometría de \textit{Hilbert}, uno realizado en el lenguaje
-\textit{Isabelle/Isar}~\cite{meikleFormalizingHilbertGrundlagen2003}, en el que
-se analizan en detalle las demostraciones originales de \textit{Hilbert}, y otro
-que utiliza el lenguaje \textit{Coq/Gallina}~\cite{dehlinger2001higher}, en el
+Durante este proceso de digitalicación hemos consultado trabajos similares que
+analizan la geometría de Hilbert, uno realizado en el lenguaje
+Isabelle/Isar~\cite{meikleFormalizingHilbertGrundlagen2003}, en el que
+se analizan en detalle las demostraciones originales de Hilbert, y otro
+que utiliza el lenguaje Coq/Gallina~\cite{dehlinger2001higher}, en el
 que se exploran formalizaciones mediante una lógica intuicionista.
+
+
 
 

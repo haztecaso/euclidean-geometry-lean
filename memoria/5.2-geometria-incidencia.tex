@@ -1,4 +1,4 @@
-\subsection{Geometría de incidencia}
+\subsection{Geometr\'{i}a de incidencia}
 
 El primer grupo de axiomas establece propiedades de la relación de
 \textit{incidencia}, una relación binaria entre \textit{puntos} y
@@ -29,12 +29,12 @@ darlo siempre por válido, definiremos un objeto (un nuevo tipo) en el que
 agruparemos nociones primitivas y axiomas sobre estas.
 
 Se procederá de forma análoga a la definición usual de un \textit{grupo}, en el
-se consideran un conjunto (en \textit{Lean} trabajaremos con tipos) con una
+se consideran un conjunto (en Lean trabajaremos con tipos) con una
 operación, un elemento distinguido y unos axiomas. Para definir la
 \textit{geometría de incidencia} se toman dos tipos (uno para los puntos y otro
 para las líneas), una relación entre estos tipos (la incidencia) y los axiomas.
 
-Para hacer esto \textit{Lean} consta de dos construcciones muy similares, las
+Para hacer esto Lean consta de dos construcciones muy similares, las
 \textit{estructuras} y las \textit{clases}, mediante las cuales se pueden
 agrupar tipos y proposiciones sobre estos tipos. Las \textit{estructuras},
 implementadas mediante \textit{tipos inductivos}, permiten agrupar varios
@@ -42,7 +42,6 @@ términos con sus tipos en una misma definición. Como las definiciones, las
 estructuras pueden estar parametrizadas\footnote{En la
 	sección~\ref{ssec:definiciones_orden} se encuentran varias definiciones que
 	hacen uso de estructuras}.
-\todo{Explicar brevemente diferencia entre estructuras y clases.}
 
 Las clases son estructuras con una funcionalidad añadida, el soporte de
 inferencia de clases. Mediante este mecanismo podemos declarar
@@ -66,22 +65,22 @@ comando \lstinline{infix}. En los axiomas, siguiendo el estilo de la libería
 lugar se han incluido los términos correspondientes como parámetros, lo que es
 equivalente en teoría de tipos pero más cómodo de leer.
 
-Es interesante observar lo cercano que es el código en \textit{Lean} a la forma
+Es interesante observar lo cercano que es el código en Lean a la forma
 en la que escribiríamos los axiomas utilizando los símbolos usuales de la
 lógica. No es necesario tener conocimientos de \textit{Lean} para entender la
-mayoría de los enunciados (no se da el mismo caso con las demostraciones).
+mayoría de los enunciados (no se da lo mismo en el caso de las demostraciones).
 
 Declarar una \textit{instancia} de esta clase consiste en dotar de la estructura
 que proporciona la clase a algún tipo concreto. De esta forma cuando utilicemos
 el tipo sobre el que hemos definido esta estructura el sistema de inferencia de
-tipos de \textit{Lean} podrá inferir que nuestro tipo tiene la estructura
-definida en la clase. Por ejemplo si tenemos dos tipos que representan los
-puntos y líneas de $\mathbb{R}^2$ podemos dotarles de la estructura definida en la clase
+tipos de Lean podrá inferir que nuestro tipo tiene la estructura definida en la
+clase. Por ejemplo si tenemos dos tipos que representan los puntos y líneas de
+$\mathbb{R}^2$ podemos dotarles de la estructura definida en la clase
 \lstinline{incidence_geometry} mediante el comando
 \lstinline{instance}\footnote{No hemos entrado en detalles sobre el uso de este
-comando debido a la extensión necesaria para definir los tipos mencionados para los puntos y
-líneas. En el fichero \texttt{src/examples.lean} del repositorio se puede
-consultar el código de este ejemplo.}. Para ello tendremos que definir la
+comando debido a la extensión necesaria para definir los tipos mencionados para
+los puntos y líneas. En el fichero \texttt{src/examples.lean} del repositorio se
+puede consultar el código de este ejemplo.}. Para ello tendremos que definir la
 relación de incidencia \lstinline{lies_on} entre estos dos tipos y demostrar que
 se cumplen los tres axiomas.
 
@@ -150,7 +149,7 @@ axiomas de incidencia es el siguiente:
 \end{proof}
 
 Esta demostración, que sigue la presentación del libro
-de~\textit{Hartshorne}~\cite{hartshorneGeometryEuclid2000}, puede interpretarse
+de~Hartshorne~\cite{hartshorneGeometryEuclid2000}, puede interpretarse
 como una demostración por reducción al absurdo sobre la condición de que las dos
 líneas sean iguales, o como una demostración por contraposición: si asumimos que
 no se cumple la conclusión (que las dos lineas no tengan más de un punto en
@@ -165,26 +164,25 @@ Analicemos la demostración línea por línea:
 \begin{enumerate}[label=L.\arabic*, topsep=0mm]
 	\setcounter{enumi}{25}
 
-	\item El estado táctico inicial incluye los parámetros del lema. En este caso
-	      los tipos \lstinline{Point} y \lstinline{Line} e \lstinline{ig}, la
+	\item El estado táctico inicial incluye los parámetros del lema. En este
+	      caso los tipos \lstinline{Point} y \lstinline{Line} e \lstinline{ig}, la
 	      instancia de la clase \lstinline{incidence_geometry}. Esta instancia
-	      representa el hecho de que los tipos \lstinline{Point} y \lstinline{Line}
-	      cumplen los axiomas de la geometría de incidencia.
-
-	      La meta se corresponde con el enunciado del lema, es decir lo que queremos
+	      representa el hecho de que los tipos \lstinline{Point} y
+	      \lstinline{Line} cumplen los axiomas de la geometría de incidencia. La
+	      meta se corresponde con el enunciado del lema, es decir lo que queremos
 	      demostrar.
-
 
 	\item \lstinline{intros l m,}\\[.5em]
 	      La aplicación de la táctica \lstinline{intros}
 	      introduce las hipótesis \lstinline{l} y \lstinline{m}. Es decir, saca el
 	      cuantificador universal de la meta e introduce las variables cuantificadas
 	      en el estado táctico, pasando a tener ahora dos nuevos términos
-	      \lstinline{l : Line} y \lstinline{m : Line}. La nueva meta es
+	      \lstinline{l : Line} y \lstinline{m : Line}.
+	      Esto equivale a decir en lenguaje natural "sean l y m dos líneas".
+	      La nueva meta es
 	      \begin{lstlisting}
-l ≠ m → (∃! (A : Point), is_common_point A l m) ∨ ¬have_common_point Point l m
+    ⊢ l ≠ m → (∃! (A : Point), is_common_point A l m) ∨ ¬have_common_point Point l m
 \end{lstlisting}
-	      Esto equivale a decir en lenguaje natural "sean l y m dos líneas"
 
 	\item \lstinline{contrapose,} La táctica \lstinline{contrapose} permite
 	      realizar una demostración por contraposición. Es decir, si nuestra meta es
@@ -196,9 +194,9 @@ l ≠ m → (∃! (A : Point), is_common_point A l m) ∨ ¬have_common_point Po
 \end{lstlisting}
 
 	\item \lstinline{push_neg, }\\[.5em] La táctica \lstinline{push_neg} utiliza
-	      equivalencias lógicas para \guillemotleft empujar\guillemotright las negaciones dentro de la fórmula.
-	      En este caso, al no haber especificado una hipótesis concreta, se aplica
-	      sobre la meta.
+	      equivalencias lógicas para \guillemotleft empujar\guillemotright\ las
+	      negaciones dentro de la fórmula. En este caso, al no haber
+	      especificado una hipótesis concreta, se aplica sobre la meta.
 
 	      En la primera parte de la implicación se aplica una ley de De Morgan para
 	      introducir la negación dentro de una disjunción, convirtiéndola en una
@@ -208,7 +206,9 @@ l ≠ m → (∃! (A : Point), is_common_point A l m) ∨ ¬have_common_point Po
 ⊢ (¬∃! (A : Point), is_common_point A l m) ∧ have_common_point Point l m → l = m
 \end{lstlisting}
 
-	      Es interesante notar que \lstinline{push_neg} no consigue 'empujar' la negación todo lo que podríamos desear.
+	      Es interesante notar que \lstinline{push_neg} no consigue
+	      \guillemotleft empujar\guillemotright la negación todo lo que
+	      podríamos desear.
 
 	      Esto es así porque no está reescribiendo las definiciones previas y de
 	      \lstinline{∃!}. Esto lo tendremos que hacer manualmente, como se verá
@@ -242,8 +242,8 @@ not_unique : ¬∃ (x : Point),
 \end{lstlisting}
 
 	\item \lstinline{push_neg at not_unique,}\\[.5em] Una vez reescrita la
-	      definición de \lstinline{∃!} volvemos a empujar la negación hacia
-	      dentro de la fórmula.
+	      definición de \lstinline{∃!} podemos continuar empujando la negación
+	      hacia dentro de la fórmula.
 	      La hipótesis \lstinline{not_unique} cambia a
 	      \begin{lstlisting}
 not_unique : ∀ (x : Point), 
@@ -257,7 +257,6 @@ not_unique : ∀ (x : Point),
 
 	      En nuestro caso tenemos la hipótesis \lstinline{hlm: have_common_point Point l m} y la definición
 	      \lstinline{have_common_point Point l m := ∃ A : Point, is_common_point A l m}.
-
 	      Por tanto al aplicar la táctica, la hipótesis hlm se convierte en dos
 	      nuevas hipótesis
 	      \begin{lstlisting}
@@ -274,8 +273,8 @@ not_unique: ∀ (x : Point), is_common_point x l m
 → (∃ (y : Point), is_common_point y l m ∧ y ≠ x) 
 \end{lstlisting}
 
-		            Primero se está construyendo el término \lstinline{not_unique A hA},
-		            al que posteriormente se le aplicará la táctica {rcases}.
+		            Primero construimos el término \lstinline{not_unique A hA},
+		            al que posteriormente aplicaremos la táctica {rcases}.
 
 		            En Lean los cuantificadores universales y las implicaciones pueden
 		            tratarse como funciones. Al pasar el primer argumento \lstinline{A}
@@ -283,9 +282,8 @@ not_unique: ∀ (x : Point), is_common_point x l m
 		            \lstinline{x}, proporcionando el término \lstinline{A : Point} que
 		            tenemos entre nuestras hipótesis. Por tanto el término
 		            \lstinline{not_unique A} es igual a
-		            \begin{lstlisting}
-is_common_point A l m → (∃ (y : Point), is_common_point y l m ∧ y ≠ A)
-\end{lstlisting}
+		            \lstinline{is_common_point A l m → (∃ (y : Point),
+			            is_common_point y l m ∧ y ≠ A)}.
 
 		            Ahora podemos observar que tenemos entre nuestras hipótesis la
 		            condición de esta implicación, \lstinline{hA: is_common_point A l m}
@@ -298,9 +296,9 @@ is_common_point A l m → (∃ (y : Point), is_common_point y l m ∧ y ≠ A)
 
 		      \item La aplicación de la táctica \lstinline{rcases} nos permite, como
 		            anteriormente, obtener un término concreto del cuantificador
-		            existencial y además profundizar en la definición recursiva del
-		            \lstinline{∧}, generando así dos hipótesis separadas. Obtenemos por
-		            tanto las nuevas hipótesis
+		            existencial y además profundizar en las definiciones de
+		            \lstinline{∃} y \lstinline{∧}, generando así tres hipótesis
+		            separadas. Obtenemos por tanto las nuevas hipótesis
 		            \begin{lstlisting}
 B: Point 
 hB: is_common_point B l m 
@@ -317,9 +315,7 @@ hAB: B ≠ A
 	\item \lstinline{exact unique_of_exists_unique (ig.I1 hAB) ⟨hA.left,hB.left⟩ ⟨hA.right,hB.right⟩,}\\[.5em]
 	      La táctica \lstinline{exact} se utiliza para concluir la demostración
 	      proporcionando un término igual a la meta. Recordemos que la meta actual
-	      es \lstinline{⊢ l = m}.
-
-	      Analicemos entonces el término que estamos proporcionando a la táctica.
+	      es \lstinline{⊢ l = m}. Analicemos entonces el término que estamos proporcionando a la táctica.
 
 	      El lema \lstinline{unique_of_exists_unique}, definido en la librería
 	      estándar de Lean, sirve para extrer la parte de unicidad del cuantificador
@@ -342,21 +338,23 @@ hAB: B ≠ A
 	      estos términos en la conjunción \lstinline{⟨hA.left,hB.left⟩}, obteniendo
 	      \lstinline{A ~ l ∧ B ~ l}.
 
-	      El uso de los paréntesis nos permite construir una conjunción sin tener
-	      que especificar esplícitamente que queremos construir una conjunción, pero
-	      el sistema de tipos de Lean permite inferir que el término esperado es una
-	      conjunción.
+	      El uso de los paréntesis nos permite construir una conjunción sin
+	      tener que especificar esplícitamente que queremos construir una
+	      conjunción. El sistema de inferencia de tipos de Lean deduce que el
+	      término esperado es una conjunción.
 
-	      Análogamente para el segundo argumento.
+	      El segundo argumento que se le pasa al término \lstinline{ig.I1 hAB}
+	      se construye de forma análoga.
+
 \end{enumerate}
 
 Como se puede ver el código que escribimos para realizar una demostración dentro
 del modo táctico no siempre es fácil de seguir y para entenderlo hay que tener
 en cuenta cómo va cambiando el estado táctico.
 
-En el entorno de desarrollo se puede consultar de forma interactiva el estado
-táctico de cada punto de una demostración, lo que facilita enormemente el
-entendimiento de los pasos de la demostración.
+En el entorno de desarrollo (ver apéndice \ref{sec:entorno}) se puede consultar
+de forma interactiva el estado táctico de cada punto de una demostración, lo que
+facilita enormemente el entendimiento de los pasos de la demostración.
 
 De las siguientes proposiciones incluiremos sólo los enunciados. El desarrollo
 de las demostraciones se encuentra en el repositorio de código.
@@ -364,7 +362,7 @@ de las demostraciones se encuentra en el repositorio de código.
 \begin{prop} Tres puntos no colineares determinan tres líneas distintas.
 \end{prop}
 
-\lstleanfull{incidence_geometry/propositions.lean}{40}{51}
+\lstleanfull{incidence_geometry/propositions.lean}{40}{50}
 
 
 \begin{prop}
@@ -372,18 +370,31 @@ de las demostraciones se encuentra en el repositorio de código.
 	tales que no existe un punto que está en todas ellas.
 \end{prop}
 
-\lstleanfull{incidence_geometry/propositions.lean}{76}{84}
+\lstleanfull{incidence_geometry/propositions.lean}{76}{82}
 
 \begin{prop}
 	Para cada línea existe un punto que no está ella.
 \end{prop}
 
-\lstleanfull{incidence_geometry/propositions.lean}{107}{110}
+\lstleanfull{incidence_geometry/propositions.lean}{107}{109}
 
 \begin{prop}
 	Para cada punto existe una línea que no pasa por él.
 \end{prop}
 
-\lstleanfull{incidence_geometry/propositions.lean}{124}{127}
+\lstleanfull{incidence_geometry/propositions.lean}{124}{126}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
