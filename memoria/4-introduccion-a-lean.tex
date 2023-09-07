@@ -35,15 +35,14 @@ Es importante no confundir esta notación con la de una relación interna a
 nuestro lenguaje. Mientras que en teoría de conjuntos utilizamos la relación de
 pertenencia $\in$ para expresar que un elemento primitivo (un conjunto) está
 contenido en otro, en las teorías de tipos no podemos considerar los términos o
-los tipos por separado. La noción fundamental es la pertenencia de tipos y cada
-término tiene que estar siempre acompañado por su tipo. En las teorías de tipos
-además existen otras aserciones, como la de igualdad entre términos de un mismo
-tipo. Dados $a:A$ y $b:A$, se tiene la aserción \textit{$a$ y $b$ son dos
-	términos de tipo A iguales por definición}, y escribimos $a\equiv b : A$
-\footnote{En \textit{Lean} existe más de un tipo de igualdad entre términos. La
-	mencionada aquí es la llamada igualdad \textit{sintáctica}, que se representa
-	con el símbolo \lstinline{=}. Tamibién existen las igualdades
-	\textit{definicionales} y \textit{proposicionales}.}.
+los tipos por separado, cada término tiene que estar siempre acompañado por su
+tipo. En las teorías de tipos además existen otras aserciones, como la de
+igualdad entre términos de un mismo tipo. Dados $a:A$ y $b:A$, se tiene la
+aserción \textit{$a$ y $b$ son dos términos de tipo A iguales por definición}, y
+escribimos $a\equiv b : A$ \footnote{En \textit{Lean} existe más de un tipo de
+	igualdad entre términos. La mencionada aquí es la llamada igualdad
+	\textit{sintáctica}, que se representa con el símbolo \lstinline{=}. Tamibién
+	existen las igualdades \textit{definicionales} y \textit{proposicionales}.}.
 
 Las teorías de tipos también pueden utilizarse para expresar afirmaciones y
 demostraciones matemáticas. Las afirmaciones se codifican mediante los tipos y
@@ -58,7 +57,7 @@ correspondiente al enunciado.
 Existen distintas elecciones de reglas de transformación que considerar en
 teoría de tipos, que dan lugares a distintas versiones de la teoría de tipos.
 Lean implementa una una versión de la teoría de tipos dependiente conocida como
-el \textit{Calculus of Constructions}.
+el \textit{Cálculo de las construcciones inductivas}.
 
 En las explicaciones que siguen la principal referencia a la que hemos recurrido
 es el manual oficial \textit{Theorem proving in Lean}~\cite{avigadLeanTheoremProver}.
@@ -195,7 +194,7 @@ Otra forma de indicar parámetros en una definición es mediante el uso del
 comando \lstinline{variable} (o su variante \lstinline{variables}) que introduce
 en el entorno el símbolo indicado, pero en lugar de fijar su existencia como
 \lstinline{constant} el símbolo introducido está \guillemotleft cuantificado
-univeralmente\guillemotright. Las siguientes líneas son equivalentes a las del
+universalmente\guillemotright. Las siguientes líneas son equivalentes a las del
 ejemplo anterior:
 
 \begin{lstlisting}
@@ -319,6 +318,8 @@ basan en los \textit{filtros}, en lugar de en los \textit{entornos} y
 \textit{bases de entornos}.
 
 \todo{Explicar cómo utilizar la web para encontrar cosas.}
+
+
 
 
 
