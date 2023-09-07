@@ -67,7 +67,7 @@ equivalente en teoría de tipos pero más cómodo de leer.
 
 Es interesante observar lo cercano que es el código en Lean a la forma
 en la que escribiríamos los axiomas utilizando los símbolos usuales de la
-lógica. No es necesario tener conocimientos de \textit{Lean} para entender la
+lógica. No es necesario tener conocimientos de Lean para entender la
 mayoría de los enunciados (no se da lo mismo en el caso de las demostraciones).
 
 Declarar una \textit{instancia} de esta clase consiste en dotar de la estructura
@@ -129,7 +129,7 @@ automáticamente.
 
 En este caso los parámetros \lstinline{Point Line : Type*} son ambos implícitos
 porque los argumentos \lstinline{A : Point} y \lstinline{l m : Line}
-proporcionan la información necesaria para la inferencia automática.
+proporcionan la información necesaria para la inferencia automática.\\
 
 \lstleanfull{incidence_geometry/basic.lean}{179}{182}
 
@@ -181,11 +181,11 @@ Analicemos la demostración línea por línea:
 	      Esto equivale a decir en lenguaje natural "sean l y m dos líneas".
 	      La nueva meta es
 	      \begin{lstlisting}
-    ⊢ l ≠ m → (∃! (A : Point), is_common_point A l m) ∨ ¬have_common_point Point l m
+⊢ l ≠ m → (∃! (A : Point), is_common_point A l m) ∨ ¬have_common_point Point l m
 \end{lstlisting}
 
 	\item \lstinline{contrapose,} La táctica \lstinline{contrapose} permite
-	      realizar una demostración por contraposición. Es decir, si nuestra meta es
+	      recurrir al esquema de la contraposición. Es decir, si nuestra meta es
 	      de la forma \lstinline{A → B}, la reemplaza por \lstinline{¬B → ¬A}. En
 	      este caso la meta resultante es
 	      \begin{lstlisting}
@@ -234,8 +234,8 @@ hlm: have_common_point Point l m
 	      fórmulas utilizando definiciones o lemas de la forma \lstinline{A ↔ B}. Al
 	      escribir \lstinline{at} indicamos dónde queremos realizar dicha
 	      reescritura, en este caso en la hipótesis \lstinline{not_unique}.
-
-	      En este caso utilizamos la definición de \lstinline{∃!}, con lo que se modifica la hipótesis
+	      Como estamos utilizando la definición de \lstinline{∃!}, la hipótesis
+	      resulta
 	      \begin{lstlisting}
 not_unique : ¬∃ (x : Point), 
   is_common_point x l m ∧ ∀ (y : Point), is_common_point y l m → y = x
@@ -256,7 +256,8 @@ not_unique : ∀ (x : Point),
 	      particularizada para el nuevo término.
 
 	      En nuestro caso tenemos la hipótesis \lstinline{hlm: have_common_point Point l m} y la definición
-	      \lstinline{have_common_point Point l m := ∃ A : Point, is_common_point A l m}.
+	      \lstinline{have_common_point Point l m := ∃ A : Point, is_common_point
+		      A l m}.\\
 	      Por tanto al aplicar la táctica, la hipótesis hlm se convierte en dos
 	      nuevas hipótesis
 	      \begin{lstlisting}
@@ -274,7 +275,7 @@ not_unique: ∀ (x : Point), is_common_point x l m
 \end{lstlisting}
 
 		            Primero construimos el término \lstinline{not_unique A hA},
-		            al que posteriormente aplicaremos la táctica {rcases}.
+		            al que luego aplicaremos la táctica \lstinline{rcases}.
 
 		            En Lean los cuantificadores universales y las implicaciones pueden
 		            tratarse como funciones. Al pasar el primer argumento \lstinline{A}
@@ -370,7 +371,7 @@ de las demostraciones se encuentra en el repositorio de código.
 	tales que no existe un punto que está en todas ellas.
 \end{prop}
 
-\lstleanfull{incidence_geometry/propositions.lean}{76}{82}
+\lstleanfull{incidence_geometry/propositions.lean}{76}{8}
 
 \begin{prop}
 	Para cada línea existe un punto que no está ella.
@@ -383,6 +384,16 @@ de las demostraciones se encuentra en el repositorio de código.
 \end{prop}
 
 \lstleanfull{incidence_geometry/propositions.lean}{124}{126}
+
+
+
+
+
+
+
+
+
+
 
 
 

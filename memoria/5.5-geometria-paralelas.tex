@@ -29,13 +29,11 @@ del quinto postulado de \textit{Euclides}?
 
 En lógica moderna llamos a esta idea \textit{independencia}. Si no existe forma
 de derivar una fórmula dada de un conjunto de fórmulas, decimos que nuestra
-fórmula es independiente del resto.
-
-Fijados unos axiomas, decir que una proposición es independiente de ellos
-equivale a decir que incluyendo su negación como axioma
-obtenemos una teoría consistente, en la que no se pueden demostrar
-contradicciones. Esta noción, expresada en términos sintácticos, tiene su
-equivalente semántico. Si fijados unos axiomas axiomas podemos construir un
+fórmula es independiente del resto. Fijados unos axiomas, decir que una
+proposición es independiente de ellos equivale a decir que incluyendo su
+negación como axioma obtenemos una teoría consistente, en la que no se pueden
+demostrar contradicciones. Esta noción, expresada en términos sintácticos, tiene
+su equivalente semántico. Si fijados unos axiomas axiomas podemos construir un
 modelo en el que se cumple la proposición y otro en el que se cumple su
 contradicción.
 
@@ -46,7 +44,6 @@ de incidencia, orden y congruencia, pero no se establece el axioma de las
 paralelas. Con estos términos, decir que el axioma de las paralelas es
 independiente del resto de axiomas equivale a decir que existen planos de
 Hilbert en los que se cumple el axioma y otros en los que se cumple su negación.
-
 Con el siguiente teorema hemos formalizado esta idea:
 
 \lstleanfull{parallels_independence.lean}{128}{130}
@@ -76,4 +73,6 @@ distintas relaciones de incidencia, orden y congruencia para estos tipos,
 demostrar que se cumplen los axiomas de los planos de Hilbert pero no el de las
 paralelas. Esto se puede hacer precisamente mediante el mecanismo de las
 instancias de clases.
+
+
 

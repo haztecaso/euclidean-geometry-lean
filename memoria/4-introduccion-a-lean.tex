@@ -48,7 +48,7 @@ definición\guillemotright, y escribimos $a\equiv b : A$ \footnote{En
 \textit{proposicionales}.}.
 
 Las teorías de tipos también pueden utilizarse para expresar afirmaciones y
-demostraciones matemáticas. Las afirmaciones se codifican mediante los tipos y
+pruebas matemáticas. Las afirmaciones se codifican mediante los tipos y
 las demostraciones mediante construcciones de términos de un tipo dado. Es
 decir, se puede interpretar la aserción $a : A$ como \guillemotleft$a$ es una
 demostración de $A$\guillemotright. Esta interpretación da lugar a una analogía
@@ -76,9 +76,9 @@ abstracción y la evaluación.
 \begin{itemize}[topsep=0pt]
 	\item \textbf{Abstracción}. Es el mecanismo de definición de funciones mediante
 	      la introducción de parámetros. Dado un término \lstinline{x + 1 : ℕ},
-	      mediante la sintaxis \lstinline{λ x : ℕ, (x + 1 : ℕ)} se convierte la
-	      variable libre \lstinline{x} en una variable ligada por la abstracción, a la
-	      que llamamos parámetro de la función.
+	      se puede convertir la variable libre \lstinline{x} en en una variable
+	      ligada por la abstracción, a la que llamamos parámetro de la función,
+	      mediante la sintaxis \lstinline{λ x : ℕ, (x + 1 : ℕ)}.
 
 	      Es importante recordar que cada término tiene que ir acompañado del tipo al
 	      que pertenece. En esta expresión estamos indicando que tanto el parámetro
@@ -187,7 +187,7 @@ Pero la función identidad que queremos considerar recibe un solo argumento.
 Como a cada término acompaña siempre su tipo, dado el término \lstinline{e : α},
 el sistema de inferencia de tipos de Lean es capaz de deducir automáticamente el
 tipo \lstinline{α}. Solo falta indicar en la definición cuál es el parámetro
-cuya identificación queremos delegar al sistema de inferencia de tipos.
+cuya identificación queremos delegar al sistema de inferencia de tipos.\\
 
 \begin{lstlisting}
 def id2 {α : Type*} (e : α) := e
@@ -220,7 +220,7 @@ proposiciones, son a su vez tipos y por tanto pueden tener términos.
 
 La correspondencia de Curry-Howard afirma que estas las $\lambda$-funciones de
 se comportan de la misma forma que la implicación en lógica.
-Por tanto en \textit{Lean} usamos el símbolo \lstinline{→} para referirnos tanto a
+Por tanto en Lean usamos el símbolo \lstinline{→} para referirnos tanto a
 funciones como a implicaciones lógicas. Dadas dos
 proposiciones \lstinline{p q : Prop} podemos construir la proposición
 \lstinline{p → q : Prop}, que se interpreta como \lstinline{p} \textit{implica}
@@ -228,7 +228,7 @@ proposiciones \lstinline{p q : Prop} podemos construir la proposición
 
 
 También tenemos a nuestra disposición los demás conectores lógicos usuales,
-definidos en la librería estándar de \textit{Lean}. Los símbolos que
+definidos en la librería estándar de Lean. Los símbolos que
 utilizaremos para estos conectores son \lstinline{∧}, \lstinline{∨},
 \lstinline{¬}, \lstinline{≠} y \lstinline{↔}. Además, tipos del \textit{Cálculo
 de construcciones inductivas} como el \textit{tipo suma} y \textit{tipo
@@ -250,7 +250,7 @@ términos y demostraciones es llamada \textit{demostraciones como términos}.
 
 Sin embargo desarrollar demostraciones construyendo directamente estos términos
 suele resultar muy complicado y alejado del trabajo deductivo matemático usual.
-Como muchos otros asistentes de demostración \textit{Lean} tiene definidos una
+Como muchos otros asistentes de demostración Lean tiene definidos una
 serie de comandos, llamados \textit{tácticas}, que permiten describir en un
 nivel de abstracción más alto cómo se construyen estas demostraciones.
 
@@ -311,7 +311,7 @@ end
 
 \subsection{\textit{mathlib}}
 
-Uno de los mayores puntos fuertes del ecosistema de \textit{Lean} es la librería
+Uno de los mayores puntos fuertes del ecosistema de Lean es la librería
 \textit{mathlib}, donde se encuentra una amplia colección de resultados
 matemáticos formalizados. Además la librería incluye definiciones de tácticas
 que implementan esquemas de demostración particulares de distintas ramas de las
@@ -324,5 +324,13 @@ del grado de matemáticas. Por ejemplo las construcciones en topología se
 basan en los \textit{filtros}, en lugar de en los \textit{entornos} y
 \textit{bases de entornos}. En cualquier caso en la librería es común que estén
 demostradas las equivalencias con axiomatizaciones y definiciones equivalentes.
+
+
+
+
+
+
+
+
 
 

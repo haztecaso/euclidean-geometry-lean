@@ -74,7 +74,7 @@ Para formalizar esta noción utilizamos una estructura:
 
 \lstleanfull{order_geometry/basic.lean}{52}{52}
 
-Cuando se define una estructura en \textit{Lean} se genera de forma automática
+Cuando se define una estructura en Lean se genera de forma automática
 un constructor, una función útil para crear términos con tipo la estructura
 definida. Dicha función se llamará como la estrucura más la notación
 \lstinline{.mk} adjuntada: en este caso se tiene la función
@@ -200,9 +200,9 @@ definición, lo cual es un recurso útil para construir términos complejos.
 
 \subsubsection{Resultados}%
 
-Los teoremas que se pueden deducir de este segundo grupo de axiomas son
+Los teoremas que se pueden deducir de este grupo de axiomas son
 considerablemente más complicados de demostrar que los del primer grupo. En
-particular son demostraciones que tienen detalles técnicos difíciles de
+particular son pruebas que tienen detalles técnicos difíciles de
 formalizar. En un artículo~\cite{meikleFormalizingHilbertGrundlagen2003},
 Meikle y Fleuriot han formalizado resultados de esta sección utilizando el
 asistente de demostración Isabelle/Isar. En este trabajo exponen que la
@@ -268,5 +268,8 @@ Con esto, en \textit{mathlib}, las relaciones de equivalencia se definen como
 estructuras que contienen las demostraciones de estas tres propiedades:
 
 \lstleanfull{order_geometry/propositions.lean}{201}{205}
+
+
+
 
 
