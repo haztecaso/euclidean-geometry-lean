@@ -1,4 +1,4 @@
-\documentclass[t]{beamer}
+\documentclass[t, aspectratio=169]{beamer}
 \input{00_common_preamble.tex}
 
 \setbeamertemplate{navigation symbols}{}
@@ -21,194 +21,23 @@
 
 \title{Formalización de las matemáticas con Lean.\\ Un caso de estudio: Geometría euclídea plana.}
 \author{Adrián Lattes Grassi}
-\date{Septiembre de 2023}
+\date{18 de septiembre de 2023}
 \subtitle{Facultad de Ciencias Matemáticas.\\Trabajo dirigido por Jorge Carmona Ruber.}
 
 \lstdefinestyle{leanBeamer}{
   style=leanBase,
   frame=,
-  basicstyle=\fontsize{9}{10}\selectfont\ttfamily,
+  basicstyle=\fontsize{8}{9}\selectfont\ttfamily,
   escapeinside=||
 }
 \lstset{style=leanBeamer}
 
+\setlength\columnsep{50pt}
+
 \begin{document}
 \frame{\titlepage}
 
-% \begin{multicols}{2} \columnbreak \end{multicols}
-
-\subsection{Proposición 1}
-
-\begin{frame}[fragile]
-\begin{lstlisting}
-lemma line_has_external_point 
-  {Point Line : Type*} [ig : incidence_geometry Point Line] :
-  ∀ l : Line, ∃ A : Point, ¬ A ~ l :=
-\end{lstlisting}
-\end{frame}
-
-\begin{frame}[fragile]
-\begin{lstlisting}
-lemma line_has_external_point 
-  {Point Line : Type*} [ig : incidence_geometry Point Line] :
-  ∀ l : Line, ∃ A : Point, ¬ A ~ l :=
-begin
-
-
-
-
-
-
-
-
-
-
-end
-\end{lstlisting}
-\lstinline{Point Line : Type*} \lstinline{ig : incidence_geometry Point Line}\\
-\end{frame}
-
-\begin{frame}[fragile]
-\begin{lstlisting}
-lemma line_has_external_point 
-  {Point Line : Type*} [ig : incidence_geometry Point Line] :
-  ∀ l : Line, ∃ A : Point, ¬ A ~ l :=
-begin
-  rcases ig.I3 with ⟨A, B, C, ⟨_, h1⟩⟩,
-
-
-
-
-
-
-
-
-
-end
-\end{lstlisting}
-\lstinline{Point Line : Type*} \lstinline{ig : incidence_geometry Point Line}\\
-\lstinline{l : Line}\\
-\end{frame}
-
-\begin{frame}[fragile]
-\begin{lstlisting}
-lemma line_has_external_point 
-  {Point Line : Type*} [ig : incidence_geometry Point Line] :
-  ∀ l : Line, ∃ A : Point, ¬ A ~ l :=
-begin
-  rcases ig.I3 with ⟨A, B, C, ⟨_, h1⟩⟩,
-  by_contra h2,
-
-
-
-
-
-
-
-
-end
-\end{lstlisting}
-\end{frame}
-
-\begin{frame}[fragile]
-\begin{lstlisting}
-lemma line_has_external_point 
-  {Point Line : Type*} [ig : incidence_geometry Point Line] :
-  ∀ l : Line, ∃ A : Point, ¬ A ~ l :=
-begin
-  rcases ig.I3 with ⟨A, B, C, ⟨_, h1⟩⟩,
-  by_contra h2,
-  push_neg at h1,
-  push_neg at h2,
-
-
-
-
-
-
-end
-\end{lstlisting}
-\end{frame}
-
-\begin{frame}[fragile]
-\begin{lstlisting}
-lemma line_has_external_point 
-  {Point Line : Type*} [ig : incidence_geometry Point Line] :
-  ∀ l : Line, ∃ A : Point, ¬ A ~ l :=
-begin
-  rcases ig.I3 with ⟨A, B, C, ⟨_, h1⟩⟩,
-  by_contra h2,
-  push_neg at h1,
-  push_neg at h2,
-  cases h2 with l hl,
-
-
-
-
-
-end
-\end{lstlisting}
-\end{frame}
-
-\begin{frame}[fragile]
-\begin{lstlisting}
-lemma line_has_external_point 
-  {Point Line : Type*} [ig : incidence_geometry Point Line] :
-  ∀ l : Line, ∃ A : Point, ¬ A ~ l :=
-begin
-  rcases ig.I3 with ⟨A, B, C, ⟨_, h1⟩⟩,
-  by_contra h2,
-  push_neg at h1,
-  push_neg at h2,
-  cases h2 with l hl,
-  have hAl : A ~ l, { tauto },
-  have hBl : B ~ l, { tauto },
-  have hCl : C ~ l, { tauto },
-
-
-end
-\end{lstlisting}
-\end{frame}
-
-\begin{frame}[fragile]
-\begin{lstlisting}
-lemma line_has_external_point 
-  {Point Line : Type*} [ig : incidence_geometry Point Line] :
-  ∀ l : Line, ∃ A : Point, ¬ A ~ l :=
-begin
-  rcases ig.I3 with ⟨A, B, C, ⟨_, h1⟩⟩,
-  by_contra h2,
-  push_neg at h1,
-  push_neg at h2,
-  cases h2 with l hl,
-  have hAl : A ~ l, { tauto },
-  have hBl : B ~ l, { tauto },
-  have hCl : C ~ l, { tauto },
-  specialize h1 l hAl hBl,
-
-end
-\end{lstlisting}
-\end{frame}
-
-\begin{frame}[fragile]
-\begin{lstlisting}
-lemma line_has_external_point 
-  {Point Line : Type*} [ig : incidence_geometry Point Line] :
-  ∀ l : Line, ∃ A : Point, ¬ A ~ l :=
-begin
-  rcases ig.I3 with ⟨A, B, C, ⟨_, h1⟩⟩,
-  by_contra h2,
-  push_neg at h1,
-  push_neg at h2,
-  cases h2 with l hl,
-  have hAl : A ~ l, { tauto },
-  have hBl : B ~ l, { tauto },
-  have hCl : C ~ l, { tauto },
-  specialize h1 l hAl hBl,
-  exact h1 hCl
-end
-\end{lstlisting}
-\end{frame}
-
+\input{presentacion_demo.tex}
 
 \end{document}
+
