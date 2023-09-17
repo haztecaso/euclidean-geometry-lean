@@ -32,12 +32,233 @@
 }
 \lstset{style=leanBeamer}
 
-\setlength\columnsep{50pt}
+    \setlength\columnsep{50pt}
+\setbeamertemplate{items}[circle]
 
 \begin{document}
 \frame{\titlepage}
 
-\input{presentacion_demo.tex}
+\section{Proceso}
+
+\begin{frame}[fragile, c]
+	\begin{itemize}[<+->]
+		\item Aprendizaje de Lean
+		\item Estudio y formalización de la geometría de Hilbert
+		\item Lectura de trabajos relacionados
+		\item Independencia del axioma de las paralelas
+	\end{itemize}
+\end{frame}
+
+
+\section{Formalización asistida por computadores}
+
+\begin{frame}[fragile, c]
+	\begin{itemize}[<+->]
+		\item Digitalización de definiciones y enunciados
+		\item Comprobación mecanizada de demostraciones
+		\item Uso en docencia
+		\item Demostración automatizada
+	\end{itemize}
+\end{frame}
+
+\section{Formalizando matemáticas en Lean}
+
+\begin{frame}[fragile, c]
+	\begin{itemize}[<+->]
+		\item Lean implementa el \textit{Cálculo de construcciones inductivas}
+		\item Correspondencia de Curry-Howard
+		\item \textit{Proposiciones como tipos}\\
+		      \lstinline{P : Prop}
+		\item \textit{Demostraciones como términos}\\
+		      \lstinline{p : P : Prop}
+		\item Modo táctico
+	\end{itemize}
+\end{frame}
+
+
+
+
+\section{Geometría euclídea plana}
+
+% \begin{frame}[fragile, c]
+% 	\centerline{\includegraphics[height=6cm]{./imgs/Euclides_portada.png}}
+% \end{frame}
+
+\subsection{Axiomatización de Hilbert}
+
+\begin{frame}[fragile, c]
+	\centerline{
+		\includegraphics[height=5cm]{./imgs/Hilbert_portada.png}\,
+		\pause
+		\includegraphics[height=5cm]{./imgs/Hartshorne_portada.png}
+		\includegraphics[height=5cm]{./imgs/Greenberg_portada.png}\,
+	}
+\end{frame}
+
+% \subsection{Nociones fundamentales}
+
+\begin{frame}[fragile, c]
+	\begin{itemize}
+		\item \textit{Puntos}. $A, B, C, \dots$
+		\item \textit{Líneas}. $l, m, n, \dots$
+		\item \textit{incidencia}. $A\sim l$
+		\item \textit{orden}. $A * B * C$
+		\item \textit{congruencia de segmentos}. $\overline{AB}\cong\overline{CD}$
+		\item \textit{congruencia de ángulos}. $\angle ABC \cong\angle CDE$
+	\end{itemize}
+\end{frame}
+
+
+
+\section{Geometría de incidencia}
+
+% \input{presentacion-incidencia-teoria.tex}
+
+\begin{frame}[fragile]
+	\begin{lstlisting}
+     class incidence_geometry (Point Line : Type*) :=
+       (lies_on : Point → Line → Prop)
+       (infix ` ~ ` : 50 := lies_on)|\pause|
+       (I1 {A B : Point} (h : A ≠ B) : ∃! l : Line, A ~ l ∧ B ~ l)|\pause|
+       (I2 (l : Line) : ∃ A B : Point, A ≠ B ∧ A ~ l ∧ B ~ l)|\pause|
+       (I3 : ∃ A B C : Point, neq3 A B C ∧ ¬ ∃ l : Line,  A ~ l ∧ B ~ l ∧ C ~ l)
+    \end{lstlisting}
+\end{frame}
+
+% \input{presentacion-incidencia-demo-version-corta.tex}
+\input{presentacion-incidencia-demo.tex}
+
+\section{Geometría del orden}
+
+\begin{frame}[fragile]
+	\begin{defin*}
+		Dados dos puntos distintos $A, B$ el \textbf{segmento}
+		$\overline{AB}$ es el \textit{conjunto de puntos} que contiene a $A, B$ y a todos los
+		puntos que están entre ellos.
+	\end{defin*}
+\end{frame}
+
+\begin{frame}[fragile]
+	\begin{defin*}
+		Dos puntos distintos $A, B$ determinan el \textbf{segmento} $\overline{AB}$.
+	\end{defin*}
+	\begin{lstlisting}
+     structure Seg (Point : Type*) := {A B : Point} (neq : A ≠ B)
+    \end{lstlisting}
+
+	\pause
+
+	\begin{defin*}
+		Un punto $C$ \textbf{pertenece} al segmento $\overline{AB}$
+		si coincide con $A$ o $B$ o está entre ellos ($A * C * B$).
+	\end{defin*}
+	\begin{lstlisting}
+     def Seg.in (seg : Seg Point) (Line : Type*) 
+       [og : order_geometry Point Line]  (P : Point) : Prop := 
+       P = seg.A ∨ P = seg.B ∨ (og.between seg.A P seg.B)
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+
+	\setcounter{tma}{2}
+	\begin{tma}
+		Dados dos puntos distintos $A$ y $C$ existe un tercer punto $B$ que se
+		encuentra entre ellos: $A * B * C$.
+	\end{tma}
+	\vspace{1em}\pause
+	\centerline{\includegraphics[width=4cm]{./imgs/teorema3.png}}\\
+	\vspace{1em}
+	\textit{Formalizing Hilbert’s Grundlagen in Isabelle/Isar},\\
+	Laura I. Meikle and Jacques D. Fleuriot.\\
+\end{frame}
+
+\section{Independencia del axioma de las paralelas}
+\begin{frame}[fragile]
+	\begin{lstlisting}
+     def parallel (Point : Type*) {Line : Type*} [ig : incidence_geometry Point Line] 
+       (l m : Line) : Prop := ¬ ∃ P : Point, is_common_point P l m
+     |\pause|
+     def P (Point Line : Type*) [ig : incidence_geometry Point Line] := 
+       ∀ (l : Line) (A : Point), ¬ A ~ l → ∃! m : Line, A ~ m ∧ parallel Point l m
+    \end{lstlisting}
+	\pause
+	\begin{multicols}{2}
+		\begin{lstlisting}
+     theorem parallels_independence 
+       (Point Line : Type*) : 
+       ¬ ∀ plane : hilbert_plane Point Line, 
+           P Point Line := 
+     begin
+       sorry
+     end
+        \end{lstlisting}
+		\columnbreak
+		\pause
+		\begin{lstlisting}
+Point: Type u_1
+Line: Type u_2
+⊢ ¬ ∀ plane : hilbert_plane Point Line, 
+      P Point Line
+        \end{lstlisting}
+	\end{multicols}
+\end{frame}
+
+\begin{frame}[fragile]
+	\begin{lstlisting}
+     def parallel (Point : Type*) {Line : Type*} [ig : incidence_geometry Point Line] 
+       (l m : Line) : Prop := ¬ ∃ P : Point, is_common_point P l m
+
+     def P (Point Line : Type*) [ig : incidence_geometry Point Line] := 
+       ∀ (l : Line) (A : Point), ¬ A ~ l → ∃! m : Line, A ~ m ∧ parallel Point l m
+    \end{lstlisting}
+
+	\begin{multicols}{2}
+		\begin{lstlisting}
+     theorem parallels_independence 
+       (Point Line : Type*) : 
+       ¬ ∀ plane : hilbert_plane Point Line, 
+           P Point Line := 
+     begin
+       push_neg, 
+       sorry
+     end
+        \end{lstlisting}
+		\columnbreak
+
+		\begin{lstlisting}
+Point: Type u_1
+Line: Type u_2
+⊢ ∃ plane : hilbert_plane Point Line, 
+      ¬ P Point Line
+        \end{lstlisting}
+	\end{multicols}
+\end{frame}
 
 \end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

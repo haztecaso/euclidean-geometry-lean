@@ -1,0 +1,78 @@
+\begin{frame}[fragile]
+	Relación de \textit{incidencia} entre \textit{puntos} y \textit{líneas}: $A\sim l$
+
+	\pause\vspace{108.5px}
+
+	\begin{lstlisting}
+     class incidence_geometry (Point Line : Type*) :=
+       (lies_on : Point → Line → Prop)
+       (infix ` ~ ` : 50 := lies_on)
+    \end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]
+	Relación de \textit{incidencia} entre \textit{puntos} y \textit{líneas}: $A\sim l$
+	\begin{block}{Axioma I1}
+		Para cada par de puntos distintos $A$ y $B$ existe una única recta que los
+		contiene.
+	\end{block}
+
+	\vspace{72px}
+
+	\begin{lstlisting}
+     class incidence_geometry (Point Line : Type*) :=
+       (lies_on : Point → Line → Prop)
+       (infix ` ~ ` : 50 := lies_on)|\pause|
+       (I1 {A B : Point} (h : A ≠ B) : ∃! l : Line, A ~ l ∧ B ~ l)
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+	Relación de \textit{incidencia} entre \textit{puntos} y \textit{líneas}: $A\sim l$
+	\begin{block}{Axioma I1}
+		Para cada par de puntos distintos $A$ y $B$ existe una única recta que los
+		contiene.
+	\end{block}
+
+	\begin{block}{Axioma I2}
+		Cada línea contiene al menos dos puntos distintos.
+	\end{block}
+
+	\vspace{36.5px}
+
+	\begin{lstlisting}
+     class incidence_geometry (Point Line : Type*) :=
+       (lies_on : Point → Line → Prop)
+       (infix ` ~ ` : 50 := lies_on)
+       (I1 {A B : Point} (h : A ≠ B) : ∃! l : Line, A ~ l ∧ B ~ l)|\pause|
+       (I2 (l : Line) : ∃ A B : Point, A ≠ B ∧ A ~ l ∧ B ~ l)
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+	Relación de \textit{incidencia} entre \textit{puntos} y \textit{líneas}: $A\sim l$
+	\begin{block}{Axioma I1}
+		Para cada par de puntos distintos $A$ y $B$ existe una única recta que los
+		contiene.
+	\end{block}
+
+	\begin{block}{Axioma I2}
+		Cada línea contiene al menos dos puntos distintos.
+	\end{block}
+
+	\begin{block}{Axioma I3}
+		Existen tres puntos no colineares. Es decir, existen $A$, $B$ y $C$ tales que
+		$AB\neq BC$.
+	\end{block}
+
+	\begin{lstlisting}
+     class incidence_geometry (Point Line : Type*) :=
+       (lies_on : Point → Line → Prop)
+       (infix ` ~ ` : 50 := lies_on)
+       (I1 {A B : Point} (h : A ≠ B) : ∃! l : Line, A ~ l ∧ B ~ l)
+       (I2 (l : Line) : ∃ A B : Point, A ≠ B ∧ A ~ l ∧ B ~ l)|\pause|
+       (I3 : ∃ A B C : Point, neq3 A B C ∧ ¬ ∃ l : Line,  A ~ l ∧ B ~ l ∧ C ~ l)
+    \end{lstlisting}
+\end{frame}
+

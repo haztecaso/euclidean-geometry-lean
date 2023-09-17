@@ -1,0 +1,560 @@
+\begin{frame}[fragile]
+	\begin{prop}
+		Dos líneas distintas pueden tener como mucho un punto en común.
+	\end{prop}
+	\vspace{1em}
+	\pause
+
+	\begin{lstlisting}
+     def is_common_point 
+     {Point Line : Type*} [incidence_geometry Point Line] 
+     (A : Point) (l m : Line) := 
+     A ~ l ∧ A ~ m 
+	\end{lstlisting}
+
+	\begin{lstlisting}
+     def have_common_point 
+     (Point : Type*) {Line : Type*} [incidence_geometry Point Line]
+     (l m : Line) := 
+     ∃ A : Point, is_common_point A l m
+	\end{lstlisting}
+\end{frame}
+
+
+
+
+
+
+
+
+
+
+\begin{frame}[fragile]
+	\begin{multicols}{2}
+		\begin{lstlisting}
+lemma neq_lines_have_at_most_one_common_point 
+  (Point : Type*) {Line : Type*} 
+  [ig : incidence_geometry Point Line] :
+  ∀ l m : Line, l ≠ m → 
+    (∃! A : Point, is_common_point A l m) 
+    ∨ ¬ have_common_point Point l m := 
+\end{lstlisting}
+		\columnbreak
+		\hfill
+	\end{multicols}
+\end{frame}
+
+
+
+
+
+
+
+
+
+
+\begin{frame}[fragile]
+	\begin{multicols}{2}
+		\begin{lstlisting}
+lemma neq_lines_have_at_most_one_common_point 
+  (Point : Type*) {Line : Type*} 
+  [ig : incidence_geometry Point Line] :
+  ∀ l m : Line, l ≠ m → 
+    (∃! A : Point, is_common_point A l m) 
+    ∨ ¬ have_common_point Point l m := 
+begin
+\end{lstlisting}
+		\columnbreak
+		\begin{lstlisting}
+
+		\end{lstlisting}
+	\end{multicols}
+\end{frame}
+
+
+
+
+
+
+
+
+
+
+\begin{frame}[fragile]
+	\begin{multicols}{2}
+		\begin{lstlisting}
+lemma neq_lines_have_at_most_one_common_point 
+  (Point : Type*) {Line : Type*} 
+  [ig : incidence_geometry Point Line] :
+  ∀ l m : Line, l ≠ m → 
+    (∃! A : Point, is_common_point A l m) 
+    ∨ ¬ have_common_point Point l m := 
+begin
+\end{lstlisting}
+		\columnbreak
+		\begin{lstlisting}
+Point Line: Type u
+ig: incidence_geometry Point Line
+
+
+
+
+
+
+⊢ ∀ (l m : Line), l ≠ m → 
+  (∃! A : Point, is_common_point A l m) 
+  ∨ ¬ have_common_point Point l m
+		\end{lstlisting}
+	\end{multicols}
+\end{frame}
+
+
+
+
+
+
+
+
+
+
+\begin{frame}[fragile]
+	\begin{multicols}{2}
+		\begin{lstlisting}
+lemma neq_lines_have_at_most_one_common_point 
+  (Point : Type*) {Line : Type*} 
+  [ig : incidence_geometry Point Line] :
+  ∀ l m : Line, l ≠ m → 
+    (∃! A : Point, is_common_point A l m) 
+    ∨ ¬ have_common_point Point l m := 
+begin
+  intros l m
+\end{lstlisting}
+		\columnbreak
+		\begin{lstlisting}
+Point Line: Type u
+ig: incidence_geometry Point Line
+
+
+
+
+
+
+⊢ ∀ (l m : Line), l ≠ m → 
+  (∃! A : Point, is_common_point A l m) 
+  ∨ ¬ have_common_point Point l m
+		\end{lstlisting}
+	\end{multicols}
+\end{frame}
+
+
+
+
+
+
+
+
+
+
+\begin{frame}[fragile]
+	\begin{multicols}{2}
+		\begin{lstlisting}
+lemma neq_lines_have_at_most_one_common_point 
+  (Point : Type*) {Line : Type*} 
+  [ig : incidence_geometry Point Line] :
+  ∀ l m : Line, l ≠ m → 
+    (∃! A : Point, is_common_point A l m) 
+    ∨ ¬ have_common_point Point l m := 
+begin
+  intros l m,
+\end{lstlisting}
+		\columnbreak
+		\begin{lstlisting}
+Point Line: Type u
+ig: incidence_geometry Point Line
+l m : Line
+
+
+
+
+
+⊢ l ≠ m → 
+  (∃! A : Point, is_common_point A l m) 
+  ∨ ¬ have_common_point Point l m
+		\end{lstlisting}
+	\end{multicols}
+\end{frame}
+
+
+
+
+
+
+
+
+
+
+\begin{frame}[fragile]
+	\begin{multicols}{2}
+		\begin{lstlisting}
+lemma neq_lines_have_at_most_one_common_point 
+  (Point : Type*) {Line : Type*} 
+  [ig : incidence_geometry Point Line] :
+  ∀ l m : Line, l ≠ m → 
+    (∃! A : Point, is_common_point A l m) 
+    ∨ ¬ have_common_point Point l m := 
+begin
+  intros l m,
+  contrapose
+\end{lstlisting}
+		\columnbreak
+		\begin{lstlisting}
+Point Line: Type u
+ig: incidence_geometry Point Line
+l m : Line
+
+
+
+
+
+⊢ l ≠ m → 
+  (∃! A : Point, is_common_point A l m) 
+  ∨ ¬ have_common_point Point l m
+		\end{lstlisting}
+	\end{multicols}
+\end{frame}
+
+
+
+
+
+
+
+
+
+
+\begin{frame}[fragile]
+	\begin{multicols}{2}
+		\begin{lstlisting}
+lemma neq_lines_have_at_most_one_common_point 
+  (Point : Type*) {Line : Type*} 
+  [ig : incidence_geometry Point Line] :
+  ∀ l m : Line, l ≠ m → 
+    (∃! A : Point, is_common_point A l m) 
+    ∨ ¬ have_common_point Point l m := 
+begin
+  intros l m,
+  contrapose,
+\end{lstlisting}
+		\columnbreak
+		\begin{lstlisting}
+Point Line: Type u
+ig: incidence_geometry Point Line
+l m : Line
+
+
+
+
+
+⊢ ¬((∃! A : Point, is_common_point A l m) 
+    ∨ ¬ have_common_point Point l m) → 
+  ¬ l ≠ m
+		\end{lstlisting}
+	\end{multicols}
+\end{frame}
+
+
+
+
+
+
+
+
+
+
+\begin{frame}[fragile]
+	\begin{multicols}{2}
+		\begin{lstlisting}
+lemma neq_lines_have_at_most_one_common_point 
+  (Point : Type*) {Line : Type*} 
+  [ig : incidence_geometry Point Line] :
+  ∀ l m : Line, l ≠ m → 
+    (∃! A : Point, is_common_point A l m) 
+    ∨ ¬ have_common_point Point l m := 
+begin
+  intros l m,
+  contrapose,
+  push_neg,
+  rintro ⟨not_unique, hlm⟩,
+  rw exists_unique at not_unique,
+  push_neg at not_unique,
+  cases hlm with A hA,
+  rcases not_unique A hA with ⟨B, ⟨hB, hAB⟩⟩,
+  rw ne_comm at hAB,
+\end{lstlisting}
+		\columnbreak
+		\begin{lstlisting}
+Point Line: Type u
+ig: incidence_geometry Point Line
+l m : Line
+
+
+
+
+
+⊢ ¬((∃! A : Point, is_common_point A l m) 
+    ∨ ¬ have_common_point Point l m) → 
+  ¬ l ≠ m
+\end{lstlisting}
+	\end{multicols}
+\end{frame}
+
+
+
+
+
+
+
+
+
+
+\begin{frame}[fragile]
+	\begin{multicols}{2}
+		\begin{lstlisting}
+lemma neq_lines_have_at_most_one_common_point 
+  (Point : Type*) {Line : Type*} 
+  [ig : incidence_geometry Point Line] :
+  ∀ l m : Line, l ≠ m → 
+    (∃! A : Point, is_common_point A l m) 
+    ∨ ¬ have_common_point Point l m := 
+begin
+  intros l m,
+  contrapose,
+  push_neg,
+  rintro ⟨not_unique, hlm⟩,
+  rw exists_unique at not_unique,
+  push_neg at not_unique,
+  cases hlm with A hA,
+  rcases not_unique A hA with ⟨B, ⟨hB, hAB⟩⟩,
+  rw ne_comm at hAB,
+\end{lstlisting}
+		\columnbreak
+		\begin{lstlisting}
+Point Line: Type u
+ig: incidence_geometry Point Line
+l m : Line
+A B: Point
+hA: is_common_point A l m
+hB: is_common_point B l m
+hAB: A ≠ B
+
+⊢ l = m
+\end{lstlisting}
+	\end{multicols}
+\end{frame}
+
+
+
+
+
+
+
+
+
+
+\begin{frame}[fragile]
+	\begin{multicols}{2}
+		\begin{lstlisting}
+lemma neq_lines_have_at_most_one_common_point 
+  (Point : Type*) {Line : Type*} 
+  [ig : incidence_geometry Point Line] :
+  ∀ l m : Line, l ≠ m → 
+    (∃! A : Point, is_common_point A l m) 
+    ∨ ¬ have_common_point Point l m := 
+begin
+  intros l m,
+  contrapose,
+  push_neg,
+  rintro ⟨not_unique, hlm⟩,
+  rw exists_unique at not_unique,
+  push_neg at not_unique,
+  cases hlm with A hA,
+  rcases not_unique A hA with ⟨B, ⟨hB, hAB⟩⟩,
+  rw ne_comm at hAB,
+  exact unique_of_exists_unique (ig.I1 hAB) ⟨hA.1, hB.1⟩ ⟨hA.2, hB.2⟩
+\end{lstlisting}
+		\columnbreak
+		\begin{lstlisting}
+Point Line: Type u
+ig: incidence_geometry Point Line
+l m : Line
+A B: Point
+hA: is_common_point A l m
+hB: is_common_point B l m
+hAB: A ≠ B
+
+⊢ l = m
+\end{lstlisting}
+	\end{multicols}
+\end{frame}
+
+
+
+
+
+
+
+
+
+
+% \begin{frame}[fragile]
+% 	\begin{multicols}{2}
+% 		\begin{lstlisting}
+% lemma neq_lines_have_at_most_one_common_point 
+%   (Point : Type*) {Line : Type*} 
+%   [ig : incidence_geometry Point Line] :
+%   ∀ l m : Line, l ≠ m → 
+%     (∃! A : Point, is_common_point A l m) 
+%     ∨ ¬ have_common_point Point l m := 
+% begin
+%   intros l m,
+%   contrapose,
+%   push_neg,
+%   rintro ⟨not_unique, hlm⟩,
+%   rw exists_unique at not_unique,
+%   push_neg at not_unique,
+%   cases hlm with A hA,
+%   rcases not_unique A hA with ⟨B, ⟨hB, hAB⟩⟩,
+%   rw ne_comm at hAB,
+%   exact unique_of_exists_unique (ig.I1 hAB) ⟨hA.1, hB.1⟩ ⟨hA.2, hB.2⟩
+% \end{lstlisting}
+% 		\vspace{1em}
+% 		\begin{lstlisting}
+% ig.I1 {A B : Point} (h : A ≠ B) : ∃! l : Line, A ~ l ∧ B ~ l
+% \end{lstlisting}
+% 		\columnbreak
+% 		\begin{lstlisting}
+% Point Line: Type u
+% ig: incidence_geometry Point Line
+% l m : Line
+% A B: Point
+% hA: is_common_point A l m
+% hB: is_common_point B l m
+% hAB: A ≠ B
+
+% ⊢ l = m
+% \end{lstlisting}
+% 	\end{multicols}
+% \end{frame}
+
+
+
+
+
+
+
+
+
+
+\begin{frame}[fragile]
+	\begin{multicols}{2}
+		\begin{lstlisting}
+lemma neq_lines_have_at_most_one_common_point 
+  (Point : Type*) {Line : Type*} 
+  [ig : incidence_geometry Point Line] :
+  ∀ l m : Line, l ≠ m → 
+    (∃! A : Point, is_common_point A l m) 
+    ∨ ¬ have_common_point Point l m := 
+begin
+  intros l m,
+  contrapose,
+  push_neg,
+  rintro ⟨not_unique, hlm⟩,
+  rw exists_unique at not_unique,
+  push_neg at not_unique,
+  cases hlm with A hA,
+  rcases not_unique A hA with ⟨B, ⟨hB, hAB⟩⟩,
+  rw ne_comm at hAB,
+  exact unique_of_exists_unique (ig.I1 hAB) ⟨hA.1, hB.1⟩ ⟨hA.2, hB.2⟩
+\end{lstlisting}
+		\vspace{1em}
+		\begin{lstlisting}
+ig.I1 hAB : ∃! l : Line, A ~ l ∧ B ~ l
+\end{lstlisting}
+		\columnbreak
+		\begin{lstlisting}
+Point Line: Type u
+ig: incidence_geometry Point Line
+l m : Line
+A B: Point
+hA: is_common_point A l m
+hB: is_common_point B l m
+hAB: A ≠ B
+
+⊢ l = m
+\end{lstlisting}
+	\end{multicols}
+\end{frame}
+
+
+
+
+
+
+
+
+
+
+\begin{frame}[fragile]
+	\begin{multicols}{2}
+		\begin{lstlisting}
+lemma neq_lines_have_at_most_one_common_point 
+  (Point : Type*) {Line : Type*} 
+  [ig : incidence_geometry Point Line] :
+  ∀ l m : Line, l ≠ m → 
+    (∃! A : Point, is_common_point A l m) 
+    ∨ ¬ have_common_point Point l m := 
+begin
+  intros l m,
+  contrapose,
+  push_neg,
+  rintro ⟨not_unique, hlm⟩,
+  rw exists_unique at not_unique,
+  push_neg at not_unique,
+  cases hlm with A hA,
+  rcases not_unique A hA with ⟨B, ⟨hB, hAB⟩⟩,
+  rw ne_comm at hAB,
+  exact unique_of_exists_unique (ig.I1 hAB) ⟨hA.1, hB.1⟩ ⟨hA.2, hB.2⟩
+end
+\end{lstlisting}
+		\columnbreak
+		\lstinline{goals accomplished} \checkmark
+	\end{multicols}
+\end{frame}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
