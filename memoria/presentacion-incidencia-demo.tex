@@ -4,19 +4,14 @@
 	\end{prop}
 	\vspace{1em}
 	\pause
-
 	\begin{lstlisting}
-     def is_common_point 
-     {Point Line : Type*} [incidence_geometry Point Line] 
-     (A : Point) (l m : Line) := 
-     A ~ l ∧ A ~ m 
+     def is_common_point (A : Point) (l m : Line) := 
+       A ~ l ∧ A ~ m 
 	\end{lstlisting}
-
+	\pause
 	\begin{lstlisting}
-     def have_common_point 
-     (Point : Type*) {Line : Type*} [incidence_geometry Point Line]
-     (l m : Line) := 
-     ∃ A : Point, is_common_point A l m
+     def have_common_point (l m : Line) := 
+       ∃ A : Point, is_common_point A l m
 	\end{lstlisting}
 \end{frame}
 
@@ -32,9 +27,7 @@
 \begin{frame}[fragile]
 	\begin{multicols}{2}
 		\begin{lstlisting}
-lemma neq_lines_have_at_most_one_common_point 
-  (Point : Type*) {Line : Type*} 
-  [ig : incidence_geometry Point Line] :
+lemma neq_lines_have_at_most_one_common_point :
   ∀ l m : Line, l ≠ m → 
     (∃! A : Point, is_common_point A l m) 
     ∨ ¬ have_common_point Point l m := 
@@ -56,9 +49,7 @@ lemma neq_lines_have_at_most_one_common_point
 \begin{frame}[fragile]
 	\begin{multicols}{2}
 		\begin{lstlisting}
-lemma neq_lines_have_at_most_one_common_point 
-  (Point : Type*) {Line : Type*} 
-  [ig : incidence_geometry Point Line] :
+lemma neq_lines_have_at_most_one_common_point :
   ∀ l m : Line, l ≠ m → 
     (∃! A : Point, is_common_point A l m) 
     ∨ ¬ have_common_point Point l m := 
@@ -83,9 +74,7 @@ begin
 \begin{frame}[fragile]
 	\begin{multicols}{2}
 		\begin{lstlisting}
-lemma neq_lines_have_at_most_one_common_point 
-  (Point : Type*) {Line : Type*} 
-  [ig : incidence_geometry Point Line] :
+lemma neq_lines_have_at_most_one_common_point :
   ∀ l m : Line, l ≠ m → 
     (∃! A : Point, is_common_point A l m) 
     ∨ ¬ have_common_point Point l m := 
@@ -120,9 +109,7 @@ ig: incidence_geometry Point Line
 \begin{frame}[fragile]
 	\begin{multicols}{2}
 		\begin{lstlisting}
-lemma neq_lines_have_at_most_one_common_point 
-  (Point : Type*) {Line : Type*} 
-  [ig : incidence_geometry Point Line] :
+lemma neq_lines_have_at_most_one_common_point :
   ∀ l m : Line, l ≠ m → 
     (∃! A : Point, is_common_point A l m) 
     ∨ ¬ have_common_point Point l m := 
@@ -158,9 +145,7 @@ ig: incidence_geometry Point Line
 \begin{frame}[fragile]
 	\begin{multicols}{2}
 		\begin{lstlisting}
-lemma neq_lines_have_at_most_one_common_point 
-  (Point : Type*) {Line : Type*} 
-  [ig : incidence_geometry Point Line] :
+lemma neq_lines_have_at_most_one_common_point :
   ∀ l m : Line, l ≠ m → 
     (∃! A : Point, is_common_point A l m) 
     ∨ ¬ have_common_point Point l m := 
@@ -196,9 +181,7 @@ l m : Line
 \begin{frame}[fragile]
 	\begin{multicols}{2}
 		\begin{lstlisting}
-lemma neq_lines_have_at_most_one_common_point 
-  (Point : Type*) {Line : Type*} 
-  [ig : incidence_geometry Point Line] :
+lemma neq_lines_have_at_most_one_common_point :
   ∀ l m : Line, l ≠ m → 
     (∃! A : Point, is_common_point A l m) 
     ∨ ¬ have_common_point Point l m := 
@@ -235,9 +218,7 @@ l m : Line
 \begin{frame}[fragile]
 	\begin{multicols}{2}
 		\begin{lstlisting}
-lemma neq_lines_have_at_most_one_common_point 
-  (Point : Type*) {Line : Type*} 
-  [ig : incidence_geometry Point Line] :
+lemma neq_lines_have_at_most_one_common_point :
   ∀ l m : Line, l ≠ m → 
     (∃! A : Point, is_common_point A l m) 
     ∨ ¬ have_common_point Point l m := 
@@ -274,9 +255,7 @@ l m : Line
 \begin{frame}[fragile]
 	\begin{multicols}{2}
 		\begin{lstlisting}
-lemma neq_lines_have_at_most_one_common_point 
-  (Point : Type*) {Line : Type*} 
-  [ig : incidence_geometry Point Line] :
+lemma neq_lines_have_at_most_one_common_point :
   ∀ l m : Line, l ≠ m → 
     (∃! A : Point, is_common_point A l m) 
     ∨ ¬ have_common_point Point l m := 
@@ -314,9 +293,7 @@ l m : Line
 \begin{frame}[fragile]
 	\begin{multicols}{2}
 		\begin{lstlisting}
-lemma neq_lines_have_at_most_one_common_point 
-  (Point : Type*) {Line : Type*} 
-  [ig : incidence_geometry Point Line] :
+lemma neq_lines_have_at_most_one_common_point :
   ∀ l m : Line, l ≠ m → 
     (∃! A : Point, is_common_point A l m) 
     ∨ ¬ have_common_point Point l m := 
@@ -354,9 +331,7 @@ l m : Line
 \begin{frame}[fragile]
 	\begin{multicols}{2}
 		\begin{lstlisting}
-lemma neq_lines_have_at_most_one_common_point 
-  (Point : Type*) {Line : Type*} 
-  [ig : incidence_geometry Point Line] :
+lemma neq_lines_have_at_most_one_common_point :
   ∀ l m : Line, l ≠ m → 
     (∃! A : Point, is_common_point A l m) 
     ∨ ¬ have_common_point Point l m := 
@@ -395,9 +370,7 @@ l m : Line
 \begin{frame}[fragile]
 	\begin{multicols}{2}
 		\begin{lstlisting}
-lemma neq_lines_have_at_most_one_common_point 
-  (Point : Type*) {Line : Type*} 
-  [ig : incidence_geometry Point Line] :
+lemma neq_lines_have_at_most_one_common_point :
   ∀ l m : Line, l ≠ m → 
     (∃! A : Point, is_common_point A l m) 
     ∨ ¬ have_common_point Point l m := 
@@ -434,9 +407,7 @@ hlm: have_common_point Point l m
 \begin{frame}[fragile]
 	\begin{multicols}{2}
 		\begin{lstlisting}
-lemma neq_lines_have_at_most_one_common_point 
-  (Point : Type*) {Line : Type*} 
-  [ig : incidence_geometry Point Line] :
+lemma neq_lines_have_at_most_one_common_point :
   ∀ l m : Line, l ≠ m → 
     (∃! A : Point, is_common_point A l m) 
     ∨ ¬ have_common_point Point l m := 
@@ -474,9 +445,7 @@ hlm: have_common_point Point l m
 \begin{frame}[fragile]
 	\begin{multicols}{2}
 		\begin{lstlisting}
-lemma neq_lines_have_at_most_one_common_point 
-  (Point : Type*) {Line : Type*} 
-  [ig : incidence_geometry Point Line] :
+lemma neq_lines_have_at_most_one_common_point :
   ∀ l m : Line, l ≠ m → 
     (∃! A : Point, is_common_point A l m) 
     ∨ ¬ have_common_point Point l m := 
@@ -514,9 +483,7 @@ hlm: have_common_point Point l m
 \begin{frame}[fragile]
 	\begin{multicols}{2}
 		\begin{lstlisting}
-lemma neq_lines_have_at_most_one_common_point 
-  (Point : Type*) {Line : Type*} 
-  [ig : incidence_geometry Point Line] :
+lemma neq_lines_have_at_most_one_common_point :
   ∀ l m : Line, l ≠ m → 
     (∃! A : Point, is_common_point A l m) 
     ∨ ¬ have_common_point Point l m := 
@@ -555,9 +522,7 @@ hlm: have_common_point Point l m
 \begin{frame}[fragile]
 	\begin{multicols}{2}
 		\begin{lstlisting}
-lemma neq_lines_have_at_most_one_common_point 
-  (Point : Type*) {Line : Type*} 
-  [ig : incidence_geometry Point Line] :
+lemma neq_lines_have_at_most_one_common_point :
   ∀ l m : Line, l ≠ m → 
     (∃! A : Point, is_common_point A l m) 
     ∨ ¬ have_common_point Point l m := 
@@ -596,9 +561,7 @@ hlm: have_common_point Point l m
 \begin{frame}[fragile]
 	\begin{multicols}{2}
 		\begin{lstlisting}
-lemma neq_lines_have_at_most_one_common_point 
-  (Point : Type*) {Line : Type*} 
-  [ig : incidence_geometry Point Line] :
+lemma neq_lines_have_at_most_one_common_point :
   ∀ l m : Line, l ≠ m → 
     (∃! A : Point, is_common_point A l m) 
     ∨ ¬ have_common_point Point l m := 
@@ -638,9 +601,7 @@ hlm: have_common_point Point l m
 \begin{frame}[fragile]
 	\begin{multicols}{2}
 		\begin{lstlisting}
-lemma neq_lines_have_at_most_one_common_point 
-  (Point : Type*) {Line : Type*} 
-  [ig : incidence_geometry Point Line] :
+lemma neq_lines_have_at_most_one_common_point :
   ∀ l m : Line, l ≠ m → 
     (∃! A : Point, is_common_point A l m) 
     ∨ ¬ have_common_point Point l m := 
@@ -680,9 +641,7 @@ hA: is_common_point A l m
 \begin{frame}[fragile]
 	\begin{multicols}{2}
 		\begin{lstlisting}
-lemma neq_lines_have_at_most_one_common_point 
-  (Point : Type*) {Line : Type*} 
-  [ig : incidence_geometry Point Line] :
+lemma neq_lines_have_at_most_one_common_point :
   ∀ l m : Line, l ≠ m → 
     (∃! A : Point, is_common_point A l m) 
     ∨ ¬ have_common_point Point l m := 
@@ -723,9 +682,7 @@ hA: is_common_point A l m
 \begin{frame}[fragile]
 	\begin{multicols}{2}
 		\begin{lstlisting}
-lemma neq_lines_have_at_most_one_common_point 
-  (Point : Type*) {Line : Type*} 
-  [ig : incidence_geometry Point Line] :
+lemma neq_lines_have_at_most_one_common_point :
   ∀ l m : Line, l ≠ m → 
     (∃! A : Point, is_common_point A l m) 
     ∨ ¬ have_common_point Point l m := 
@@ -766,9 +723,7 @@ hAB: B ≠ A
 \begin{frame}[fragile]
 	\begin{multicols}{2}
 		\begin{lstlisting}
-lemma neq_lines_have_at_most_one_common_point 
-  (Point : Type*) {Line : Type*} 
-  [ig : incidence_geometry Point Line] :
+lemma neq_lines_have_at_most_one_common_point :
   ∀ l m : Line, l ≠ m → 
     (∃! A : Point, is_common_point A l m) 
     ∨ ¬ have_common_point Point l m := 
@@ -810,9 +765,7 @@ hAB: B ≠ A
 \begin{frame}[fragile]
 	\begin{multicols}{2}
 		\begin{lstlisting}
-lemma neq_lines_have_at_most_one_common_point 
-  (Point : Type*) {Line : Type*} 
-  [ig : incidence_geometry Point Line] :
+lemma neq_lines_have_at_most_one_common_point :
   ∀ l m : Line, l ≠ m → 
     (∃! A : Point, is_common_point A l m) 
     ∨ ¬ have_common_point Point l m := 
@@ -854,9 +807,7 @@ hAB: A ≠ B
 \begin{frame}[fragile]
 	\begin{multicols}{2}
 		\begin{lstlisting}
-lemma neq_lines_have_at_most_one_common_point 
-  (Point : Type*) {Line : Type*} 
-  [ig : incidence_geometry Point Line] :
+lemma neq_lines_have_at_most_one_common_point :
   ∀ l m : Line, l ≠ m → 
     (∃! A : Point, is_common_point A l m) 
     ∨ ¬ have_common_point Point l m := 
@@ -899,7 +850,7 @@ hAB: A ≠ B
 % \begin{frame}[fragile]
 % 	\begin{multicols}{2}
 % 		\begin{lstlisting}
-% lemma neq_lines_have_at_most_one_common_point 
+% lemma neq_lines_have_at_most_one_common_point :
 %   (Point : Type*) {Line : Type*} 
 %   [ig : incidence_geometry Point Line] :
 %   ∀ l m : Line, l ≠ m → 
@@ -948,9 +899,7 @@ hAB: A ≠ B
 \begin{frame}[fragile]
 	\begin{multicols}{2}
 		\begin{lstlisting}
-lemma neq_lines_have_at_most_one_common_point 
-  (Point : Type*) {Line : Type*} 
-  [ig : incidence_geometry Point Line] :
+lemma neq_lines_have_at_most_one_common_point :
   ∀ l m : Line, l ≠ m → 
     (∃! A : Point, is_common_point A l m) 
     ∨ ¬ have_common_point Point l m := 
@@ -997,9 +946,7 @@ hAB: A ≠ B
 \begin{frame}[fragile]
 	\begin{multicols}{2}
 		\begin{lstlisting}
-lemma neq_lines_have_at_most_one_common_point 
-  (Point : Type*) {Line : Type*} 
-  [ig : incidence_geometry Point Line] :
+lemma neq_lines_have_at_most_one_common_point :
   ∀ l m : Line, l ≠ m → 
     (∃! A : Point, is_common_point A l m) 
     ∨ ¬ have_common_point Point l m := 
@@ -1020,6 +967,11 @@ end
 		\lstinline{goals accomplished} \checkmark
 	\end{multicols}
 \end{frame}
+
+
+
+
+
 
 
 
