@@ -1,5 +1,39 @@
+% \documentclass[handout, t, aspectratio=169]{beamer}
 \documentclass[t, aspectratio=169]{beamer}
 \input{00_common_preamble.tex}
+
+\setbeameroption{hide notes} % Only slides
+% \setbeameroption{show only notes} % Only notes
+% \setbeameroption{show notes on second screen=right} % Both
+
+\makeatletter
+\def\beamer@setupnote{%
+  \gdef\beamer@notesactions{%
+    \beamer@outsideframenote{%
+      \beamer@atbeginnote%
+      \beamer@notes%
+      \ifx\beamer@noteitems\@empty\else
+      \begin{itemize}\itemsep=0pt\parskip=0pt%
+        \beamer@noteitems%
+      \end{itemize}%
+      \fi%
+      \beamer@atendnote%
+    }%
+    \gdef\beamer@notesactions{}%
+  }
+}
+\makeatother
+
+\setbeamercolor{note page}{bg=white!90!black, fg=black}
+\setbeamertemplate{note page}{%
+    % adds in bg color
+        \insertvrule{\paperheight}{note page.bg}%
+        \vskip-\paperheight%
+    % changes font color
+        \usebeamercolor[fg]{note page}%
+    % inserts note
+        \insertnote%
+}
 
 \setbeamertemplate{navigation symbols}{}
 \setbeamertemplate{frametitle}[default][center]
@@ -28,32 +62,69 @@
 }
 \lstset{style=leanBeamer}
 
-    \setlength\columnsep{50pt}
+\setlength\columnsep{50pt}
 \setbeamertemplate{items}[circle]
 
 \begin{document}
-\frame{\titlepage}
 
-\section{Proceso}
-
-\begin{frame}[fragile, c]
-	\begin{itemize}[<+->]
-		\item Aprendizaje de Lean
-		\item Estudio y formalización de la geometría de Hilbert
-		\item Lectura de trabajos relacionados
-		\item Independencia del axioma de las paralelas
-	\end{itemize}
+\begin{frame}
+	\titlepage
+	\note[item]{Voy a contar resumidamente en qué ha consistido mi Trabajo de
+		Fin de Grado.}
+	\note[item]{Expondré brevemente el proceso del trabajo, qué es formalizar
+		matemáticas y cómo se usa Lean para formalizar enunciados y
+		demostraciones.}
+	\note[item]{Explicaré muy resumidamente una demostración de una proposición
+		de la geometría de incidencia}
+	\note[item]{Hablaré sobre cómo he adaptado algunas definiciones para
+		formalizarlas.}
+	\note[item]{Propondré una estrategia de demostración de la independencia del
+		axioma de las paralelas.}
+	\note[item]{Empecé aprendiendo a utilizar el Lenguaje Lean. Fue una suerte
+		poder asistir al curso de doctorado sobre Lean impartido por María Inés
+		de Frutos, pudiendo compartir dudas y soluciones con la profesora y los
+		asistentes.}
+	\note[item]{Posteriormente empecé a utilizar Lean para formalizar axiomas,
+		definiciones y resultados de la Geometría euclídea plana. Fui
+		compaginando el estudio de la geometría con el aprendizaje de Lean.}
+	\note[item]{Durante el proceso de formalización leí algún artículo sobre
+		formalización de geometría euclídea en otros sistemas de demostración
+		asistida.}
 \end{frame}
 
+% \section{Proceso}
+% \begin{frame}[fragile, c]
+% 	\begin{itemize}
+%         \item Aprendizaje de Lean 
+% 		\item Estudio y formalización de la geometría de Hilbert
+% 		\item Lectura de trabajos relacionados
+% 		% \item Independencia del axioma de las paralelas
+% 	\end{itemize}
+% \end{frame}
 
 \section{Formalización asistida por computadores}
 
 \begin{frame}[fragile, c]
-	\begin{itemize}[<+->]
+	\begin{itemize}
 		\item Digitalización de definiciones y enunciados
+		      \note[item]{Digitalizar conceptos y enunciados puede resultar muy
+			      útil en el campo de las matemáticas. Si los artículos se
+			      publicaran acompañados de una formalización de los conceptos y
+			      enunciados, se podría construir una base de datos de resultados
+			      matemáticos, lo que facilitaría enormemente la búsqueda de los
+			      artículos.}
 		\item Comprobación mecanizada de demostraciones
-		\item Uso en docencia
+		      \note[item]{Las demostraciones se pueden digitalizar de forma que el
+			      asistente de demostración compruebe que cada paso es correcto.}
+		\item Uso en docencia y comunicación
+		      \note[item]{Para alumnos de matemáticas puede resultar muy útil para
+			      afianzar conocimientos y comprobar la corrección de
+			      razonamientos.}
 		\item Demostración automatizada
+		      \note[item]{Este es un campo de investigación abierto en el que
+			      queda mucho por avanzar. El sueño es conseguir que los
+			      ordenadores sean capaces de encontrar demostraciones de
+			      resultados de forma independiente.}
 	\end{itemize}
 \end{frame}
 
@@ -62,41 +133,57 @@
 \begin{frame}[fragile, c]
 	\begin{itemize}[<+->]
 		\item Lean implementa el \textit{Cálculo de construcciones inductivas}
+		      \note[item]{Lean es un lenguaje de programación funcional que
+			      implementa la teoría de tipos del \textit{Cálculo de
+				      construcciones inductivas}, particularmente útil para formalizar
+			      matemáticas.}
 		\item Correspondencia de Curry-Howard
+		      \note[item]{La correspondencia de Curry-Howard establece relaciones
+			      teorías de tipos y lógicas formales.}
 		\item \textit{Proposiciones como tipos}\\
 		      \lstinline{P : Prop}
+		      \note[item]{En este contexto, las proposiciones lógicas se
+			      corresponden con los tipos. En Lean tenemos el tipo de orden
+			      superior \lstinline{Prop} cuyos términos son las proposiciones,
+			      que son a su vez tipos.}
 		\item \textit{Demostraciones como términos}\\
 		      \lstinline{p : P : Prop}
+		      \note[item]{Demostrar una proposición se corresponde con construir
+			      un término de tipo esa proposición.}
 		\item Modo táctico
+		      \note[item]{Demostrar un resultado construyendo el término del tipo
+			      correspondiente no es la forma de desarrollar demostraciones a
+			      la que estamos acostumbrados en matemáticas. En Lean tenemos el
+			      modo táctico, que permite crear estos términos mediante
+			      instrucciones más cercanas a las técnicas de demostración
+			      usuales.}
 	\end{itemize}
 \end{frame}
 
-
-
-
 \section{Geometría euclídea plana}
-
-% \begin{frame}[fragile, c]
-% 	\centerline{\includegraphics[height=6cm]{./imgs/Euclides_portada.png}}
-% \end{frame}
-
 \subsection{Axiomatización de Hilbert}
 
 \begin{frame}[fragile, c]
 	\centerline{
 		\includegraphics[height=5cm]{./imgs/Hilbert_portada.png}\,
+		\note[item]{La axiomatización más moderna de la geometría de
+			Euclides es la desarrollada por Hilbert, llamada Fundamentos de
+			la Geometría.}
 		\pause
 		\includegraphics[height=5cm]{./imgs/Hartshorne_portada.png}
 		\includegraphics[height=5cm]{./imgs/Greenberg_portada.png}\,
+		\note[item]{Yo he seguido las presentaciones modernas de los libros
+			de Hartshorne y Greenberg.}
 	}
 \end{frame}
 
-% \subsection{Nociones fundamentales}
+\subsection{Nociones fundamentales}
 
 \begin{frame}[fragile, c]
 	\begin{itemize}
 		\item \textit{Puntos}. $A, B, C, \dots$
 		\item \textit{Líneas}. $l, m, n, \dots$
+		      \pause
 		\item \textit{incidencia}. $A\sim l$
 		\item \textit{orden}. $A * B * C$
 		\item \textit{congruencia de segmentos}. $\overline{AB}\cong\overline{CD}$
@@ -107,7 +194,6 @@
 
 
 \section{Geometría de incidencia}
-
 % \input{presentacion-incidencia-teoria.tex}
 
 \begin{frame}[fragile]
@@ -121,8 +207,8 @@
     \end{lstlisting}
 \end{frame}
 
-% \input{presentacion-incidencia-demo-version-corta.tex}
-\input{presentacion-incidencia-demo.tex}
+\input{presentacion-incidencia-demo-version-mas-corta.tex}
+% \input{presentacion-incidencia-demo.tex}
 
 \section{Geometría del orden}
 
@@ -139,7 +225,7 @@
 		Dos puntos distintos $A, B$ determinan el \textbf{segmento} $\overline{AB}$.
 	\end{defin*}
 	\begin{lstlisting}
-     structure Seg (Point : Type*) := {A B : Point} (neq : A ≠ B)
+     structure Seg := {A B : Point} (neq : A ≠ B)
     \end{lstlisting}
 
 	\pause
@@ -149,25 +235,24 @@
 		si coincide con $A$ o $B$ o está entre ellos ($A * C * B$).
 	\end{defin*}
 	\begin{lstlisting}
-     def Seg.in (seg : Seg Point) (Line : Type*) 
-       [og : order_geometry Point Line]  (P : Point) : Prop := 
+     def Seg.in (seg : Seg) (P : Point) : Prop := 
        P = seg.A ∨ P = seg.B ∨ (og.between seg.A P seg.B)
     \end{lstlisting}
 \end{frame}
 
-\begin{frame}[fragile]
-
-	\setcounter{tma}{2}
-	\begin{tma}
-		Dados dos puntos distintos $A$ y $C$ existe un tercer punto $B$ que se
-		encuentra entre ellos: $A * B * C$.
-	\end{tma}
-	\vspace{1em}\pause
-	\centerline{\includegraphics[width=4cm]{./imgs/teorema3.png}}\\
-	\vspace{1em}
-	\textit{Formalizing Hilbert’s Grundlagen in Isabelle/Isar},\\
-	Laura I. Meikle and Jacques D. Fleuriot.\\
-\end{frame}
+% \begin{frame}[fragile]
+% 	\setcounter{tma}{2}
+% 	\begin{tma}
+% 		Dados dos puntos distintos $A$ y $C$ existe un tercer punto $B$ que se
+% 		encuentra entre ellos: $A * B * C$.
+% 	\end{tma}
+% 	\vspace{1em}
+%     % \pause
+% 	\centerline{\includegraphics[width=4cm]{./imgs/teorema3.png}}\\
+% 	\vspace{1em}
+% 	\textit{Formalizing Hilbert’s Grundlagen in Isabelle/Isar},\\
+% 	Laura I. Meikle and Jacques D. Fleuriot.\\
+% \end{frame}
 
 \section{Independencia del axioma de las paralelas}
 \begin{frame}[fragile]
@@ -191,8 +276,7 @@
 		\columnbreak
 		\pause
 		\begin{lstlisting}
-Point: Type u_1
-Line: Type u_2
+Point Line : Type u
 ⊢ ¬ ∀ plane : hilbert_plane Point Line, 
       P Point Line
         \end{lstlisting}
@@ -221,8 +305,7 @@ Line: Type u_2
 		\columnbreak
 
 		\begin{lstlisting}
-Point: Type u_1
-Line: Type u_2
+Point Line : Type u
 ⊢ ∃ plane : hilbert_plane Point Line, 
       ¬ P Point Line
         \end{lstlisting}
@@ -255,34 +338,5 @@ Line: Type u_2
 \end{frame}
 
 \end{document}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
