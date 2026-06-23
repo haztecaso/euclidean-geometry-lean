@@ -29,7 +29,7 @@ términos con sus tipos se pueda derivar que un término tiene un
 tipo\guillemotright\footnote{La referencia que hemos seguido en esta introducción a la teoría
 	de tipos es el primer capítulo del libro \textit{Homotopy Type
 		Theory}~\cite{HomotopyTypeTheory}.}. Dados un término $a$ y un tipo $A$, si
-\textit{$a$ tiene tipo $A$} escribimos $a:A$. Esta es misma notación es la
+\textit{$a$ tiene tipo $A$} escribimos $a:A$. Esta misma notación es la
 utilizada en Lean, en el que por ejemplo podemos expresar la aserción
 \guillemotleft3 es un número natural\guillemotright\ con el código \lstinline{3 : ℕ}.
 \
@@ -44,7 +44,7 @@ aserción \guillemotleft $a$ y $b$ son dos términos de tipo A iguales por
 definición\guillemotright, y escribimos $a\equiv b : A$ \footnote{En
 	Lean existe más de un tipo de igualdad entre términos. La mencionada
 	aquí es la llamada igualdad \textit{sintáctica}, que se representa con el
-	símbolo \lstinline{=}. Tamibién existen las igualdades \textit{definicionales} y
+	símbolo \lstinline{=}. También existen las igualdades \textit{definicionales} y
 \textit{proposicionales}.}.
 
 Las teorías de tipos también pueden utilizarse para expresar afirmaciones y
@@ -59,7 +59,7 @@ correspondiente al enunciado.
 
 Existen distintas elecciones de reglas de transformación que considerar en
 teoría de tipos, que dan lugares a distintas versiones de la teoría de tipos.
-Lean implementa una una versión de la teoría de tipos dependiente conocida como
+Lean implementa una versión de la teoría de tipos dependiente conocida como
 el \textit{Cálculo de las construcciones inductivas}.
 
 En las explicaciones que siguen la principal referencia a la que hemos recurrido
@@ -76,7 +76,7 @@ abstracción y la evaluación.
 \begin{itemize}[topsep=0pt]
 	\item \textbf{Abstracción}. Es el mecanismo de definición de funciones mediante
 	      la introducción de parámetros. Dado un término \lstinline{x + 1 : ℕ},
-	      se puede convertir la variable libre \lstinline{x} en en una variable
+	      se puede convertir la variable libre \lstinline{x} en una variable
 	      ligada por la abstracción, a la que llamamos parámetro de la función,
 	      mediante la sintaxis \lstinline{λ x : ℕ, (x + 1 : ℕ)}.
 
@@ -172,7 +172,7 @@ que anotan el tipo de la definición.
 Esta notación de introducción de parámetros es muy útil y simple, pero puede
 resultar demasiado explícita. Veamos por ejemplo cómo se puede definir la
 función identidad, que dado un término de un tipo devuelve el mismo término.
-Si queremos que la identidad definida sea sea general y se le puedan aplicar términos
+Si queremos que la identidad definida sea general y se le puedan aplicar términos
 de cualquier tipo necesitaremos introducir el tipo del término como un parámetro
 adicional.
 
@@ -194,7 +194,7 @@ def id2 {α : Type*} (e : α) := e
 \end{lstlisting}
 
 Así los parámetros indicados entre llaves, llamados \textit{parámetros
-	implícitos}, serán deducidos automaticamente.
+	implícitos}, serán deducidos automáticamente.
 
 \subsubsection*{Variables}%
 
@@ -218,7 +218,7 @@ la correspondencia de Curry-Howard, que relaciona \textit{tipos} con
 \textit{proposiciones}. Los términos de tipo \lstinline{P : Prop}, que representan las
 proposiciones, son a su vez tipos y por tanto pueden tener términos.
 
-La correspondencia de Curry-Howard afirma que estas las $\lambda$-funciones de
+La correspondencia de Curry-Howard afirma que estas $\lambda$-funciones
 se comportan de la misma forma que la implicación en lógica.
 Por tanto en Lean usamos el símbolo \lstinline{→} para referirnos tanto a
 funciones como a implicaciones lógicas. Dadas dos
