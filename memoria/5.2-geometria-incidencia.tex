@@ -94,7 +94,7 @@ utilizan los corchetes: \lstinline{[incidence_geometry Point Line]}.
 Las siguientes definiciones son útiles para tratar con puntos y líneas y
 continuar el desarrollo de la teoría.
 
-En las demostraciones es útil tenér una forma de, dados dos puntos distintos,
+En las demostraciones es útil tener una forma de, dados dos puntos distintos,
 construir el término de la línea que pasa por ellos, aprovechando el
 axioma~\hyperref[ax:I1]{I1}.
 
@@ -311,7 +311,7 @@ hAB: B ≠ A
 	      \lstinline{hAB: B ≠ A} en el mismo orden que el utilizado en los axiomas y
 	      poder utilizarlos correctamente, reescribimos la hipótesis \lstinline{hAB}
 	      utilizando la propiedad conmutativa de la desigualdad, obteniendo así la
-	      hipóteis \lstinline{hAB: A ≠ B}.
+	      hipótesis \lstinline{hAB: A ≠ B}.
 
 	\item \lstinline{exact unique_of_exists_unique (ig.I1 hAB) ⟨hA.left,hB.left⟩ ⟨hA.right,hB.right⟩,}\\[.5em]
 	      La táctica \lstinline{exact} se utiliza para concluir la demostración
@@ -319,14 +319,14 @@ hAB: B ≠ A
 	      es \lstinline{⊢ l = m}. Analicemos entonces el término que estamos proporcionando a la táctica.
 
 	      El lema \lstinline{unique_of_exists_unique}, definido en la librería
-	      estándar de Lean, sirve para extrer la parte de unicidad del cuantificador
+	      estándar de Lean, sirve para extraer la parte de unicidad del cuantificador
 	      \lstinline{∃!}. Dadas una fórmula de la forma \lstinline{∃! x, px} y dos
 	      fórmulas \lstinline{p a} y \lstinline{p b} , devuelve la fórmula que
 	      aserta la igualdad entre los términos que cumplen la propiedad
 	      \lstinline{p}: \lstinline{a = b}.
 
 	      Como primer argumento le estamos pasando el primer axioma de incidencia,
-	      particularizado con la hipóteis \lstinline{hAB : A ≠ B}. Es decir
+	      particularizado con la hipótesis \lstinline{hAB : A ≠ B}. Es decir
 	      \lstinline{ig.I1 hAB} es igual a\\ \lstinline{∃! l : Line, A ~ l ∧ B ~ l}.
 
 	      Ahora queremos pasar en los otros dos argumentos términos
@@ -340,7 +340,7 @@ hAB: B ≠ A
 	      \lstinline{A ~ l ∧ B ~ l}.
 
 	      El uso de los paréntesis nos permite construir una conjunción sin
-	      tener que especificar esplícitamente que queremos construir una
+	      tener que especificar explícitamente que queremos construir una
 	      conjunción. El sistema de inferencia de tipos de Lean deduce que el
 	      término esperado es una conjunción.
 

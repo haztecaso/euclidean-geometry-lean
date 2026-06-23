@@ -120,7 +120,7 @@ begin
   exact h1 hCl
 end
 
-/-- Para caada punto existe una línea que no pasa por él. -/
+/-- Para cada punto existe una línea que no pasa por él. -/
 lemma point_has_external_line 
   {Point Line : Type*} [ig : incidence_geometry Point Line] : 
   ∀ A: Point, ∃ l: Line, ¬ A ~ l :=

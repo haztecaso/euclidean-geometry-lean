@@ -124,7 +124,7 @@ lemma points_in_line_from_points {A B : Point} (hAB : A ≠ B) :
 begin
   -- rw line_from_points,
   split,
-  { rw [has_point], /- TODO: ¿Cómo puedo escoger un representante canónico? ¿o puedo evitar tener que escojerlo? -/
+  { rw [has_point], /- TODO: ¿Cómo puedo escoger un representante canónico? ¿o puedo evitar tener que escogerlo? -/
     sorry },
   { sorry },
 end

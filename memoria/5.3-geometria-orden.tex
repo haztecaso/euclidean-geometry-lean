@@ -3,8 +3,7 @@
 
 El segundo grupo de axiomas establece propiedades de la relación de
 \textit{orden}, una relación ternaria entre puntos. Dados tres puntos $A, B, C$
-escribiremos $A * B * C$ para indicar que están relacionados mediante esta
-relesta relaciónón.
+escribiremos $A * B * C$ para indicar que están relacionados.
 
 Así empieza por tanto la definición de la clase que engloba los axiomas de
 orden:
@@ -76,7 +75,7 @@ Para formalizar esta noción utilizamos una estructura:
 
 Cuando se define una estructura en Lean se genera de forma automática
 un constructor, una función útil para crear términos con tipo la estructura
-definida. Dicha función se llamará como la estrucura más la notación
+definida. Dicha función se llamará como la estructura más la notación
 \lstinline{.mk} adjuntada: en este caso se tiene la función
 \lstinline{Seg.mk : (neq : A ≠ B) → Seg Point} (observemos cómo los términos
 \lstinline{A B : Point} son implícitos en la definición de la estructura).
@@ -160,7 +159,7 @@ establecer esta relación de pertenencia.
 
 \lstleanfull{order_geometry/basic.lean}{154}{156}
 
-En este caso el orden de los puntos que determinan un rayo sí que es imporante.
+En este caso el orden de los puntos que determinan un rayo sí que es importante.
 No se tiene como antes que $P$ pertenece a $\overrightarrow{AB}$ si y sólo si
 pertenece a $\overrightarrow{BA}$. En términos conjuntistas tendríamos que los
 rayos $\overrightarrow{AB}$ y $\overrightarrow{BA}$ son distintos.
@@ -176,7 +175,7 @@ rayos $\overrightarrow{AB}$ y $\overrightarrow{BA}$ son distintos.
 
 Como en la definición de ángulo estamos considerando dos rayos con un punto en
 común, se puede observar que tres puntos no alineados determinan un ángulo.
-Podemos definir de esta manera un otro constructor para ángulos:
+Podemos definir de esta manera otro constructor para ángulos:
 
 \lstleanfull{order_geometry/basic.lean}{184}{192}
 
