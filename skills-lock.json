@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "skills": {
+    "lean4": {
+      "source": "cameronfreer/lean4-skills",
+      "sourceType": "github",
+      "skillPath": "plugins/lean4/skills/lean4/SKILL.md",
+      "computedHash": "79f99bbbdd9ff37343f945b30ab477406a3be61e178fafe5f71964b287de14cf"
+    }
+  }
+}
